@@ -6,6 +6,7 @@ extends Node3D
 @onready var world: Node3D = get_node("world")
 @onready var world_ui: Node3D = get_node("world_ui")
 @onready var cam: Node3D = get_node("cam_gimbal/pivot/cam")
+@onready var cam_controller = get_node("cam_gimbal")
 
 @export var world_size: int = 32
 @export var world_radius: float = 16
@@ -15,20 +16,20 @@ extends Node3D
 var world_nodes: Array = []
 
 func _ready() -> void:
+	cam.position = Vector3(0, 0, world_radius*2)
+	cam_controller.zoom_max = world_radius*3
+	
+	# create nodes
 	for node_id in range(0, world_size):
 		var new_node: WorldNode = world_node.instantiate()
 		new_node.id = node_id
 		new_node.name = str(node_id)
 		if node_id != 0:
 			new_node.position = sample_point_in_sphere(world_radius)
-		
-		#new_node.connections.append(randi_range_exclude(0, world_size, [node_id]))
-		#new_node.connections.append(randi_range_exclude(0, world_size, new_node.connections))
-		#new_node.connections.append(randi_range_exclude(0, world_size, new_node.connections))
-
 		world.add_child(new_node)
 		world_nodes.append(node_id)
 		
+	# establish starting connections between nodes
 	for node_id in range(0, world_nodes.size()):
 		var valid_connections: Array = []
 		var node_pos = world.get_child(node_id).get_global_position()
@@ -42,6 +43,7 @@ func _ready() -> void:
 			if i <= valid_connections.size()-1:
 				world.get_child(node_id).connections.append(valid_connections[i])
 		
+	# draw connections between nodes
 	for node_id in range(0, world_nodes.size()):
 		var connections = world.get_child(node_id).connections
 		for i in range (0, connections.size()):

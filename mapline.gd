@@ -6,5 +6,9 @@ extends Line2D
 var cam: Node3D
 
 func _process(_delta):
-	set_point_position(0, cam.unproject_position(pos1))
-	set_point_position(1, cam.unproject_position(pos2))
+	if cam.is_position_behind(pos1) or cam.is_position_behind(pos2):
+		visible = false
+	else:
+		visible = true
+		set_point_position(0, cam.unproject_position(pos1))
+		set_point_position(1, cam.unproject_position(pos2))
