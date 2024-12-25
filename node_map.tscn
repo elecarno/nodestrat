@@ -1,42 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4yxi8su2ki"]
+[gd_scene load_steps=2 format=3 uid="uid://mud4y75goq2m"]
 
 [ext_resource type="Script" path="res://node_map.gd" id="1_mpb5c"]
-[ext_resource type="Script" path="res://orbit_cam.gd" id="2_g3eqh"]
-[ext_resource type="Texture2D" uid="uid://dqcj0t3rwiqch" path="res://grid_circle_small.png" id="3_hkc6t"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3gpy"]
-transparency = 1
-albedo_texture = ExtResource("3_hkc6t")
-texture_filter = 0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_4t1lb"]
-
-[sub_resource type="Environment" id="Environment_jx0ei"]
-background_mode = 1
-background_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
-ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-
-[node name="node_map" type="Node3D"]
+[node name="node_map" type="Node2D"]
 script = ExtResource("1_mpb5c")
 
-[node name="cam_gimbal" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.990258, 0.139242, 0, -0.139242, 0.990258, 0, 0, 0)
-script = ExtResource("2_g3eqh")
-
-[node name="pivot" type="Node3D" parent="cam_gimbal"]
-
-[node name="cam" type="Camera3D" parent="cam_gimbal/pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32)
-
-[node name="grid" type="MeshInstance3D" parent="."]
-transform = Transform3D(99.9998, 0.143073, 0.112593, -0.143197, 99.9998, 0.110337, -0.112435, -0.110498, 99.9999, 0, -24, 0)
-material_override = SubResource("StandardMaterial3D_c3gpy")
-mesh = SubResource("PlaneMesh_4t1lb")
-
-[node name="world_ui" type="Node3D" parent="."]
-
-[node name="world" type="Node3D" parent="."]
-
-[node name="env" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_jx0ei")
+[node name="cam" type="Camera2D" parent="."]
+enabled = false

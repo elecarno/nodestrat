@@ -25,7 +25,10 @@ func _input(event: InputEvent) -> void:
 				cam.position.z += zoom_speed
 
 func _physics_process(delta: float) -> void:
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and cam.current:
 		active = true
 	else:
 		active = false
+	
+	if Input.is_action_just_pressed("map"):
+		cam.current = !cam.current
