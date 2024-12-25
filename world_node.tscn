@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwnhq4lmyminr"]
+
+[ext_resource type="Script" path="res://world_node.gd" id="1_4rgje"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3tfo1"]
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_h2h1k"]
+
+[node name="world_node" type="Node3D"]
+script = ExtResource("1_4rgje")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_3tfo1")
+mesh = SubResource("SphereMesh_h2h1k")
+skeleton = NodePath("../..")
