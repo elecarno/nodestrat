@@ -43,7 +43,7 @@ func raycast():
 	ray_query.from = from
 	ray_query.to = to
 	var raycast_result = space.intersect_ray(ray_query)
-	print(raycast_result)
+	#print(raycast_result)
 
 	if raycast_result.has("collider"):
 		if raycast_result["collider"] is WorldNode:

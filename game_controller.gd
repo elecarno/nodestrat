@@ -9,6 +9,12 @@ extends Node
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("map"):
 		switch_cams()
+		
+	if Input.is_action_just_pressed("esc"):
+		world_map.visible = true
+		node_map.visible = false
+		orbit_cam.current = true
+		pan_cam.enabled = false
 
 func switch_cams():
 	world_map.visible = !world_map.visible
