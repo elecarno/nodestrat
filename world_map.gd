@@ -20,8 +20,6 @@ var world_nodes: Array = []
 func _ready() -> void:
 	cam.position = Vector3(0, 0, world_radius*2)
 	cam_controller.zoom_max = world_radius*3
-	
-	var player_node = randi_range(0, world_size)
 
 	# create nodes
 	for node_id in range(0, world_size):
@@ -33,8 +31,6 @@ func _ready() -> void:
 		if node_id != 0:
 			new_node.position = sample_point_in_sphere(world_radius)
 			new_node.node_data["name"] = node_names.pick_random()
-		if node_id == player_node:
-			new_node.node_data["owner"] = "PLAYER"
 		world.add_child(new_node)
 		world_nodes.append(node_id)
 		

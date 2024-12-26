@@ -38,11 +38,11 @@ func _ready() -> void:
 	mesh.scale = Vector3(scale_fac, scale_fac, scale_fac)
 	col.scale = Vector3(scale_fac, scale_fac, scale_fac)
 	
-	if node_data["owner"] == "PLAYER":
-		node_data["status"] = STATUS.owned
-		var mat: StandardMaterial3D = mesh.material_override.duplicate()
-		mat.albedo_color = Color(0, 1, 0, 1)
-		mesh.material_override = mat
+	#if node_data["owner"] == "PLAYER":
+		#node_data["status"] = STATUS.owned
+		#var mat: StandardMaterial3D = mesh.material_override.duplicate()
+		#mat.albedo_color = Color(0, 1, 0, 1)
+		#mesh.material_override = mat
 	
 	n_alpha.seed = node_data["n_alpha"]
 	n_beta.seed = node_data["n_beta"]

@@ -1,28 +1,51 @@
 class_name GameController
 extends Node
 
+@export var player_scene: PackedScene
+var peer = ENetMultiplayerPeer.new()
+var port = 6868
+
+@onready var players: Node = get_node("players")
 @onready var world_map: Node3D = get_node("world_map")
 @onready var node_map: Node2D = get_node("node_map")
+
 @onready var orbit_cam: Camera3D = get_node("world_map/cam_gimbal/pivot/cam")
 @onready var pan_cam: Camera2D = get_node("node_map/pan_cam/cam")
 @onready var timestamp: Label = get_node("canvas_layer/ui/time_control/timestamp")
 @onready var speedstamp: Label = get_node("canvas_layer/ui/time_control/speedstamp")
 @onready var node_info: Control = get_node("canvas_layer/ui/node_info")
+@onready var ui: Control = get_node("canvas_layer/ui")
+@onready var menu: Control = get_node("canvas_layer/menu")
 
-var tick: int = 24 # used for game calculations
+@export var tick: int = 24 # used for game calculations
 var last_day_tick: int = floor(tick/24)
 var current_day_tick: int # used for day based game calculations
 var time: float = 24 # used to add to tick
-var time_multiplier: float = 1 # game speed, 1.0 = 1 tick per second
+@export var time_multiplier: float = 1 # game speed, 1.0 = 1 tick per second
 var stage: int = 1
 const time_max: float = 30
 const time_min: float = 0.5
-var paused: bool = false
+@export var paused: bool = false
+
+func _ready() -> void:
+	get_node("canvas_layer/crt").visible = true
+	ui.visible = false
+	menu.visible = true
 
 func _process(delta: float) -> void:
-	timestamp.text = format_time()
+	if paused:
+		speedstamp.text = "||"
+	else:
+		speedstamp.text = str(time_multiplier) + "x"
 	
-	if Input.is_action_just_pressed("pause"):
+	timestamp.text = format_time()
+	ui.get_node("mp/playercount").text = "CONNECTED PEERS: " + str(players.get_child_count())
+	
+	if not is_multiplayer_authority():
+		ui.get_node("time_control/speed_up").visible = false
+		ui.get_node("time_control/speed_down").visible = false
+	
+	if Input.is_action_just_pressed("pause") and is_multiplayer_authority():
 		paused = !paused
 	
 	if not paused:
@@ -64,7 +87,8 @@ func increase_speed():
 		else:
 			time_multiplier += 10
 	
-	speedstamp.text = str(time_multiplier) + "x"
+	if not paused:
+		speedstamp.text = str(time_multiplier) + "x"
 	
 func decrease_speed():
 	if time_multiplier > time_min:
@@ -75,6 +99,7 @@ func decrease_speed():
 		else:
 			time_multiplier -= 9
 			
+	if not paused:
 		speedstamp.text = str(time_multiplier) + "x"
 	
 #func nation_day_tick():
@@ -100,4 +125,23 @@ func _on_speed_up_pressed() -> void:
 
 func _on_speed_down_pressed() -> void:
 	decrease_speed()
+
+
+func _on_host_pressed() -> void:
+	peer.create_server(port)
+	multiplayer.multiplayer_peer = peer
+	multiplayer.peer_connected.connect(_add_player)
+	_add_player()
+	ui.visible = true
+	menu.visible = false
 	
+func _add_player(id = 1):
+	var player = player_scene.instantiate()
+	player.name = str(id)
+	players.call_deferred("add_child", player)
+
+func _on_join_pressed() -> void:
+	peer.create_client("localhost", port)
+	multiplayer.multiplayer_peer = peer
+	ui.visible = true
+	menu.visible = false
