@@ -10,7 +10,7 @@ extends Node3D
 
 var active: bool = false
 
-func _input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:	
 	if event is InputEventMouseMotion and active:
 		rotate_y(deg_to_rad(-event.relative.x * sensitivity))
 		pivot.rotate_x(deg_to_rad(-event.relative.y * sensitivity))
@@ -30,5 +30,21 @@ func _physics_process(delta: float) -> void:
 	else:
 		active = false
 	
-	if Input.is_action_just_pressed("map"):
-		cam.current = !cam.current
+	if Input.is_action_just_pressed("lmb"):
+		raycast()
+
+func raycast():
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_length = 1024
+	var from = cam.project_ray_origin(mouse_pos)
+	var to = from + cam.project_ray_normal(mouse_pos) * ray_length
+	var space = get_world_3d().direct_space_state
+	var ray_query = PhysicsRayQueryParameters3D.new()
+	ray_query.from = from
+	ray_query.to = to
+	var raycast_result = space.intersect_ray(ray_query)
+	print(raycast_result)
+
+	if raycast_result.has("collider"):
+		if raycast_result["collider"] is WorldNode:
+			raycast_result["collider"].load_node_map()

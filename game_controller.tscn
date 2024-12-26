@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=5 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://game_controller.gd" id="1_4detf"]
 [ext_resource type="PackedScene" uid="uid://mud4y75goq2m" path="res://node_map.tscn" id="2_fsd5f"]
 [ext_resource type="PackedScene" uid="uid://b4yxi8su2ki" path="res://world_map.tscn" id="3_r76vv"]
+
+[sub_resource type="Environment" id="Environment_xeig2"]
+background_mode = 1
+background_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
 
 [node name="game_controller" type="Node"]
 script = ExtResource("1_4detf")
@@ -11,3 +17,6 @@ script = ExtResource("1_4detf")
 visible = false
 
 [node name="world_map" parent="." instance=ExtResource("3_r76vv")]
+
+[node name="env" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xeig2")

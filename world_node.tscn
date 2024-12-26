@@ -1,16 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwnhq4lmyminr"]
+[gd_scene load_steps=8 format=3 uid="uid://cwnhq4lmyminr"]
 
 [ext_resource type="Script" path="res://world_node.gd" id="1_4rgje"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3tfo1"]
 emission = Color(1, 1, 1, 1)
+disable_receive_shadows = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_h2h1k"]
 
-[node name="world_node" type="Node3D"]
+[sub_resource type="SphereMesh" id="SphereMesh_udxw4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x8qsu"]
+cull_mode = 1
+disable_receive_shadows = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vsb3"]
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+disable_receive_shadows = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hlmlg"]
+
+[node name="world_node" type="StaticBody3D"]
 script = ExtResource("1_4rgje")
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3tfo1")
 mesh = SubResource("SphereMesh_h2h1k")
 skeleton = NodePath("../..")
+
+[node name="select" type="MeshInstance3D" parent="mesh"]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_udxw4")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_x8qsu")
+
+[node name="inner" type="MeshInstance3D" parent="mesh/select"]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 0, 0, 0)
+mesh = SubResource("SphereMesh_udxw4")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2vsb3")
+
+[node name="col" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hlmlg")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

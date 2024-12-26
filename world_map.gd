@@ -12,6 +12,8 @@ extends Node3D
 @export var world_radius: float = 16
 @export var max_connections_per_node: int = 4
 @export var connection_threshold: float = 8
+@export var min_node_size: int = 16
+@export var max_node_size: int = 64
 
 var world_nodes: Array = []
 
@@ -24,6 +26,7 @@ func _ready() -> void:
 		var new_node: WorldNode = world_node.instantiate()
 		new_node.id = node_id
 		new_node.name = str(node_id)
+		new_node.node_data["size"] = randi_range(min_node_size, max_node_size)
 		if node_id != 0:
 			new_node.position = sample_point_in_sphere(world_radius)
 		world.add_child(new_node)

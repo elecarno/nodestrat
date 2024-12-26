@@ -1,9 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://mud4y75goq2m"]
+[gd_scene load_steps=6 format=3 uid="uid://mud4y75goq2m"]
 
 [ext_resource type="Script" path="res://node_map.gd" id="1_mpb5c"]
+[ext_resource type="Script" path="res://pan_cam.gd" id="2_pul1f"]
+[ext_resource type="Texture2D" uid="uid://cf0d1idx02fkl" path="res://node_tiles.png" id="2_qv3of"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fsp26"]
+texture = ExtResource("2_qv3of")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bb85p"]
+sources/0 = SubResource("TileSetAtlasSource_fsp26")
 
 [node name="node_map" type="Node2D"]
 script = ExtResource("1_mpb5c")
 
-[node name="cam" type="Camera2D" parent="."]
+[node name="pan_cam" type="Node2D" parent="."]
+script = ExtResource("2_pul1f")
+
+[node name="cam" type="Camera2D" parent="pan_cam"]
 enabled = false
+
+[node name="t_ground" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_bb85p")
