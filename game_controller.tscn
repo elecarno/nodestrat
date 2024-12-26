@@ -1,14 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=9 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://game_controller.gd" id="1_4detf"]
 [ext_resource type="PackedScene" uid="uid://mud4y75goq2m" path="res://node_map.tscn" id="2_fsd5f"]
 [ext_resource type="PackedScene" uid="uid://b4yxi8su2ki" path="res://world_map.tscn" id="3_r76vv"]
+[ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="4_7cnmm"]
+[ext_resource type="Texture2D" uid="uid://doq4lvgr6riry" path="res://frame_3x.png" id="5_jdauc"]
+[ext_resource type="Shader" path="res://vhs.gdshader" id="6_dlk7b"]
 
 [sub_resource type="Environment" id="Environment_xeig2"]
 background_mode = 1
 background_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l2nop"]
+shader = ExtResource("6_dlk7b")
+shader_parameter/resolution = Vector2(640, 360)
+shader_parameter/scan_line_amount = 0.3
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.015
+shader_parameter/interference_amount = 0.1
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.3
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/aberation_amount = 0.25
+shader_parameter/roll_line_amount = 0.0
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
 
 [node name="game_controller" type="Node"]
 script = ExtResource("1_4detf")
@@ -20,3 +40,135 @@ visible = false
 
 [node name="env" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xeig2")
+
+[node name="canvas_layer" type="CanvasLayer" parent="."]
+
+[node name="ui" type="Control" parent="canvas_layer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="time_control" type="Control" parent="canvas_layer/ui"]
+anchors_preset = 0
+offset_right = 214.0
+offset_bottom = 99.0
+
+[node name="timestamp" type="Label" parent="canvas_layer/ui/time_control"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 17.0
+offset_right = 144.0
+offset_bottom = 40.0
+theme = ExtResource("4_7cnmm")
+theme_override_font_sizes/font_size = 21
+text = "S0 / DD : hh"
+
+[node name="speedstamp" type="Label" parent="canvas_layer/ui/time_control"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 51.0
+offset_right = 110.0
+offset_bottom = 74.0
+theme = ExtResource("4_7cnmm")
+theme_override_font_sizes/font_size = 21
+text = "1x"
+horizontal_alignment = 1
+
+[node name="speed_up" type="Button" parent="canvas_layer/ui/time_control"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 46.0
+offset_right = 157.0
+offset_bottom = 78.0
+theme = ExtResource("4_7cnmm")
+text = "+"
+
+[node name="speed_down" type="Button" parent="canvas_layer/ui/time_control"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 46.0
+offset_right = 54.0
+offset_bottom = 78.0
+theme = ExtResource("4_7cnmm")
+text = "-
+"
+
+[node name="node_info" type="Control" parent="canvas_layer/ui"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -268.0
+offset_top = -150.0
+offset_right = 268.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="bg" type="NinePatchRect" parent="canvas_layer/ui/node_info"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_jdauc")
+region_rect = Rect2(0, 0, 144, 144)
+patch_margin_left = 48
+patch_margin_top = 48
+patch_margin_right = 48
+patch_margin_bottom = 48
+
+[node name="name" type="Label" parent="canvas_layer/ui/node_info"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -123.0
+offset_top = 11.0
+offset_right = 123.0
+offset_bottom = 48.0
+grow_horizontal = 2
+theme = ExtResource("4_7cnmm")
+theme_override_font_sizes/font_size = 42
+text = "16-ERIDANI"
+horizontal_alignment = 1
+
+[node name="info" type="Label" parent="canvas_layer/ui/node_info"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -149.0
+offset_top = -92.0
+offset_right = 149.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_7cnmm")
+theme_override_font_sizes/font_size = 21
+text = "Radius: 16
+Unowned"
+horizontal_alignment = 1
+
+[node name="vhs" type="ColorRect" parent="canvas_layer"]
+material = SubResource("ShaderMaterial_l2nop")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="canvas_layer/ui/time_control/speed_up" to="." method="_on_speed_up_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/time_control/speed_down" to="." method="_on_speed_down_pressed"]

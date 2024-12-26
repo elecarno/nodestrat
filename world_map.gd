@@ -12,7 +12,7 @@ extends Node3D
 @export var world_radius: float = 16
 @export var max_connections_per_node: int = 4
 @export var connection_threshold: float = 8
-@export var min_node_size: int = 16
+@export var min_node_size: int = 32
 @export var max_node_size: int = 64
 
 var world_nodes: Array = []
@@ -21,14 +21,20 @@ func _ready() -> void:
 	cam.position = Vector3(0, 0, world_radius*2)
 	cam_controller.zoom_max = world_radius*3
 	
+	var player_node = randi_range(0, world_size)
+
 	# create nodes
 	for node_id in range(0, world_size):
 		var new_node: WorldNode = world_node.instantiate()
 		new_node.id = node_id
 		new_node.name = str(node_id)
 		new_node.node_data["size"] = randi_range(min_node_size, max_node_size)
+		new_node.node_data["name"] = "Tower"
 		if node_id != 0:
 			new_node.position = sample_point_in_sphere(world_radius)
+			new_node.node_data["name"] = node_names.pick_random()
+		if node_id == player_node:
+			new_node.node_data["owner"] = "PLAYER"
 		world.add_child(new_node)
 		world_nodes.append(node_id)
 		
@@ -89,3 +95,11 @@ func randi_range_exclude(min_value: int, max_value: int, exclude: Array) -> int:
 		
 	# Return a random choice from the valid values
 	return valid_values[randi() % valid_values.size()]
+
+var node_names: Array = [
+	"Lytir", "Noctuae", "Oynyena", "Carcharoth", "Metri", "Gori", "Panacea",
+	"Rosae", "Maja", "Keni", "Namo", "Vaire", "Inin", "Bracko", "Anat",
+	"Anin", "Reeni", "Satet", "Eridani", "Zori", "Pegasi", "Goll", "Durin",
+	"Alkonost", "Scorpii", "Ledi", "Capricorni", "Tresi", "Artemis", "Hebe",
+	"Essid", "Xani", "Mova"
+]
