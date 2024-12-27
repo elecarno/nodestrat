@@ -1,6 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwnhq4lmyminr"]
+[gd_scene load_steps=9 format=3 uid="uid://cwnhq4lmyminr"]
 
 [ext_resource type="Script" path="res://world_node.gd" id="1_4rgje"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qtj8h"]
+properties/0/path = NodePath(".:node_data")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3tfo1"]
 emission = Color(1, 1, 1, 1)
@@ -23,6 +28,9 @@ disable_receive_shadows = true
 
 [node name="world_node" type="StaticBody3D"]
 script = ExtResource("1_4rgje")
+
+[node name="m_sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qtj8h")
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3tfo1")

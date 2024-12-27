@@ -8,7 +8,6 @@ extends Node3D
 @onready var world_ui: Node3D = get_node("world_ui")
 @onready var cam: Node3D = get_node("cam_gimbal/pivot/cam")
 @onready var cam_controller = get_node("cam_gimbal")
-@onready var m_sync = get_node("m_sync")
 
 @export var world_seed: int
 @export var world_size: int = 32
@@ -53,7 +52,9 @@ func generate_nodes():
 		if node_id != 0:
 			new_node.node_data["position"] = sample_point_in_sphere(world_radius)
 			new_node.node_data["name"] = node_names[rng.randi() % node_names.size()]
-		world.add_child(new_node)
+		world.get_child(node_id).id = node_id
+		world.get_child(node_id).node_data = new_node.node_data
+		world.get_child(node_id).init_node()
 		world_nodes[node_id] = new_node.node_data
 		
 	# establish starting connections between nodes
@@ -79,6 +80,7 @@ func generate_nodes():
 			new_mapline.pos2 = world.get_child(connections[i]).get_global_position()
 			new_mapline.cam = cam
 			world_ui.add_child(new_mapline)
+
 
 func sample_point_in_sphere(radius: float) -> Vector3:
 	# Random angles

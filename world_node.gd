@@ -15,7 +15,7 @@ var n_hills: FastNoiseLite = FastNoiseLite.new()
 
 enum STATUS {unowned, owned, contested}
 
-@export var id: int = 0 
+var id: int = 0 
 @export var node_data: Dictionary = {
 	"name": "NULLSEC",
 	"size": 16,
@@ -36,7 +36,7 @@ var tilemap_data: Dictionary = {
 	"hill_tiles": {} # destroy, cannot throw over
 }
 
-func _ready() -> void:
+func init_node() -> void:
 	var scale_fac = 2*log(node_data["size"] / 32) + 1
 	mesh.scale = Vector3(scale_fac, scale_fac, scale_fac)
 	col.scale = Vector3(scale_fac, scale_fac, scale_fac)
@@ -103,6 +103,16 @@ func load_node_map():
 	game_contoller.node_map.load_node()
 	game_contoller.switch_cams()
 	game_contoller.toggle_node_info("N/A", node_data, false)
+
+#func _physics_process(_delta: float) -> void:
+	#if randf() > 0.999 and is_multiplayer_authority():
+		#node_data["owner"] = "NEW PLAYER"
+		#node_data["status"] = STATUS.owned
+	#
+	#if node_data["status"] == STATUS.owned:
+		#var mat: StandardMaterial3D = mesh.material_override.duplicate()
+		#mat.albedo_color = Color(0, 1, 0, 1)
+		#mesh.material_override = mat
 
 func _on_mouse_entered() -> void:
 	var node_name = str(id) + "-" + node_data["name"].to_upper()

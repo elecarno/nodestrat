@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4yxi8su2ki"]
+[gd_scene load_steps=7 format=3 uid="uid://b4yxi8su2ki"]
 
 [ext_resource type="Script" path="res://world_map.gd" id="1_mpb5c"]
 [ext_resource type="Script" path="res://orbit_cam.gd" id="2_g3eqh"]
 [ext_resource type="Texture2D" uid="uid://dqcj0t3rwiqch" path="res://grid_circle_small.png" id="3_hkc6t"]
+[ext_resource type="PackedScene" uid="uid://cwnhq4lmyminr" path="res://world_node.tscn" id="4_puhio"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3gpy"]
 transparency = 1
@@ -34,3 +35,67 @@ mesh = SubResource("PlaneMesh_4t1lb")
 [node name="world_ui" type="Node3D" parent="."]
 
 [node name="world" type="Node3D" parent="."]
+
+[node name="0" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="1" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="2" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="3" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="4" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="5" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="6" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="7" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="8" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="9" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="10" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="11" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="12" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="13" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="14" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="15" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="16" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="17" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="18" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="19" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="20" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="21" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="22" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="23" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="24" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="25" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="26" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="27" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="28" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="29" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="30" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="31" parent="world" instance=ExtResource("4_puhio")]
