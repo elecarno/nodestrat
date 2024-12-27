@@ -1,3 +1,4 @@
+class_name WorldMap
 extends Node3D
 
 @onready var world_node: PackedScene = preload("res://world_node.tscn")
@@ -7,7 +8,9 @@ extends Node3D
 @onready var world_ui: Node3D = get_node("world_ui")
 @onready var cam: Node3D = get_node("cam_gimbal/pivot/cam")
 @onready var cam_controller = get_node("cam_gimbal")
+@onready var m_sync = get_node("m_sync")
 
+@export var world_seed: int
 @export var world_size: int = 32
 @export var world_radius: float = 16
 @export var max_connections_per_node: int = 4
@@ -15,24 +18,40 @@ extends Node3D
 @export var min_node_size: int = 32
 @export var max_node_size: int = 64
 
-var world_nodes: Array = []
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var generated: bool = false
+
+var world_nodes: Dictionary = {}
 
 func _ready() -> void:
+	rng.seed = world_seed
+	
+	print(world_seed)
+	
 	cam.position = Vector3(0, 0, world_radius*2)
 	cam_controller.zoom_max = world_radius*3
 
+func _physics_process(_delta: float) -> void:
+	#if not is_multiplayer_authority() and world_nodes == {}:
+		#spawn_nodes()
+		
+	if world_seed != 0 and not generated:
+		generate_nodes()
+		generated = true
+
+func generate_nodes():
 	# create nodes
 	for node_id in range(0, world_size):
 		var new_node: WorldNode = world_node.instantiate()
 		new_node.id = node_id
 		new_node.name = str(node_id)
-		new_node.node_data["size"] = randi_range(min_node_size, max_node_size)
+		new_node.node_data["size"] = rng.randi_range(min_node_size, max_node_size)
 		new_node.node_data["name"] = "Tower"
 		if node_id != 0:
-			new_node.position = sample_point_in_sphere(world_radius)
-			new_node.node_data["name"] = node_names.pick_random()
+			new_node.node_data["position"] = sample_point_in_sphere(world_radius)
+			new_node.node_data["name"] = node_names[rng.randi() % node_names.size()]
 		world.add_child(new_node)
-		world_nodes.append(node_id)
+		world_nodes[node_id] = new_node.node_data
 		
 	# establish starting connections between nodes
 	for node_id in range(0, world_nodes.size()):
@@ -43,14 +62,14 @@ func _ready() -> void:
 			if node_pos.distance_to(other_node_pos) <= connection_threshold:
 				valid_connections.append(conn_node_id)
 				
-		var number_of_connections = randi_range(1, max_connections_per_node)
+		var number_of_connections = rng.randi_range(1, max_connections_per_node)
 		for i in range(0, number_of_connections):
 			if i <= valid_connections.size()-1:
-				world.get_child(node_id).connections.append(valid_connections[i])
-		
+				world.get_child(node_id).node_data["connections"].append(valid_connections[i])
+	
 	# draw connections between nodes
 	for node_id in range(0, world_nodes.size()):
-		var connections = world.get_child(node_id).connections
+		var connections = world.get_child(node_id).node_data["connections"]
 		for i in range (0, connections.size()):
 			var new_mapline = mapline.instantiate()
 			new_mapline.pos1 = world.get_child(node_id).position
@@ -60,12 +79,12 @@ func _ready() -> void:
 
 func sample_point_in_sphere(radius: float) -> Vector3:
 	# Random angles
-	var phi = randf() * TAU # TAU is 2 * PI in Godot
-	var cos_theta = randf() * 2.0 - 1.0 # Uniform distribution for cos(theta)
+	var phi = rng.randf() * TAU # TAU is 2 * PI in Godot
+	var cos_theta = rng.randf() * 2.0 - 1.0 # Uniform distribution for cos(theta)
 	var theta = acos(cos_theta)
 
 	# Random radius within the sphere
-	var u = randf()
+	var u = rng.randf()
 	var r = radius * u ** (1.0 / 3.0)
 
 	# Convert to Cartesian coordinates
@@ -90,7 +109,7 @@ func randi_range_exclude(min_value: int, max_value: int, exclude: Array) -> int:
 		return min_value
 		
 	# Return a random choice from the valid values
-	return valid_values[randi() % valid_values.size()]
+	return valid_values[rng.randi() % valid_values.size()]
 
 var node_names: Array = [
 	"Lytir", "Noctuae", "Oynyena", "Carcharoth", "Metri", "Gori", "Panacea",

@@ -24,7 +24,7 @@ func _input(event: InputEvent) -> void:
 			if cam.position.z < zoom_max:
 				cam.position.z += zoom_speed
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and cam.current:
 		active = true
 	else:

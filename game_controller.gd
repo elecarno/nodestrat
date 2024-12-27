@@ -2,8 +2,8 @@ class_name GameController
 extends Node
 
 @onready var players: Node = get_node("players")
-@onready var world_map: Node3D = get_node("world_map")
-@onready var node_map: Node2D = get_node("node_map")
+@onready var world_map: WorldMap = get_node("world_map")
+@onready var node_map: NodeMap = get_node("node_map")
 
 @onready var orbit_cam: Camera3D = get_node("world_map/cam_gimbal/pivot/cam")
 @onready var pan_cam: Camera2D = get_node("node_map/pan_cam/cam")
@@ -30,6 +30,21 @@ func _process(delta: float) -> void:
 		speedstamp.text = "||"
 	else:
 		speedstamp.text = str(time_multiplier) + "x"
+		
+	#ui.get_node("world_info/info").text = "
+	#Size: %02d
+	#\nRadius: %02d
+	#\nMax Conn. / Node: %02d
+	#\nConn. Thres.: %02d
+	#\nMin Node Size: %02d
+	#\nMax Node Size: %02d" % [
+	#world_map.world_size, 
+	#world_map.world_radius,
+	#world_map.max_connections_per_node,
+	#world_map.connection_threshold,
+	#world_map.min_node_size,
+	#world_map.max_node_size
+	#]
 	
 	timestamp.text = format_time()
 	ui.get_node("mp/playercount").text = "CONNECTED PEERS: " + str(players.get_child_count())
@@ -102,9 +117,9 @@ func decrease_speed():
 		#emit_signal("daytick")
 		#last_day_tick = current_day_tick
 
-func toggle_node_info(name, node_data, vis):
+func toggle_node_info(node_name, node_data, vis):
 	node_info.visible = vis
-	node_info.get_node("name").text = name
+	node_info.get_node("name").text = node_name
 	node_info.get_node("info").text = "Radius: %02d" % [node_data["size"]]
 	if node_data["status"] == 0:
 		node_info.get_node("info").text += "\nUnowned"

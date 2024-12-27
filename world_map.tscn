@@ -1,8 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4yxi8su2ki"]
+[gd_scene load_steps=7 format=3 uid="uid://b4yxi8su2ki"]
 
 [ext_resource type="Script" path="res://world_map.gd" id="1_mpb5c"]
 [ext_resource type="Script" path="res://orbit_cam.gd" id="2_g3eqh"]
 [ext_resource type="Texture2D" uid="uid://dqcj0t3rwiqch" path="res://grid_circle_small.png" id="3_hkc6t"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mg7c7"]
+properties/0/path = NodePath(".:world_seed")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3gpy"]
 transparency = 1
@@ -13,6 +18,10 @@ texture_filter = 0
 
 [node name="world_map" type="Node3D"]
 script = ExtResource("1_mpb5c")
+world_seed = 1
+
+[node name="m_sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_mg7c7")
 
 [node name="cam_gimbal" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.990258, 0.139242, 0, -0.139242, 0.990258, 0, 0, 0)

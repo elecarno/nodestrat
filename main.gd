@@ -8,6 +8,8 @@ extends Node
 var lobby_id = 0
 var peer = SteamMultiplayerPeer.new()
 
+var peer_local = ENetMultiplayerPeer.new()
+
 func _ready() -> void:
 	m_spawner.spawn_function = spawn_level
 	peer.lobby_created.connect(_on_lobby_created)
@@ -33,8 +35,8 @@ func _on_lobby_created(connected, id):
 		Steam.setLobbyJoinable(lobby_id, true)
 		print(lobby_id)
 		
-func join_lobby(lobby_id):
-	peer.connect_lobby(lobby_id)
+func join_lobby(id):
+	peer.connect_lobby(id)
 	multiplayer.multiplayer_peer = peer
 	canvas_layer.visible = false
 
@@ -60,3 +62,14 @@ func _on_refresh_pressed() -> void:
 			n.queue_free()
 			
 	open_lobby_list()
+
+func _on_host_local_pressed() -> void:
+	peer_local.create_server(6868)
+	multiplayer.multiplayer_peer = peer_local
+	m_spawner.spawn("res://game_controller.tscn") 
+	canvas_layer.visible = false
+
+func _on_join_local_pressed() -> void:
+	peer_local.create_client("127.0.0.1", 6868)
+	multiplayer.multiplayer_peer = peer_local
+	canvas_layer.visible = false

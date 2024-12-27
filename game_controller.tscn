@@ -209,6 +209,36 @@ theme_override_font_sizes/font_size = 21
 text = "CONNECTED PEERS: 0"
 horizontal_alignment = 2
 
+[node name="world_info" type="Control" parent="canvas_layer/ui"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -342.0
+offset_top = -286.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="info" type="Label" parent="canvas_layer/ui/world_info"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -53.0
+offset_right = -25.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_7cnmm")
+theme_override_font_sizes/font_size = 21
+text = "world info"
+horizontal_alignment = 2
+vertical_alignment = 2
+
 [node name="crt" type="ColorRect" parent="canvas_layer"]
 visible = false
 material = SubResource("ShaderMaterial_l2nop")
