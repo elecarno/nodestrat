@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://b1maxltpl60t3"]
 
-[ext_resource type="Script" path="res://game_controller.gd" id="1_4detf"]
-[ext_resource type="PackedScene" uid="uid://mud4y75goq2m" path="res://node_map.tscn" id="2_fsd5f"]
-[ext_resource type="Script" path="res://m_spawner.gd" id="3_1vqeo"]
-[ext_resource type="PackedScene" uid="uid://b4yxi8su2ki" path="res://world_map.tscn" id="3_r76vv"]
+[ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_4detf"]
+[ext_resource type="Script" path="res://scripts/m_spawner.gd" id="3_1vqeo"]
+[ext_resource type="PackedScene" uid="uid://b0rg0cmnswrtn" path="res://scenes/player.tscn" id="3_pqsfh"]
 [ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="4_7cnmm"]
-[ext_resource type="PackedScene" uid="uid://b0rg0cmnswrtn" path="res://player.tscn" id="4_kiiiu"]
-[ext_resource type="Texture2D" uid="uid://doq4lvgr6riry" path="res://frame_3x.png" id="5_jdauc"]
+[ext_resource type="PackedScene" uid="uid://mud4y75goq2m" path="res://scenes/node_map.tscn" id="4_i50tw"]
+[ext_resource type="Texture2D" uid="uid://doq4lvgr6riry" path="res://sprites/frame_3x.png" id="5_jdauc"]
+[ext_resource type="PackedScene" uid="uid://b4yxi8su2ki" path="res://scenes/world_map.tscn" id="5_nsfya"]
 [ext_resource type="Shader" path="res://vhs.gdshader" id="6_dlk7b"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3p6oe"]
@@ -53,17 +53,16 @@ script = ExtResource("1_4detf")
 replication_config = SubResource("SceneReplicationConfig_3p6oe")
 
 [node name="m_spawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("../players")
 script = ExtResource("3_1vqeo")
-player_scene = ExtResource("4_kiiiu")
+player_scene = ExtResource("3_pqsfh")
 
 [node name="players" type="Node" parent="."]
 
-[node name="node_map" parent="." instance=ExtResource("2_fsd5f")]
+[node name="node_map" parent="." instance=ExtResource("4_i50tw")]
 visible = false
 
-[node name="world_map" parent="." instance=ExtResource("3_r76vv")]
+[node name="world_map" parent="." instance=ExtResource("5_nsfya")]
 
 [node name="env" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xeig2")

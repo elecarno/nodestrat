@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dkftjwp7ktel0"
-path.s3tc="res://.godot/imported/grid_circle.png-b5f59d361ade949db92bc3f15382de38.s3tc.ctex"
+path.s3tc="res://.godot/imported/grid_circle.png-5b081ce94f31b701dc3b81bf31796962.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://grid_circle.png"
-dest_files=["res://.godot/imported/grid_circle.png-b5f59d361ade949db92bc3f15382de38.s3tc.ctex"]
+source_file="res://sprites/grid_circle.png"
+dest_files=["res://.godot/imported/grid_circle.png-5b081ce94f31b701dc3b81bf31796962.s3tc.ctex"]
 
 [params]
 

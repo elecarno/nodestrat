@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://mud4y75goq2m"]
 
-[ext_resource type="Script" path="res://node_map.gd" id="1_mpb5c"]
-[ext_resource type="Script" path="res://pan_cam.gd" id="2_pul1f"]
-[ext_resource type="Texture2D" uid="uid://cf0d1idx02fkl" path="res://node_tiles.png" id="2_qv3of"]
-[ext_resource type="Texture2D" uid="uid://dj5y228k2q5ql" path="res://select.png" id="4_jupjo"]
+[ext_resource type="Script" path="res://scripts/node_map.gd" id="1_mpb5c"]
+[ext_resource type="Script" path="res://scripts/pan_cam.gd" id="2_pul1f"]
+[ext_resource type="Texture2D" uid="uid://cf0d1idx02fkl" path="res://sprites/node_tiles.png" id="2_qv3of"]
+[ext_resource type="Texture2D" uid="uid://dj5y228k2q5ql" path="res://sprites/select.png" id="4_jupjo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fsp26"]
 texture = ExtResource("2_qv3of")
@@ -37,6 +37,10 @@ tile_set = SubResource("TileSet_bb85p")
 
 [node name="t_hills" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_bb85p")
+
+[node name="objects" type="Node2D" parent="."]
+
+[node name="entities" type="Node2D" parent="."]
 
 [node name="select" type="Sprite2D" parent="."]
 texture = ExtResource("4_jupjo")

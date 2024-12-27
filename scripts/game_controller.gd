@@ -1,6 +1,8 @@
 class_name GameController
 extends Node
 
+var client_id = 0
+
 @onready var players: Node = get_node("players")
 @onready var world_map: WorldMap = get_node("world_map")
 @onready var node_map: NodeMap = get_node("node_map")
@@ -20,7 +22,7 @@ var time: float = 24 # used to add to tick
 var stage: int = 1
 const time_max: float = 30
 const time_min: float = 0.5
-@export var paused: bool = false
+@export var paused: bool = true
 
 func _ready() -> void:
 	get_node("canvas_layer/crt").visible = true
@@ -53,8 +55,8 @@ func _process(delta: float) -> void:
 		ui.get_node("time_control/speed_up").visible = false
 		ui.get_node("time_control/speed_down").visible = false
 	
-	if Input.is_action_just_pressed("pause") and is_multiplayer_authority():
-		paused = !paused
+	if Input.is_action_just_pressed("pause"):
+		toggle_pause.rpc()
 	
 	if not paused:
 		time += (delta * time_multiplier)
@@ -70,6 +72,10 @@ func _process(delta: float) -> void:
 		node_map.visible = false
 		orbit_cam.current = true
 		pan_cam.enabled = false
+
+@rpc("any_peer", "call_local")
+func toggle_pause():
+	paused = !paused
 
 func switch_cams():
 	world_map.visible = !world_map.visible

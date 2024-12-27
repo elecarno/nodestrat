@@ -1,8 +1,8 @@
 class_name WorldMap
 extends Node3D
 
-@onready var world_node: PackedScene = preload("res://world_node.tscn")
-@onready var mapline: PackedScene = preload("res://mapline.tscn")
+@onready var world_node: PackedScene = preload("res://scenes/world_node.tscn")
+@onready var mapline: PackedScene = preload("res://scenes/mapline.tscn")
 
 @onready var world: Node3D = get_node("world")
 @onready var world_ui: Node3D = get_node("world_ui")

@@ -1,5 +1,6 @@
 extends Node3D
 
+@onready var world_map: WorldMap = get_parent()
 @onready var cam: Camera3D = get_node("pivot/cam")
 @onready var pivot: Node3D = get_node("pivot")
 
@@ -30,7 +31,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		active = false
 	
-	if Input.is_action_just_pressed("lmb"):
+	if Input.is_action_just_pressed("lmb") and world_map.visible:
 		raycast()
 
 func raycast():

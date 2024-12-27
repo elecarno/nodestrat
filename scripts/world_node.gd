@@ -6,6 +6,7 @@ extends StaticBody3D
 @onready var col: CollisionShape3D = get_node("col")
 @onready var game_contoller: GameController = get_tree().get_root().get_node("main/game_controller")
 @onready var world_map: WorldMap = get_parent().get_parent()
+@onready var node_map: NodeMap = get_parent().get_parent().get_parent().get_node("node_map")
 
 var n_alpha: FastNoiseLite = FastNoiseLite.new()
 var n_beta: FastNoiseLite = FastNoiseLite.new()
@@ -35,6 +36,9 @@ var tilemap_data: Dictionary = {
 	"wall_tiles": {}, # build/destroy, can throw over
 	"hill_tiles": {} # destroy, cannot throw over
 }
+
+var object_data: Array = []
+var entity_data: Array = []
 
 func init_node() -> void:
 	var scale_fac = 2*log(node_data["size"] / 32) + 1
@@ -98,8 +102,6 @@ func init_node() -> void:
 
 func load_node_map():
 	game_contoller.node_map.node_id = id
-	game_contoller.node_map.node_data = node_data
-	game_contoller.node_map.tilemap_data = tilemap_data
 	game_contoller.node_map.load_node()
 	game_contoller.switch_cams()
 	game_contoller.toggle_node_info("N/A", node_data, false)
@@ -113,6 +115,17 @@ func load_node_map():
 		#var mat: StandardMaterial3D = mesh.material_override.duplicate()
 		#mat.albedo_color = Color(0, 1, 0, 1)
 		#mesh.material_override = mat
+
+
+@rpc("any_peer", "call_local")
+func add_building(pos: Vector2):
+	var building: Dictionary = {
+		"type": "test_building",
+		"pos": pos
+	}
+	object_data.append(building)
+	if node_map.node_id == id:
+		node_map.load_objects()
 
 func _on_mouse_entered() -> void:
 	var node_name = str(id) + "-" + node_data["name"].to_upper()

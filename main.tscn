@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://cojgggvnucx7m"]
 
-[ext_resource type="Script" path="res://steam.gd" id="1_tes2x"]
-[ext_resource type="Script" path="res://main.gd" id="1_uxe2g"]
-[ext_resource type="Texture2D" uid="uid://doq4lvgr6riry" path="res://frame_3x.png" id="2_346u3"]
+[ext_resource type="Script" path="res://scripts/steam.gd" id="1_tes2x"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_uxe2g"]
+[ext_resource type="Texture2D" uid="uid://doq4lvgr6riry" path="res://sprites/frame_3x.png" id="2_346u3"]
 [ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="3_ew0gk"]
 [ext_resource type="Shader" path="res://vhs.gdshader" id="4_cwq1p"]
 

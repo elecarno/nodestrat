@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cwnhq4lmyminr"]
 
-[ext_resource type="Script" path="res://world_node.gd" id="1_4rgje"]
+[ext_resource type="Script" path="res://scripts/world_node.gd" id="1_ax0ul"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qtj8h"]
 properties/0/path = NodePath(".:node_data")
@@ -27,7 +27,7 @@ disable_receive_shadows = true
 [sub_resource type="SphereShape3D" id="SphereShape3D_hlmlg"]
 
 [node name="world_node" type="StaticBody3D"]
-script = ExtResource("1_4rgje")
+script = ExtResource("1_ax0ul")
 
 [node name="m_sync" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qtj8h")

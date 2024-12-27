@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://b4yxi8su2ki"]
 
-[ext_resource type="Script" path="res://world_map.gd" id="1_mpb5c"]
-[ext_resource type="Script" path="res://orbit_cam.gd" id="2_g3eqh"]
-[ext_resource type="Texture2D" uid="uid://dqcj0t3rwiqch" path="res://grid_circle_small.png" id="3_hkc6t"]
-[ext_resource type="PackedScene" uid="uid://cwnhq4lmyminr" path="res://world_node.tscn" id="4_puhio"]
+[ext_resource type="Script" path="res://scripts/world_map.gd" id="1_mpb5c"]
+[ext_resource type="Script" path="res://scripts/orbit_cam.gd" id="2_g3eqh"]
+[ext_resource type="Texture2D" uid="uid://dqcj0t3rwiqch" path="res://sprites/grid_circle_small.png" id="3_hkc6t"]
+[ext_resource type="PackedScene" uid="uid://cwnhq4lmyminr" path="res://scenes/world_node.tscn" id="4_puhio"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3gpy"]
 transparency = 1
