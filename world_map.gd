@@ -24,7 +24,8 @@ var generated: bool = false
 var world_nodes: Dictionary = {}
 
 func _ready() -> void:
-	rng.seed = world_seed
+	if is_multiplayer_authority():
+		world_seed = randi()
 	
 	print(world_seed)
 	
@@ -34,6 +35,8 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	#if not is_multiplayer_authority() and world_nodes == {}:
 		#spawn_nodes()
+		
+	rng.seed = world_seed
 		
 	if world_seed != 0 and not generated:
 		generate_nodes()
