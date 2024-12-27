@@ -4,8 +4,7 @@ extends StaticBody3D
 @onready var mesh: MeshInstance3D = get_node("mesh")
 @onready var select: MeshInstance3D = get_node("mesh/select")
 @onready var col: CollisionShape3D = get_node("col")
-@onready var node_map: NodeMap = get_tree().get_root().get_node("game_controller/node_map")
-@onready var game_contoller: GameController = get_tree().get_root().get_node("game_controller")
+@onready var game_contoller: GameController = get_tree().get_root().get_node("main/game_controller")
 
 var id: int = 0
 var connections: Array = []
@@ -86,9 +85,9 @@ func _ready() -> void:
 						#node_data["wall_tiles"][tile_pos] = wall_tile
 
 func load_node_map():
-	node_map.node_id = id
-	node_map.node_data = node_data
-	node_map.load_node()
+	game_contoller.node_map.node_id = id
+	game_contoller.node_map.node_data = node_data
+	game_contoller.node_map.load_node()
 	game_contoller.switch_cams()
 	game_contoller.toggle_node_info("N/A", node_data, false)
 

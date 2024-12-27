@@ -1,0 +1,145 @@
+[gd_scene load_steps=7 format=3 uid="uid://cojgggvnucx7m"]
+
+[ext_resource type="Script" path="res://steam.gd" id="1_tes2x"]
+[ext_resource type="Script" path="res://main.gd" id="1_uxe2g"]
+[ext_resource type="Texture2D" uid="uid://doq4lvgr6riry" path="res://frame_3x.png" id="2_346u3"]
+[ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="3_ew0gk"]
+[ext_resource type="Shader" path="res://vhs.gdshader" id="4_cwq1p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_md4gd"]
+shader = ExtResource("4_cwq1p")
+shader_parameter/resolution = Vector2(640, 360)
+shader_parameter/scan_line_amount = 0.3
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.015
+shader_parameter/interference_amount = 0.1
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.3
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/aberation_amount = 0.25
+shader_parameter/roll_line_amount = 0.0
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+
+[node name="main" type="Node"]
+script = ExtResource("1_uxe2g")
+
+[node name="steam" type="Node" parent="."]
+script = ExtResource("1_tes2x")
+
+[node name="m_spawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+
+[node name="canvas_layer" type="CanvasLayer" parent="."]
+
+[node name="menu" type="Control" parent="canvas_layer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lobby_list" type="Control" parent="canvas_layer/menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -260.0
+offset_right = 256.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="bg" type="NinePatchRect" parent="canvas_layer/menu/lobby_list"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_346u3")
+region_rect = Rect2(0, 0, 144, 144)
+patch_margin_left = 48
+patch_margin_top = 48
+patch_margin_right = 48
+patch_margin_bottom = 48
+
+[node name="refresh" type="Button" parent="canvas_layer/menu/lobby_list"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = -66.0
+offset_right = 154.0
+offset_bottom = -28.0
+grow_vertical = 0
+theme = ExtResource("3_ew0gk")
+text = "Refresh"
+
+[node name="host" type="Button" parent="canvas_layer/menu/lobby_list"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -154.0
+offset_top = -66.0
+offset_right = -36.0
+offset_bottom = -28.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("3_ew0gk")
+text = "Host"
+
+[node name="title" type="Label" parent="canvas_layer/menu/lobby_list"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -149.0
+offset_right = 149.0
+offset_bottom = 41.0
+grow_horizontal = 2
+theme = ExtResource("3_ew0gk")
+theme_override_font_sizes/font_size = 21
+text = "LOBBIES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lobby_container" type="ScrollContainer" parent="canvas_layer/menu/lobby_list"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -198.0
+offset_right = 220.0
+offset_bottom = 171.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lobby_vbox" type="VBoxContainer" parent="canvas_layer/menu/lobby_list/lobby_container"]
+layout_mode = 2
+
+[node name="crt" type="ColorRect" parent="canvas_layer"]
+visible = false
+material = SubResource("ShaderMaterial_md4gd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="canvas_layer/menu/lobby_list/refresh" to="." method="_on_refresh_pressed"]
+[connection signal="pressed" from="canvas_layer/menu/lobby_list/host" to="." method="_on_host_pressed"]

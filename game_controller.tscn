@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=12 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://game_controller.gd" id="1_4detf"]
 [ext_resource type="PackedScene" uid="uid://mud4y75goq2m" path="res://node_map.tscn" id="2_fsd5f"]
+[ext_resource type="Script" path="res://m_spawner.gd" id="3_1vqeo"]
 [ext_resource type="PackedScene" uid="uid://b4yxi8su2ki" path="res://world_map.tscn" id="3_r76vv"]
 [ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="4_7cnmm"]
 [ext_resource type="PackedScene" uid="uid://b0rg0cmnswrtn" path="res://player.tscn" id="4_kiiiu"]
@@ -44,7 +45,6 @@ shader_parameter/pixel_strength = -2.0
 
 [node name="game_controller" type="Node"]
 script = ExtResource("1_4detf")
-player_scene = ExtResource("4_kiiiu")
 
 [node name="m_sync" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_3p6oe")
@@ -52,6 +52,8 @@ replication_config = SubResource("SceneReplicationConfig_3p6oe")
 [node name="m_spawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("../players")
+script = ExtResource("3_1vqeo")
+player_scene = ExtResource("4_kiiiu")
 
 [node name="players" type="Node" parent="."]
 
@@ -207,89 +209,6 @@ theme_override_font_sizes/font_size = 21
 text = "CONNECTED PEERS: 0"
 horizontal_alignment = 2
 
-[node name="menu" type="Control" parent="canvas_layer"]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="lobby" type="Control" parent="canvas_layer/menu"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -268.0
-offset_top = -146.0
-offset_right = 268.0
-offset_bottom = 146.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="bg" type="NinePatchRect" parent="canvas_layer/menu/lobby"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_jdauc")
-region_rect = Rect2(0, 0, 144, 144)
-patch_margin_left = 48
-patch_margin_top = 48
-patch_margin_right = 48
-patch_margin_bottom = 48
-
-[node name="host" type="Button" parent="canvas_layer/menu/lobby"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.0
-offset_top = -50.0
-offset_right = 59.0
-offset_bottom = -12.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("4_7cnmm")
-text = "Host"
-
-[node name="join" type="Button" parent="canvas_layer/menu/lobby"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.0
-offset_right = 59.0
-offset_bottom = 38.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("4_7cnmm")
-text = "Join"
-
-[node name="info" type="Label" parent="canvas_layer/menu/lobby"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -149.0
-offset_right = 149.0
-offset_bottom = 41.0
-grow_horizontal = 2
-theme = ExtResource("4_7cnmm")
-theme_override_font_sizes/font_size = 21
-text = "LOBBY"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="crt" type="ColorRect" parent="canvas_layer"]
 visible = false
 material = SubResource("ShaderMaterial_l2nop")
@@ -302,5 +221,3 @@ mouse_filter = 2
 
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_up" to="." method="_on_speed_up_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_down" to="." method="_on_speed_down_pressed"]
-[connection signal="pressed" from="canvas_layer/menu/lobby/host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="canvas_layer/menu/lobby/join" to="." method="_on_join_pressed"]

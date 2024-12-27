@@ -1,10 +1,6 @@
 class_name GameController
 extends Node
 
-@export var player_scene: PackedScene
-var peer = ENetMultiplayerPeer.new()
-var port = 6868
-
 @onready var players: Node = get_node("players")
 @onready var world_map: Node3D = get_node("world_map")
 @onready var node_map: Node2D = get_node("node_map")
@@ -15,7 +11,6 @@ var port = 6868
 @onready var speedstamp: Label = get_node("canvas_layer/ui/time_control/speedstamp")
 @onready var node_info: Control = get_node("canvas_layer/ui/node_info")
 @onready var ui: Control = get_node("canvas_layer/ui")
-@onready var menu: Control = get_node("canvas_layer/menu")
 
 @export var tick: int = 24 # used for game calculations
 var last_day_tick: int = floor(tick/24)
@@ -29,8 +24,6 @@ const time_min: float = 0.5
 
 func _ready() -> void:
 	get_node("canvas_layer/crt").visible = true
-	ui.visible = false
-	menu.visible = true
 
 func _process(delta: float) -> void:
 	if paused:
@@ -125,23 +118,3 @@ func _on_speed_up_pressed() -> void:
 
 func _on_speed_down_pressed() -> void:
 	decrease_speed()
-
-
-func _on_host_pressed() -> void:
-	peer.create_server(port)
-	multiplayer.multiplayer_peer = peer
-	multiplayer.peer_connected.connect(_add_player)
-	_add_player()
-	ui.visible = true
-	menu.visible = false
-	
-func _add_player(id = 1):
-	var player = player_scene.instantiate()
-	player.name = str(id)
-	players.call_deferred("add_child", player)
-
-func _on_join_pressed() -> void:
-	peer.create_client("localhost", port)
-	multiplayer.multiplayer_peer = peer
-	ui.visible = true
-	menu.visible = false
