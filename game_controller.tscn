@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=13 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_4detf"]
 [ext_resource type="Script" path="res://scripts/m_spawner.gd" id="3_1vqeo"]
@@ -7,21 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://mud4y75goq2m" path="res://scenes/node_map.tscn" id="4_i50tw"]
 [ext_resource type="Texture2D" uid="uid://doq4lvgr6riry" path="res://sprites/frame_3x.png" id="5_jdauc"]
 [ext_resource type="PackedScene" uid="uid://b4yxi8su2ki" path="res://scenes/world_map.tscn" id="5_nsfya"]
+[ext_resource type="Texture2D" uid="uid://bt018u1dhc8li" path="res://sprites/ui_main.png" id="6_bm72a"]
 [ext_resource type="Shader" path="res://vhs.gdshader" id="6_dlk7b"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3p6oe"]
-properties/0/path = NodePath(".:tick")
+properties/0/path = NodePath("world_map:world_seed")
 properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath(".:time_multiplier")
-properties/1/spawn = true
-properties/1/replication_mode = 2
-properties/2/path = NodePath(".:paused")
-properties/2/spawn = true
-properties/2/replication_mode = 2
-properties/3/path = NodePath("world_map:world_seed")
-properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/0/replication_mode = 1
 
 [sub_resource type="Environment" id="Environment_xeig2"]
 background_mode = 1
@@ -78,47 +70,78 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="time_control" type="Control" parent="canvas_layer/ui"]
+[node name="bg" type="TextureRect" parent="canvas_layer/ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_bm72a")
+
+[node name="faction_info" type="Control" parent="canvas_layer/ui"]
+layout_mode = 1
 anchors_preset = 0
-offset_right = 214.0
+offset_right = 239.0
+offset_bottom = 274.0
+mouse_filter = 2
+
+[node name="energy" type="Label" parent="canvas_layer/ui/faction_info"]
+layout_mode = 1
+offset_left = 33.0
+offset_top = 8.0
+offset_right = 207.0
+offset_bottom = 37.0
+theme = ExtResource("4_7cnmm")
+theme_override_font_sizes/font_size = 21
+text = "E: 1000/1000"
+
+[node name="time_control" type="Control" parent="canvas_layer/ui"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -214.0
 offset_bottom = 99.0
+grow_horizontal = 0
 
 [node name="timestamp" type="Label" parent="canvas_layer/ui/time_control"]
 layout_mode = 0
-offset_left = 21.0
-offset_top = 17.0
-offset_right = 144.0
-offset_bottom = 40.0
+offset_left = 49.0
+offset_top = 11.0
+offset_right = 197.0
+offset_bottom = 34.0
 theme = ExtResource("4_7cnmm")
 theme_override_font_sizes/font_size = 21
 text = "S0 / DD : hh"
 
 [node name="speedstamp" type="Label" parent="canvas_layer/ui/time_control"]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 51.0
-offset_right = 110.0
-offset_bottom = 74.0
+offset_left = 123.0
+offset_top = 59.0
+offset_right = 175.0
+offset_bottom = 82.0
 theme = ExtResource("4_7cnmm")
 theme_override_font_sizes/font_size = 21
-text = "1x"
+text = "0.5x"
 horizontal_alignment = 1
 
 [node name="speed_up" type="Button" parent="canvas_layer/ui/time_control"]
 layout_mode = 0
-offset_left = 125.0
-offset_top = 46.0
-offset_right = 157.0
-offset_bottom = 78.0
+offset_left = 179.0
+offset_top = 58.0
+offset_right = 203.0
+offset_bottom = 82.0
 theme = ExtResource("4_7cnmm")
 text = "+"
 
 [node name="speed_down" type="Button" parent="canvas_layer/ui/time_control"]
 layout_mode = 0
-offset_left = 22.0
-offset_top = 46.0
-offset_right = 54.0
-offset_bottom = 78.0
+offset_left = 95.0
+offset_top = 58.0
+offset_right = 119.0
+offset_bottom = 82.0
 theme = ExtResource("4_7cnmm")
 text = "-
 "
@@ -188,13 +211,11 @@ Unowned"
 horizontal_alignment = 1
 
 [node name="mp" type="Control" parent="canvas_layer/ui"]
+visible = false
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -262.0
+anchors_preset = 0
+offset_right = 262.0
 offset_bottom = 98.0
-grow_horizontal = 0
 
 [node name="playercount" type="Label" parent="canvas_layer/ui/mp"]
 layout_mode = 1

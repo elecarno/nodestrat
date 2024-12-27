@@ -59,10 +59,7 @@ func _process(delta: float) -> void:
 		toggle_pause.rpc()
 	
 	if not paused:
-		time += (delta * time_multiplier)
-		tick = floor(time)
-		current_day_tick = floor(tick/24)
-		#nation_day_tick()
+		run_tick.rpc(delta)
 	
 	if Input.is_action_just_pressed("map"):
 		switch_cams()
@@ -72,6 +69,12 @@ func _process(delta: float) -> void:
 		node_map.visible = false
 		orbit_cam.current = true
 		pan_cam.enabled = false
+
+@rpc("any_peer", "call_local")
+func run_tick(delta):
+	time += (delta * time_multiplier)
+	tick = floor(time)
+	current_day_tick = floor(tick/24)
 
 @rpc("any_peer", "call_local")
 func toggle_pause():
@@ -91,6 +94,7 @@ func format_time():
 	var days = int(tick/24)
 	return "S%01d / %02d : %02d" % [stage, days, hours]
 	
+@rpc("any_peer", "call_local")
 func increase_speed():
 	if time_multiplier < time_max:
 		time_multiplier = floor(time_multiplier)
@@ -104,6 +108,7 @@ func increase_speed():
 	if not paused:
 		speedstamp.text = str(time_multiplier) + "x"
 	
+@rpc("any_peer", "call_local")
 func decrease_speed():
 	if time_multiplier > time_min:
 		if time_multiplier == 1:
@@ -135,7 +140,7 @@ func toggle_node_info(node_name, node_data, vis):
 		node_info.get_node("info").text += "\nContested"
 
 func _on_speed_up_pressed() -> void:
-	increase_speed()
+	increase_speed.rpc()
 
 func _on_speed_down_pressed() -> void:
-	decrease_speed()
+	decrease_speed.rpc()
