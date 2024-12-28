@@ -84,7 +84,6 @@ environment = SubResource("Environment_xeig2")
 [node name="canvas_layer" type="CanvasLayer" parent="."]
 
 [node name="ui" type="Control" parent="canvas_layer"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -106,8 +105,8 @@ texture = ExtResource("6_bm72a")
 [node name="faction_info" type="Control" parent="canvas_layer/ui"]
 layout_mode = 1
 anchors_preset = 0
-offset_right = 239.0
-offset_bottom = 274.0
+offset_right = 911.0
+offset_bottom = 130.0
 mouse_filter = 2
 
 [node name="energy" type="Label" parent="canvas_layer/ui/faction_info"]
@@ -149,6 +148,15 @@ offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
 text = "γ: 999/1K (+99)"
+
+[node name="name" type="Label" parent="canvas_layer/ui/faction_info"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 34.0
+offset_right = 282.0
+offset_bottom = 54.0
+theme = ExtResource("4_7cnmm")
+text = "FACTION NAME"
 
 [node name="time_control" type="Control" parent="canvas_layer/ui"]
 layout_mode = 1
@@ -311,6 +319,7 @@ horizontal_alignment = 2
 vertical_alignment = 2
 
 [node name="lobby" type="Control" parent="canvas_layer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

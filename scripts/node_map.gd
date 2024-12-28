@@ -13,7 +13,10 @@ extends Node2D
 @onready var c_objects: Node2D = get_node("objects")
 @onready var c_entities: Node2D = get_node("entities")
 
-@onready var test_building: PackedScene = preload("res://scenes/test_building.tscn")
+@onready var buildings: Dictionary = {
+	"test_building": preload("res://scenes/buildings/test_building.tscn"),
+	"fortress": preload("res://scenes/buildings/fortress.tscn")
+}
 
 var node_id: int = 0
 
@@ -52,7 +55,7 @@ func _physics_process(_delta: float) -> void:
 	if t_ground.get_used_cells().has(cell_position):
 		select.visible = true
 		if Input.is_action_just_pressed("lmb"):
-			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), snapped_position)
+			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), "test_building", snapped_position)
 	else:
 		select.visible = false
 		
@@ -61,8 +64,10 @@ func load_objects():
 		c_objects.remove_child(object)
 		object.queue_free()
 	
-	var object_data = world.get_child(node_id).object_data
-	for object in range(0, object_data.size()):
-		var object_node = test_building.instantiate()
-		object_node.position = object_data[object]["pos"]
+	var objects = world.get_child(node_id).get_node("objects")
+	for i in range(0, objects.get_child_count()):
+		var type = objects.get_child(i).type
+		var pos = objects.get_child(i).pos
+		var object_node = buildings[type].instantiate()
+		object_node.position = pos
 		c_objects.add_child(object_node)

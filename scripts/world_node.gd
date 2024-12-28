@@ -1,12 +1,17 @@
 class_name WorldNode
 extends StaticBody3D
 
+@onready var building_node = preload("res://scenes/building.tscn")
+
 @onready var mesh: MeshInstance3D = get_node("mesh")
 @onready var select: MeshInstance3D = get_node("mesh/select")
 @onready var col: CollisionShape3D = get_node("col")
 @onready var game_contoller: GameController = get_tree().get_root().get_node("main/game_controller")
 @onready var world_map: WorldMap = get_parent().get_parent()
 @onready var node_map: NodeMap = get_parent().get_parent().get_parent().get_node("node_map")
+
+@onready var c_objects: Node = get_node("objects")
+@onready var c_entities: Node = get_node("entities")
 
 var n_alpha: FastNoiseLite = FastNoiseLite.new()
 var n_beta: FastNoiseLite = FastNoiseLite.new()
@@ -23,7 +28,7 @@ var id: int = 0
 	"position": Vector3.ZERO,
 	"connections": [],
 	"status": STATUS.unowned,
-	"owner": null,
+	"faction": null,
 	"n_alpha": 0,
 	"n_beta": 0,
 	"n_gamma": 0,
@@ -37,8 +42,8 @@ var tilemap_data: Dictionary = {
 	"hill_tiles": {} # destroy, cannot throw over
 }
 
-var object_data: Array = []
-var entity_data: Array = []
+#var object_data: Array = []
+#var entity_data: Array = []
 
 func init_node() -> void:
 	var scale_fac = 2*log(node_data["size"] / 32) + 1
@@ -65,7 +70,6 @@ func init_node() -> void:
 	n_walls.seed = node_data["n_walls"]
 	n_hills.seed = node_data["n_hills"]
 	
-	#var center = Vector2i(0, 0)
 	var radius = (node_data["size"])
 	
 	for x in range(-radius, radius):
@@ -106,26 +110,44 @@ func load_node_map():
 	game_contoller.switch_cams()
 	game_contoller.toggle_node_info("N/A", node_data, false)
 
-#func _physics_process(_delta: float) -> void:
-	#if randf() > 0.999 and is_multiplayer_authority():
-		#node_data["owner"] = "NEW PLAYER"
-		#node_data["status"] = STATUS.owned
-	#
-	#if node_data["status"] == STATUS.owned:
-		#var mat: StandardMaterial3D = mesh.material_override.duplicate()
-		#mat.albedo_color = Color(0, 1, 0, 1)
-		#mesh.material_override = mat
-
 @rpc("any_peer", "call_local")
-func add_building(peer_id, pos: Vector2):
-	var building: Dictionary = {
-		"type": "test_building",
-		"pos": pos,
-		"owner": game_contoller.get_faction(peer_id)
-	}
-	object_data.append(building)
+func add_building(peer_id, type, pos: Vector2):
+	var building: Building = building_node.instantiate()
+	building.type = type
+	building.pos = pos
+	building.faction = game_contoller.get_faction(peer_id)
+	c_objects.add_child(building)
 	if node_map.node_id == id:
 		node_map.load_objects()
+
+@rpc("any_peer", "call_local")
+func refresh_status():
+	var num_of_fortresses: int = 0
+	var fortress_faction: String = ""
+	for i in range(0, c_objects.get_child_count()):
+		if c_objects.get_child(i).type == "fortress":
+			num_of_fortresses += 1
+			fortress_faction = c_objects.get_child(i).faction
+	
+	if num_of_fortresses == 0:
+		node_data["status"] = STATUS.unowned
+		node_data["faction"] = null
+	elif num_of_fortresses == 1:
+		node_data["status"] = STATUS.owned
+		node_data["faction"] = fortress_faction
+	elif num_of_fortresses > 1:
+		node_data["status"] = STATUS.contested
+		node_data["faction"] = null
+	
+	if node_data["status"] == STATUS.owned:
+		var mat: StandardMaterial3D = mesh.material_override.duplicate()
+		var faction_peer_id = game_contoller.get_faction_peer_id(fortress_faction)
+		mat.albedo_color = game_contoller.get_faction_colour(faction_peer_id)
+		mesh.material_override = mat
+	else:
+		var mat: StandardMaterial3D = mesh.material_override.duplicate()
+		mat.albedo_color = Color(1, 1, 1, 1)
+		mesh.material_override = mat
 
 func _on_mouse_entered() -> void:
 	var node_name = str(id) + "-" + node_data["name"].to_upper()

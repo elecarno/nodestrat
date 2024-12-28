@@ -4,6 +4,8 @@ extends Node3D
 @onready var world_node: PackedScene = preload("res://scenes/world_node.tscn")
 @onready var mapline: PackedScene = preload("res://scenes/mapline.tscn")
 
+@onready var players: Node = get_node("../players")
+
 @onready var world: Node3D = get_node("world")
 @onready var world_ui: Node3D = get_node("world_ui")
 @onready var cam: Node3D = get_node("cam_gimbal/pivot/cam")
@@ -35,9 +37,6 @@ func init_world():
 	set_physics_process(true)
 
 func _physics_process(_delta: float) -> void:
-	#if not is_multiplayer_authority() and world_nodes == {}:
-		#spawn_nodes()
-		
 	rng.seed = world_seed
 		
 	if world_seed != 0 and not generated:
@@ -83,7 +82,24 @@ func generate_nodes():
 			new_mapline.pos2 = world.get_child(connections[i]).get_global_position()
 			new_mapline.cam = cam
 			world_ui.add_child(new_mapline)
+			
+	create_player_factions()
 
+func create_player_factions():
+	for i in range(0, players.get_child_count()):
+		var starting_node = get_random_key_exclude(world_nodes, 0)
+		print(str(players.get_child(i).client_id) + " set to start in " + str(starting_node))
+		players.get_child(i).faction_name = world_nodes[starting_node]["name"]
+		var colour_idx = rng.randi() % faction_colours.size()
+		players.get_child(i).faction_colour = faction_colours[colour_idx]
+		faction_colours.remove_at(colour_idx)
+		players.get_child(i).update_faction_label()
+		var fortress_pos = sample_point_in_circle(min_node_size - 2) * 16
+		world.get_child(starting_node).add_building(players.get_child(i).client_id, "fortress", fortress_pos)
+		world.get_child(starting_node).refresh_status()
+
+func generate_random_color() -> Color:
+	return Color(rng.randf(), rng.randf(), rng.randf(), 1.0)  # Alpha is set to 1.0 (fully opaque)
 
 func sample_point_in_sphere(radius: float) -> Vector3:
 	# Random angles
@@ -102,6 +118,20 @@ func sample_point_in_sphere(radius: float) -> Vector3:
 
 	return Vector3(x, y, z)
 	
+func sample_point_in_circle(radius: float) -> Vector2:
+	# Generate a random angle in radians
+	var angle = rng.randf() * TAU  # TAU is 2 * PI
+
+	# Generate a random radius with uniform distribution over the circle's area
+	var r = sqrt(rng.randf()) * radius
+
+	# Convert polar coordinates to Cartesian coordinates
+	var x = r * cos(angle)
+	var y = r * sin(angle)
+
+	return Vector2(floor(x), floor(y))
+
+	
 func randi_range_exclude(min_value: int, max_value: int, exclude: Array) -> int:
 	if min_value > max_value:
 		return min_value
@@ -119,10 +149,44 @@ func randi_range_exclude(min_value: int, max_value: int, exclude: Array) -> int:
 	# Return a random choice from the valid values
 	return valid_values[rng.randi() % valid_values.size()]
 
+func get_random_key_exclude(dictionary: Dictionary, exclude_key):
+	# Get all keys from the dictionary
+	var keys = dictionary.keys()
+	
+	# Remove the excluded key if it exists
+	if exclude_key in keys:
+		keys.erase(exclude_key)
+	
+	# Check if there are any remaining keys
+	if keys.size() == 0:
+		return null # Return null if no valid keys are left
+	
+	# Return a random key from the remaining list
+	return keys[rng.randi() % keys.size()]
+
 var node_names: Array = [
 	"Lytir", "Noctuae", "Oynyena", "Carcharoth", "Metri", "Gori", "Panacea",
 	"Rosae", "Maja", "Keni", "Namo", "Vaire", "Inin", "Bracko", "Anat",
 	"Anin", "Reeni", "Satet", "Eridani", "Zori", "Pegasi", "Goll", "Durin",
 	"Alkonost", "Scorpii", "Ledi", "Capricorni", "Tresi", "Artemis", "Hebe",
 	"Essid", "Xani", "Mova"
+]
+
+var faction_colours: Array = [
+	Color(0.745, 0.290, 0.184, 1.0), # #be4a2f
+	Color(0.843, 0.463, 0.263, 1.0), # #d77643
+	Color(0.635, 0.149, 0.200, 1.0), # #a22633
+	Color(0.894, 0.231, 0.267, 1.0), # #e43b44
+	Color(0.969, 0.463, 0.133, 1.0), # #f77622
+	Color(0.996, 0.906, 0.380, 1.0), # #fee761
+	Color(0.388, 0.780, 0.302, 1.0), # #63c74d
+	Color(0.243, 0.537, 0.282, 1.0), # #3e8948
+	Color(0.149, 0.361, 0.259, 1.0), # #265c42
+	Color(0.071, 0.306, 0.537, 1.0), # #124e89
+	Color(0.000, 0.600, 0.859, 1.0), # #0099db
+	Color(0.173, 0.909, 0.961, 1.0), # #2ce8f5
+	Color(1.000, 0.000, 0.267, 1.0), # #ff0044
+	Color(0.408, 0.216, 0.424, 1.0), # #68386c
+	Color(0.710, 0.314, 0.533, 1.0), # #b55088
+	Color(0.965, 0.459, 0.478, 1.0)  # #f6757a
 ]

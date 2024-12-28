@@ -8,6 +8,7 @@ var client_id: int = 0
 var is_client: bool = false
 @export var player_name: String = "Player"
 @export var faction_name: String = "PLAYER FACTION"
+@export var faction_colour: Color = Color(0.8, 0.8, 0.8, 1)
 var has_lobby_entry: bool = false
 var is_ready: bool = false
 
@@ -31,3 +32,7 @@ func _ready() -> void:
 			lobby.get_child(i).init_entry()
 			has_lobby_entry = true
 	
+func update_faction_label():
+	if is_multiplayer_authority():
+		main.get_node("game_controller/canvas_layer/ui/faction_info/name").text = faction_name
+		main.get_node("game_controller/canvas_layer/ui/faction_info/name").set("theme_override_colors/font_color", faction_colour)

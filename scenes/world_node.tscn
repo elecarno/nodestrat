@@ -5,7 +5,7 @@
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qtj8h"]
 properties/0/path = NodePath(".:node_data")
 properties/0/spawn = true
-properties/0/replication_mode = 1
+properties/0/replication_mode = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3tfo1"]
 emission = Color(1, 1, 1, 1)
@@ -52,6 +52,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2vsb3")
 
 [node name="col" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_hlmlg")
+
+[node name="objects" type="Node" parent="."]
+
+[node name="entities" type="Node" parent="."]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

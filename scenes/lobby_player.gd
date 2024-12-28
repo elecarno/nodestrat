@@ -5,7 +5,7 @@ var player_name: String = "N/A"
 
 @onready var players = get_node("../../../../../players")
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	for player in range(0, players.get_child_count()):
 		if players.get_child(player).client_id == client_id:
 			player_name = players.get_child(player).player_name

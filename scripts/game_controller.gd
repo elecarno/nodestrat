@@ -27,6 +27,8 @@ const time_min: float = 0.5
 
 func _ready() -> void:
 	get_node("canvas_layer/crt").visible = true
+	ui.visible = false
+	lobby.visible = true
 	
 	$canvas_layer/lobby/settings/seed/edit.text = str(randi())
 	$canvas_layer/lobby/settings/size/edit.text = str(world_map.world_size)
@@ -47,21 +49,6 @@ func _process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("crt_toggle"):
 		get_node("canvas_layer/crt").visible = !get_node("canvas_layer/crt").visible
-		
-	#ui.get_node("world_info/info").text = "
-	#Size: %02d
-	#\nRadius: %02d
-	#\nMax Conn. / Node: %02d
-	#\nConn. Thres.: %02d
-	#\nMin Node Size: %02d
-	#\nMax Node Size: %02d" % [
-	#world_map.world_size, 
-	#world_map.world_radius,
-	#world_map.max_connections_per_node,
-	#world_map.connection_threshold,
-	#world_map.min_node_size,
-	#world_map.max_node_size
-	#]
 	
 	timestamp.text = format_time()
 	ui.get_node("mp/playercount").text = "CONNECTED PEERS: " + str(players.get_child_count())
@@ -140,14 +127,17 @@ func get_faction(peer_id):
 	for player in range(0, players.get_child_count()):
 		if players.get_child(player).client_id == peer_id:
 			return players.get_child(player).faction_name
-
-#func nation_day_tick():
-	#if current_day_tick > last_day_tick:
-		#for n in nations:
-			#n._add_gains()
-		#emit_signal("daytick")
-		#last_day_tick = current_day_tick
-
+			
+func get_faction_colour(peer_id):
+	for player in range(0, players.get_child_count()):
+		if players.get_child(player).client_id == peer_id:
+			return players.get_child(player).faction_colour
+			
+func get_faction_peer_id(faction):
+	for player in range(0, players.get_child_count()):
+		if players.get_child(player).faction_name == faction:
+			return players.get_child(player).client_id
+			
 func toggle_node_info(node_name, node_data, vis):
 	node_info.visible = vis
 	node_info.get_node("name").text = node_name
@@ -155,7 +145,7 @@ func toggle_node_info(node_name, node_data, vis):
 	if node_data["status"] == 0:
 		node_info.get_node("info").text += "\nUnowned"
 	elif node_data["status"] == 1:
-		node_info.get_node("info").text += "\nOwned by " + node_data["owner"]
+		node_info.get_node("info").text += "\nOwned by " + node_data["faction"]
 	elif node_data["status"] == 2:
 		node_info.get_node("info").text += "\nContested"
 
