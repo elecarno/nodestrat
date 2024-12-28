@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://nicc6mm1ib02"]
+
+[ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_r4kjt"]
+
+[resource]
+script = ExtResource("1_r4kjt")
+TYPE = 0
+MAX_HP = 100
+ENERGY_COST = 0
+MAX_ENERGY = 0
+MAX_ALPHA = 0
+MAX_BETA = 0
+MAX_GAMMA = 0

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://bt1e1otxp1pkm"]
+
+[ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_yundm"]
+
+[resource]
+script = ExtResource("1_yundm")
+TYPE = 0
+MAX_HP = 100
+ENERGY_COST = 25
+MAX_ENERGY = 500
+MAX_ALPHA = 250
+MAX_BETA = 250
+MAX_GAMMA = 250

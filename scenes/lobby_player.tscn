@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ch5jnqmw51dyk"]
 
-[ext_resource type="Script" path="res://scenes/lobby_player.gd" id="1_46gct"]
+[ext_resource type="Script" path="res://scripts/lobby_player.gd" id="1_46gct"]
 [ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="1_ewk0i"]
 
 [node name="lobby_player" type="HBoxContainer"]

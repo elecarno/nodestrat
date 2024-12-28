@@ -46,23 +46,21 @@ var tilemap_data: Dictionary = {
 #var entity_data: Array = []
 
 func init_node() -> void:
+	# set scale based on node size
+	# uses a logarithm so that they all remain big enough to click easily
 	var scale_fac = 2*log(node_data["size"] / 32) + 1
 	mesh.scale = Vector3(scale_fac, scale_fac, scale_fac)
 	col.scale = Vector3(scale_fac, scale_fac, scale_fac)
 	
+	# set node position
+	position = node_data["position"]
+	
+	# set noise seeds based on rng using the world seed
 	node_data["n_alpha"] = world_map.rng.randi()
 	node_data["n_beta"] = world_map.rng.randi()
 	node_data["n_gamma"] = world_map.rng.randi()
 	node_data["n_walls"] = world_map.rng.randi()
 	node_data["n_hills"] = world_map.rng.randi()
-	
-	position = node_data["position"]
-	
-	#if node_data["owner"] == "PLAYER":
-		#node_data["status"] = STATUS.owned
-		#var mat: StandardMaterial3D = mesh.material_override.duplicate()
-		#mat.albedo_color = Color(0, 1, 0, 1)
-		#mesh.material_override = mat
 	
 	n_alpha.seed = node_data["n_alpha"]
 	n_beta.seed = node_data["n_beta"]
@@ -70,8 +68,8 @@ func init_node() -> void:
 	n_walls.seed = node_data["n_walls"]
 	n_hills.seed = node_data["n_hills"]
 	
+	# calculate tiles
 	var radius = (node_data["size"])
-	
 	for x in range(-radius, radius):
 		for y in range(-radius, radius):
 			var tile_pos: Vector2 = Vector2(x,y )
@@ -104,12 +102,14 @@ func init_node() -> void:
 					#if walls > 0.5 and walls < 0.85:
 						#tilemap_data["wall_tiles"][tile_pos] = wall_tile
 
+# load node data into 2d node map and switch cameras
 func load_node_map():
 	game_contoller.node_map.node_id = id
 	game_contoller.node_map.load_node()
 	game_contoller.switch_cams()
 	game_contoller.toggle_node_info("N/A", node_data, false)
 
+# add building to node on all peers
 @rpc("any_peer", "call_local")
 func add_building(peer_id, type, pos: Vector2):
 	var building: Building = building_node.instantiate()
@@ -120,8 +120,10 @@ func add_building(peer_id, type, pos: Vector2):
 	if node_map.node_id == id:
 		node_map.load_objects()
 
+# refresh faction ownership status of node on all peers
 @rpc("any_peer", "call_local")
 func refresh_status():
+	# establish number of fortresses on node
 	var num_of_fortresses: int = 0
 	var fortress_faction: String = ""
 	for i in range(0, c_objects.get_child_count()):
@@ -129,6 +131,7 @@ func refresh_status():
 			num_of_fortresses += 1
 			fortress_faction = c_objects.get_child(i).faction
 	
+	# set ownership based on fortresses
 	if num_of_fortresses == 0:
 		node_data["status"] = STATUS.unowned
 		node_data["faction"] = null
@@ -139,6 +142,7 @@ func refresh_status():
 		node_data["status"] = STATUS.contested
 		node_data["faction"] = null
 	
+	# set color based on ownership
 	if node_data["status"] == STATUS.owned:
 		var mat: StandardMaterial3D = mesh.material_override.duplicate()
 		var faction_peer_id = game_contoller.get_faction_peer_id(fortress_faction)
@@ -149,6 +153,7 @@ func refresh_status():
 		mat.albedo_color = Color(1, 1, 1, 1)
 		mesh.material_override = mat
 
+# mouse hover checks
 func _on_mouse_entered() -> void:
 	var node_name = str(id) + "-" + node_data["name"].to_upper()
 	game_contoller.toggle_node_info(node_name, node_data, true)

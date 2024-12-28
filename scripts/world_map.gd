@@ -24,21 +24,26 @@ var generated: bool = false
 
 var world_nodes: Dictionary = {}
 
+# set phys process to false so that it doesn't check for the seed yet
 func _ready() -> void:
 	set_physics_process(false)
-	
+
+# initialise world
 @rpc("any_peer", "call_local")
 func init_world():
 	print(world_seed)
 	
+	# ensure camera starts far enough out to show the whole map
 	cam.position = Vector3(0, 0, world_radius*2)
 	cam_controller.zoom_max = world_radius*3
 	
+	# allow physics process to wait for seed
 	set_physics_process(true)
 
 func _physics_process(_delta: float) -> void:
 	rng.seed = world_seed
-		
+	
+	# wait until the game has recieved the seed before generating world
 	if world_seed != 0 and not generated:
 		generate_nodes()
 		generated = true
@@ -98,6 +103,7 @@ func create_player_factions():
 		world.get_child(starting_node).add_building(players.get_child(i).client_id, "fortress", fortress_pos)
 		world.get_child(starting_node).refresh_status()
 
+# utility functions
 func generate_random_color() -> Color:
 	return Color(rng.randf(), rng.randf(), rng.randf(), 1.0)  # Alpha is set to 1.0 (fully opaque)
 
@@ -163,7 +169,9 @@ func get_random_key_exclude(dictionary: Dictionary, exclude_key):
 	
 	# Return a random key from the remaining list
 	return keys[rng.randi() % keys.size()]
+	
 
+# data arrays
 var node_names: Array = [
 	"Lytir", "Noctuae", "Oynyena", "Carcharoth", "Metri", "Gori", "Panacea",
 	"Rosae", "Maja", "Keni", "Namo", "Vaire", "Inin", "Bracko", "Anat",
