@@ -52,7 +52,7 @@ func _physics_process(_delta: float) -> void:
 	if t_ground.get_used_cells().has(cell_position):
 		select.visible = true
 		if Input.is_action_just_pressed("lmb"):
-			world.get_child(node_id).add_building.rpc(snapped_position)
+			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), snapped_position)
 	else:
 		select.visible = false
 		

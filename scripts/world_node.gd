@@ -116,12 +116,12 @@ func load_node_map():
 		#mat.albedo_color = Color(0, 1, 0, 1)
 		#mesh.material_override = mat
 
-
 @rpc("any_peer", "call_local")
-func add_building(pos: Vector2):
+func add_building(peer_id, pos: Vector2):
 	var building: Dictionary = {
 		"type": "test_building",
-		"pos": pos
+		"pos": pos,
+		"owner": game_contoller.get_faction(peer_id)
 	}
 	object_data.append(building)
 	if node_map.node_id == id:

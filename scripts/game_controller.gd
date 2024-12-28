@@ -13,6 +13,7 @@ var client_id = 0
 @onready var speedstamp: Label = get_node("canvas_layer/ui/time_control/speedstamp")
 @onready var node_info: Control = get_node("canvas_layer/ui/node_info")
 @onready var ui: Control = get_node("canvas_layer/ui")
+@onready var lobby: Control = get_node("canvas_layer/lobby")
 
 @export var tick: int = 24 # used for game calculations
 var last_day_tick: int = floor(tick/24)
@@ -26,12 +27,26 @@ const time_min: float = 0.5
 
 func _ready() -> void:
 	get_node("canvas_layer/crt").visible = true
-
+	
+	$canvas_layer/lobby/settings/seed/edit.text = str(randi())
+	$canvas_layer/lobby/settings/size/edit.text = str(world_map.world_size)
+	$canvas_layer/lobby/settings/radius/edit.text = str(world_map.world_radius)
+	$canvas_layer/lobby/settings/max_conn/edit.text = str(world_map.max_connections_per_node)
+	$canvas_layer/lobby/settings/conn_thres/edit.text = str(world_map.connection_threshold)
+	$canvas_layer/lobby/settings/min_node/edit.text = str(world_map.min_node_size)
+	$canvas_layer/lobby/settings/max_node/edit.text = str(world_map.max_node_size)
+	
+	if multiplayer.get_unique_id() != 1:
+		$canvas_layer/lobby/start.visible = false
+	
 func _process(delta: float) -> void:
 	if paused:
 		speedstamp.text = "||"
 	else:
 		speedstamp.text = str(time_multiplier) + "x"
+		
+	if Input.is_action_just_pressed("crt_toggle"):
+		get_node("canvas_layer/crt").visible = !get_node("canvas_layer/crt").visible
 		
 	#ui.get_node("world_info/info").text = "
 	#Size: %02d
@@ -120,7 +135,12 @@ func decrease_speed():
 			
 	if not paused:
 		speedstamp.text = str(time_multiplier) + "x"
-	
+
+func get_faction(peer_id):
+	for player in range(0, players.get_child_count()):
+		if players.get_child(player).client_id == peer_id:
+			return players.get_child(player).faction_name
+
 #func nation_day_tick():
 	#if current_day_tick > last_day_tick:
 		#for n in nations:
@@ -144,3 +164,25 @@ func _on_speed_up_pressed() -> void:
 
 func _on_speed_down_pressed() -> void:
 	decrease_speed.rpc()
+
+func _on_start_pressed() -> void:
+	start_game.rpc()
+	
+@rpc("any_peer", "call_local")
+func start_game():
+	var all_players_ready: bool = true
+	for i in range(0, players.get_child_count()):
+		if !players.get_child(i).is_ready:
+			all_players_ready = false
+	
+	if all_players_ready:
+		world_map.world_seed = int($canvas_layer/lobby/settings/seed/edit.text)
+		world_map.world_size = int($canvas_layer/lobby/settings/size/edit.text)
+		world_map.world_radius = int($canvas_layer/lobby/settings/radius/edit.text)
+		world_map.max_connections_per_node = int($canvas_layer/lobby/settings/max_conn/edit.text)
+		world_map.connection_threshold = int($canvas_layer/lobby/settings/conn_thres/edit.text)
+		world_map.min_node_size = int($canvas_layer/lobby/settings/min_node/edit.text)
+		world_map.max_connections_per_node = int($canvas_layer/lobby/settings/max_node/edit.text)
+		lobby.visible = false
+		ui.visible = true
+		world_map.init_world()

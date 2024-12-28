@@ -23,13 +23,16 @@ var generated: bool = false
 var world_nodes: Dictionary = {}
 
 func _ready() -> void:
-	if is_multiplayer_authority():
-		world_seed = randi()
+	set_physics_process(false)
 	
+@rpc("any_peer", "call_local")
+func init_world():
 	print(world_seed)
 	
 	cam.position = Vector3(0, 0, world_radius*2)
 	cam_controller.zoom_max = world_radius*3
+	
+	set_physics_process(true)
 
 func _physics_process(_delta: float) -> void:
 	#if not is_multiplayer_authority() and world_nodes == {}:

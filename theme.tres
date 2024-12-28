@@ -1,35 +1,45 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bh0okiyugsrgf"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://bh0okiyugsrgf"]
 
-[ext_resource type="FontFile" uid="uid://dk8tn66lsfq0u" path="res://theme/vcr_osd.ttf" id="1_6ns4q"]
+[ext_resource type="FontFile" uid="uid://bn55anuiqssoj" path="res://theme/Better VCR 9.0.1.ttf" id="1_5gara"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_57nru"]
-bg_color = Color(1, 1, 1, 0.196078)
+bg_color = Color(0.862745, 0.960784, 1, 0.196078)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.977937, 0.977937, 0.977937, 1)
+border_color = Color(0.862745, 0.960784, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_teu23"]
-bg_color = Color(0, 0, 0, 0)
+bg_color = Color(0.862745, 0.960784, 1, 0)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.977937, 0.977937, 0.977937, 1)
+border_color = Color(0.862745, 0.960784, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bevxn"]
-bg_color = Color(1, 1, 1, 0.392157)
+bg_color = Color(0.862745, 0.960784, 1, 0.392157)
 border_width_left = 2
 border_width_top = 1
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.977937, 0.977937, 0.977937, 1)
+border_color = Color(0.862745, 0.960784, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b8ki1"]
+bg_color = Color(0.862745, 0.960784, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.862745, 0.960784, 1, 1)
 
 [resource]
-default_font = ExtResource("1_6ns4q")
-default_font_size = 21
+default_font = ExtResource("1_5gara")
+default_font_size = 16
 Button/styles/focus = null
 Button/styles/hover = SubResource("StyleBoxFlat_57nru")
 Button/styles/normal = SubResource("StyleBoxFlat_teu23")
 Button/styles/pressed = SubResource("StyleBoxFlat_bevxn")
+Label/colors/font_color = Color(0.862745, 0.960784, 1, 1)
+LineEdit/styles/normal = SubResource("StyleBoxFlat_b8ki1")

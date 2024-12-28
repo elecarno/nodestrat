@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch5jnqmw51dyk"]
+
+[ext_resource type="Script" path="res://scenes/lobby_player.gd" id="1_46gct"]
+[ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="1_ewk0i"]
+
+[node name="lobby_player" type="HBoxContainer"]
+size_flags_horizontal = 3
+script = ExtResource("1_46gct")
+
+[node name="label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 2
+theme = ExtResource("1_ewk0i")
+text = "N/A"
+vertical_alignment = 1
+
+[node name="ready_label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 2
+theme = ExtResource("1_ewk0i")
+text = "Not Ready"
+vertical_alignment = 1
+
+[node name="ready" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_ewk0i")
+toggle_mode = true
+text = "Ready"
+
+[connection signal="toggled" from="ready" to="." method="_on_ready_toggled"]
