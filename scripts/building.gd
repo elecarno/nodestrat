@@ -3,7 +3,7 @@ extends Node
 
 @onready var objects: Node = get_parent()
 
-var id: int = 0
+var id: int = randi()
 var type: String = "test_building"
 var pos: Vector2 = Vector2.ZERO
 var faction: String = ""
@@ -48,62 +48,69 @@ func _ready() -> void:
 	
 	if type == "fortress":
 		stored_energy = 500
-		
-	refresh_connections()
+	
 	
 func day_tick():
+	print("---")
+	print("running daytick on building " + str(id))
 	add_production()
+	print("---")
 	
 func add_production():
-	if stored_energy == MAX_ENERGY:
-		var to_transfer = PROD_ENERGY
-		while to_transfer > 0:
-			var nearest_transfer_idx = get_nearest_transfer("ENERGY")
-			var transfer_object = objects.get_child(nearest_transfer_idx)
-			var transferable_amount: int = transfer_object.MAX_ENERGY - transfer_object.stored_energy
-			if transferable_amount > to_transfer:
-				objects.get_child(nearest_transfer_idx).stored_energy += to_transfer
-				to_transfer = 0
-			else:
-				objects.get_child(nearest_transfer_idx).stored_energy += transferable_amount
-				to_transfer -= transferable_amount
-	else:
-		stored_energy += PROD_ENERGY
-		if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
+	#if stored_energy == MAX_ENERGY:
+		#var to_transfer = PROD_ENERGY
+		#while to_transfer > 0:
+			#var nearest_transfer_idx = get_nearest_transfer("ENERGY")
+			#var transfer_object = objects.get_child(nearest_transfer_idx)
+			#var transferable_amount: int = transfer_object.MAX_ENERGY - transfer_object.stored_energy
+			#if transferable_amount > to_transfer:
+				#objects.get_child(nearest_transfer_idx).stored_energy += to_transfer
+				#to_transfer = 0
+			#else:
+				#objects.get_child(nearest_transfer_idx).stored_energy += transferable_amount
+				#to_transfer -= transferable_amount
+	#else:
+		#print("added energy prod")
+		#stored_energy += PROD_ENERGY
+		#if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
 	
+	print("added energy prod " + str(PROD_ENERGY))
+	stored_energy += PROD_ENERGY
+	if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
+	
+	print("added alpha prod " + str(PROD_ALPHA))
 	stored_alpha += PROD_ALPHA
 	if stored_alpha > MAX_ALPHA: stored_alpha = MAX_ALPHA
 	
+	print("added beta prod " + str(PROD_BETA))
 	stored_beta += PROD_BETA
 	if stored_beta > MAX_BETA: stored_beta = MAX_BETA
 	
+	print("added gamma prod " + str(PROD_GAMMA))
 	stored_gamma += PROD_GAMMA
 	if stored_gamma > MAX_GAMMA: stored_gamma = MAX_GAMMA
 	
 func get_nearest_transfer(res: String):
 	var highest_priority_object_idx: int = 0
-	for i in range(0, objects.get_child_count()):
-		if objects.get_child(i) is Building:
-			var object = objects.get_child(i)
-			if object.TRANSFER_PRIORITY > highest_priority_object_idx:
-				if res == "ENERGY":
-					if object.stored_energy < object.MAX_ENERGY:
-						highest_priority_object_idx = i
-				if res == "ALPHA":
-					if object.stored_alpha < object.MAX_ALPHA:
-						highest_priority_object_idx = i
-				if res == "BETA":
-					if object.stored_beta < object.MAX_BETA:
-						highest_priority_object_idx = i
-				if res == "GAMMA":
-					if object.stored_gamma < object.MAX_GAMMA:
-						highest_priority_object_idx = i
+	
+	for i in range(0, connections.size()):
+		var conn_object
+		for object in objects.get_children():
+			if object.id == connections[i]:
+				conn_object == object
+			
+		if conn_object.TRANSFER_PRIORITY > highest_priority_object_idx:
+			if res == "ENERGY":
+				if conn_object.stored_energy < conn_object.MAX_ENERGY:
+					highest_priority_object_idx = i
+			if res == "ALPHA":
+				if conn_object.stored_alpha < conn_object.MAX_ALPHA:
+					highest_priority_object_idx = i
+			if res == "BETA":
+				if conn_object.stored_beta < conn_object.MAX_BETA:
+					highest_priority_object_idx = i
+			if res == "GAMMA":
+				if conn_object.stored_gamma < conn_object.MAX_GAMMA:
+					highest_priority_object_idx = i
 	
 	return highest_priority_object_idx
-
-func refresh_connections():
-	for i in range(0, objects.get_child_count()):
-		if objects.get_child(i) is Building:
-			var object = objects.get_child(i)
-			if pos.distance_to(object.pos) <= TRANSFER_RADIUS:
-				connections.append(object.id)

@@ -30,7 +30,7 @@ func _ready() -> void:
 
 # initialise world
 func init_world():
-	print(world_seed)
+	print("world initialising with seed: " + str(world_seed))
 	
 	# ensure camera starts far enough out to show the whole map
 	cam.position = Vector3(0, 0, world_radius*2)
@@ -48,6 +48,9 @@ func _physics_process(_delta: float) -> void:
 		generated = true
 
 func generate_nodes():
+	print("-----")
+	print("generating nodes")
+	
 	# create nodes
 	for node_id in range(0, world_size):
 		var new_node: WorldNode = world_node.instantiate()
@@ -62,6 +65,7 @@ func generate_nodes():
 		world.get_child(node_id).node_data = new_node.node_data
 		world.get_child(node_id).init_node()
 		world_nodes[node_id] = new_node.node_data
+		print("created node " + str(node_id))
 		
 	# establish starting connections between nodes
 	for node_id in range(0, world_nodes.size()):
@@ -71,11 +75,13 @@ func generate_nodes():
 			var other_node_pos = world.get_child(conn_node_id).get_global_position()
 			if node_pos.distance_to(other_node_pos) <= connection_threshold:
 				valid_connections.append(conn_node_id)
+				#print("found valid connections for " + str(node_id) + ": " + str(valid_connections))
 				
 		var number_of_connections = rng.randi_range(1, max_connections_per_node)
 		for i in range(0, number_of_connections):
 			if i <= valid_connections.size()-1:
 				world.get_child(node_id).node_data["connections"].append(valid_connections[i])
+				print("connected node " + str(node_id) + " to " + str(valid_connections[i]))
 	
 	# draw connections between nodes
 	for node_id in range(0, world_nodes.size()):
@@ -86,14 +92,16 @@ func generate_nodes():
 			new_mapline.pos2 = world.get_child(connections[i]).get_global_position()
 			new_mapline.cam = cam
 			world_ui.add_child(new_mapline)
+		print("spawned connection lines for " + str(node_id))
 			
 	create_player_factions()
+	print("-----")
 
 func create_player_factions():
 	for i in range(0, players.get_child_count()):
 		var starting_node = get_random_key_exclude(world_nodes, 0)
-		print(str(players.get_child(i).client_id) + " set to start in " + str(starting_node))
 		players.get_child(i).faction_name = world_nodes[starting_node]["name"]
+		print(str(players.get_child(i).player_name) + " set to start in node " + str(starting_node))
 		var colour_idx = rng.randi() % faction_colours.size()
 		players.get_child(i).faction_colour = faction_colours[colour_idx]
 		faction_colours.remove_at(colour_idx)

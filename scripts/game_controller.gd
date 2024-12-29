@@ -100,7 +100,8 @@ func run_tick(delta):
 
 func day_tick():
 	if current_day_tick > last_day_tick:
-		print("running daytick " + str(current_day_tick))
+		print("----- @rpc")
+		print("running daytick call " + str(current_day_tick))
 		
 		var world = world_map.get_node("world")
 		for node in range(0, world.get_child_count()):
@@ -114,6 +115,7 @@ func day_tick():
 @rpc("any_peer", "call_local")
 func toggle_pause():
 	paused = !paused
+	print("----- @rpc")
 	print("pause set to " + str(paused))
 
 # handle camera switching between world and node maps
@@ -147,7 +149,8 @@ func increase_speed():
 	
 	if not paused:
 		speedstamp.text = str(time_multiplier) + "x"
-		
+	
+	print("----- @rpc")
 	print("increased speed to " + str(time_multiplier))
 	
 @rpc("any_peer", "call_local")
@@ -163,6 +166,7 @@ func decrease_speed():
 	if not paused:
 		speedstamp.text = str(time_multiplier) + "x"
 	
+	print("----- @rpc")
 	print("decreased speed to " + str(time_multiplier))
 
 func _on_speed_up_pressed() -> void:

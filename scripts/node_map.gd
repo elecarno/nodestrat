@@ -19,7 +19,7 @@ extends Node2D
 @onready var buildings: Dictionary = {
 	"test_building": preload("res://scenes/buildings/b_test.tscn"),
 	"fortress": preload("res://scenes/buildings/b_fortress.tscn"),
-	"power_plant": preload("res://scenes/buildings/b_powerplant.tscn"),
+	"powerplant": preload("res://scenes/buildings/b_powerplant.tscn"),
 	"battery": preload("res://scenes/buildings/b_battery.tscn"),
 	"harvester_a": preload("res://scenes/buildings/b_harvester_a.tscn"),
 	"harvester_b": preload("res://scenes/buildings/b_harvester_b.tscn"),
@@ -31,6 +31,9 @@ var node_id: int = 0
 var build_type: String = ""
 
 func load_node() -> void:
+	print("-----")
+	print("loading node_map for node " + str(node_id))
+	
 	# clear tilemaps
 	t_ground.clear()
 	t_walls.clear()
@@ -41,20 +44,24 @@ func load_node() -> void:
 	var tilemap_data: Dictionary =  node.tilemap_data
 	
 	# load tilemap data
+	print("generating ground tiles")
 	var ground_tile_data = tilemap_data["ground_tiles"]
 	for tile in ground_tile_data:
 		t_ground.set_cell(tile, 0, ground_tile_data[tile], 0)
 	
+	print("generating wall tiles")
 	var wall_tile_data = tilemap_data["wall_tiles"]
 	for tile in wall_tile_data:
 		t_walls.set_cell(tile, 0, wall_tile_data[tile], 0)
 
+	print("generating hill tiles")
 	var hill_tile_data = tilemap_data["hill_tiles"]
 	for tile in hill_tile_data:
 		t_hills.set_cell(tile, 0, hill_tile_data[tile], 0)
 	
 	# refresh objects
 	load_objects()
+	print("-----")
 		
 func _physics_process(_delta: float) -> void:
 	if world_map.visible:
@@ -80,6 +87,7 @@ func _physics_process(_delta: float) -> void:
 		select.visible = false
 
 func load_objects():
+	print("refreshing objects")
 	# clear all objects
 	for object in c_objects.get_children():
 		c_objects.remove_child(object)
@@ -98,18 +106,24 @@ func load_objects():
 	for i in range(0, objects.get_child_count()):
 		var type = objects.get_child(i).type
 		var pos = objects.get_child(i).pos
-		var object_node = buildings[type].instantiate()
+		var connections = objects.get_child(i).connections
+		var object_id = objects.get_child(i).id
+		var object_node: MapBuilding = buildings[type].instantiate()
+		object_node.id = object_id
+		object_node.connections = connections
 		object_node.position = pos
+		object_node.type = type
 		c_objects.add_child(object_node)
+		print("spawned object " + str(objects.get_child(i).id) + " on node_map")
 		
 	# spawn connection lines
-	for i in range(0, objects.get_child_count()):
-		var conns: Array = objects.get_child(i).connections
-		for j in range(0, conns.size()):
-			var conn_line: Line2D = connection_line.instantiate()
-			conn_line.set_point_position(0, objects.get_child(j).pos)
-			for object in objects.get_children():
-				if object.id == conns[j]:
-					conn_line.set_point_position(1, object.pos)
-			c_ui.add_child(conn_line)
+	#for i in range(0, objects.get_child_count()):
+		#var conns: Array = objects.get_child(i).connections
+		#for j in range(0, conns.size()):
+			#var conn_line: Line2D = connection_line.instantiate()
+			#conn_line.set_point_position(0, objects.get_child(j).pos)
+			#for object in objects.get_children():
+				#if object.id == conns[j]:
+					#conn_line.set_point_position(1, object.pos)
+			#c_ui.add_child(conn_line)
 					

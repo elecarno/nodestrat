@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dk1ekrh4mr07g"]
+[gd_scene load_steps=3 format=3 uid="uid://dk1ekrh4mr07g"]
 
+[ext_resource type="Script" path="res://scripts/map_building.gd" id="1_5bc2j"]
 [ext_resource type="Texture2D" uid="uid://dkdb1dpj1s828" path="res://sprites/a_tile.png" id="1_ye7m3"]
 
-[node name="test_building" type="Node2D"]
+[node name="b_harvester_b" type="Node2D"]
+script = ExtResource("1_5bc2j")
 
 [node name="sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_ye7m3")

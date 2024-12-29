@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://p0twotbhi2wg"]
+[gd_scene load_steps=3 format=3 uid="uid://p0twotbhi2wg"]
 
+[ext_resource type="Script" path="res://scripts/map_building.gd" id="1_hu73c"]
 [ext_resource type="Texture2D" uid="uid://dkdb1dpj1s828" path="res://sprites/a_tile.png" id="1_tw0yp"]
 
-[node name="test_building" type="Node2D"]
+[node name="b_battery" type="Node2D"]
+script = ExtResource("1_hu73c")
 
 [node name="sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_tw0yp")

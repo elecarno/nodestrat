@@ -47,6 +47,8 @@ var tilemap_data: Dictionary = {
 #var entity_data: Array = []
 
 func init_node() -> void:
+	print("--")
+	print("initialising node " + str(id))
 	# set scale based on node size
 	# uses a logarithm so that they all remain big enough to click easily
 	var scale_fac = 2*log(node_data["size"] / 32) + 1
@@ -104,6 +106,7 @@ func init_node() -> void:
 				#else:
 					#if walls > 0.5 and walls < 0.85:
 						#tilemap_data["wall_tiles"][tile_pos] = wall_tile
+	print("--")
 
 # load node data into 2d node map and switch cameras
 func load_node_map():
@@ -115,12 +118,16 @@ func load_node_map():
 # add building to node on all peers
 @rpc("any_peer", "call_local")
 func add_building(peer_id, type, pos: Vector2):
+	print("----- @rpc")
 	var building: Building = building_node.instantiate()
-	building.id = world_map.rng.randi()
 	building.type = type
 	building.pos = pos
 	building.faction = game_contoller.get_faction(peer_id)
 	c_objects.add_child(building)
+	print("added building of type " + type + " to node " + str(id))
+	print("----- @rpc")
+	refresh_building_connections()
+	
 	if node_map.node_id == id:
 		node_map.load_objects()
 	
@@ -132,6 +139,8 @@ func add_building(peer_id, type, pos: Vector2):
 # refresh faction ownership status of node on all peers
 @rpc("any_peer", "call_local")
 func refresh_status():
+	print("----- @rpc")
+	print("refreshing status of node " + str(id))
 	# establish number of fortresses on node
 	var num_of_fortresses: int = 0
 	var fortress_faction: String = ""
@@ -144,12 +153,15 @@ func refresh_status():
 	if num_of_fortresses == 0:
 		node_data["status"] = STATUS.unowned
 		node_data["faction"] = null
+		print("status set to unowned")
 	elif num_of_fortresses == 1:
 		node_data["status"] = STATUS.owned
 		node_data["faction"] = fortress_faction
+		print("status set to onwed by " + fortress_faction)
 	elif num_of_fortresses > 1:
 		node_data["status"] = STATUS.contested
 		node_data["faction"] = null
+		print("status set to contested")
 	
 	# set color based on ownership
 	if node_data["status"] == STATUS.owned:
@@ -157,13 +169,28 @@ func refresh_status():
 		var faction_peer_id = game_contoller.get_faction_peer_id(fortress_faction)
 		mat.albedo_color = game_contoller.get_faction_colour(faction_peer_id)
 		mesh.material_override = mat
+		print("set node colour to colour of " + fortress_faction)
 	else:
 		var mat: StandardMaterial3D = mesh.material_override.duplicate()
 		mat.albedo_color = Color(1, 1, 1, 1)
 		mesh.material_override = mat
+		print("set node colour to default")
+	
+	print("----- @rpc")
+
+func refresh_building_connections():
+	print("refreshing building connections for node " + str(id))
+	for i in range(0, c_objects.get_child_count()):
+		if c_objects.get_child(i) is Building:
+			for conn_object in c_objects.get_children():
+				var object = c_objects.get_child(i)
+				if object.pos.distance_to(conn_object.pos) <= object.TRANSFER_RADIUS*16 and conn_object.id != object.id:
+					c_objects.get_child(i).connections.append(conn_object.id)
+					print("connected building %s (%s) to %s (%s)" % [object.id, object.type, conn_object.id, conn_object.type])
 
 # run day tick methods on all objects and entities
 func day_tick():
+	print("running daytick on node " + str(id))
 	for object in range(0, c_objects.get_child_count()):
 		if c_objects.get_child(object) is Building:
 			c_objects.get_child(object).day_tick()
