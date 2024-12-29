@@ -9,6 +9,7 @@ extends StaticBody3D
 @onready var game_contoller: GameController = get_tree().get_root().get_node("main/game_controller")
 @onready var world_map: WorldMap = get_parent().get_parent()
 @onready var node_map: NodeMap = get_parent().get_parent().get_parent().get_node("node_map")
+#@onready var players: Node = get_parent().get_parent().get_parent().get_node("players")
 
 @onready var c_objects: Node = get_node("objects")
 @onready var c_entities: Node = get_node("entities")
@@ -96,8 +97,10 @@ func init_node() -> void:
 				var walls = n_walls.get_noise_2d(x,y)*5
 				var hills = n_hills.get_noise_2d(x,y)*5
 				
-				if hills > 0.9 and hills < 2:
-					tilemap_data["hill_tiles"][tile_pos] = hill_tile
+				# temporarily disabled hill generation because it
+				# adds too much extra stuff to account for
+				#if hills > 0.9 and hills < 2:
+					#tilemap_data["hill_tiles"][tile_pos] = hill_tile
 				#else:
 					#if walls > 0.5 and walls < 0.85:
 						#tilemap_data["wall_tiles"][tile_pos] = wall_tile
@@ -119,6 +122,10 @@ func add_building(peer_id, type, pos: Vector2):
 	c_objects.add_child(building)
 	if node_map.node_id == id:
 		node_map.load_objects()
+	
+	if node_data["status"] == STATUS.owned:
+		var faction_peer_id = game_contoller.get_faction_peer_id(node_data["faction"])
+		game_contoller.update_player_data(faction_peer_id)
 
 # refresh faction ownership status of node on all peers
 @rpc("any_peer", "call_local")
@@ -148,10 +155,17 @@ func refresh_status():
 		var faction_peer_id = game_contoller.get_faction_peer_id(fortress_faction)
 		mat.albedo_color = game_contoller.get_faction_colour(faction_peer_id)
 		mesh.material_override = mat
+		game_contoller.update_player_data(faction_peer_id)
 	else:
 		var mat: StandardMaterial3D = mesh.material_override.duplicate()
 		mat.albedo_color = Color(1, 1, 1, 1)
 		mesh.material_override = mat
+
+# run day tick methods on all objects and entities
+func day_tick():
+	for object in range(0, c_objects.get_child_count()):
+		if c_objects.get_child(object) is Building:
+			c_objects.get_child(object).day_tick()
 
 # mouse hover checks
 func _on_mouse_entered() -> void:

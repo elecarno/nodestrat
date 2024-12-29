@@ -85,6 +85,18 @@ func run_tick(delta):
 	time += (delta * time_multiplier)
 	tick = floor(time)
 	current_day_tick = floor(tick/24)
+	day_tick()
+
+func day_tick():
+	if current_day_tick > last_day_tick:
+		var world = world_map.get_node("world")
+		for node in range(0, world.get_child_count()):
+			world_map.get_node("world").get_child(node).day_tick()
+		
+		for player in range(0, players.get_child_count()):
+			players.get_child(player).update_player_data()
+				
+		last_day_tick = current_day_tick
 
 # handle pause on all clients
 @rpc("any_peer", "call_local")
@@ -157,6 +169,12 @@ func get_faction_peer_id(faction):
 	for player in range(0, players.get_child_count()):
 		if players.get_child(player).faction_name == faction:
 			return players.get_child(player).client_id
+
+# player update calls
+func update_player_data(peer_id):
+	for player in range(0, players.get_child_count()):
+		if players.get_child(player).client_id == peer_id:
+			players.get_child(player).update_player_data()
 
 # toggle node infobox 
 func toggle_node_info(node_name, node_data, vis):
