@@ -116,6 +116,7 @@ func load_node_map():
 @rpc("any_peer", "call_local")
 func add_building(peer_id, type, pos: Vector2):
 	var building: Building = building_node.instantiate()
+	building.id = world_map.rng.randi()
 	building.type = type
 	building.pos = pos
 	building.faction = game_contoller.get_faction(peer_id)

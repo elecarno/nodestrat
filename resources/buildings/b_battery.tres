@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://bot3of4re8bw"]
+
+[ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_mbw28"]
+
+[resource]
+script = ExtResource("1_mbw28")
+CODE = "battery"
+DISPLAY_NAME = "Battery"
+TYPE = 0
+MAX_HP = 150
+ENERGY_COST = 0
+TRANSFER_PRIORITY = 2
+TRANSFER_RADIUS = 5
+MAX_ENERGY = 500
+MAX_ALPHA = 0
+MAX_BETA = 0
+MAX_GAMMA = 0
+PROD_ENERGY = 0
+PROD_ALPHA = 0
+PROD_BETA = 0
+PROD_GAMMA = 0
+BUILD_ENERGY = 100
+ANY_MATTER = 250
+BUILD_ALPHA = 0
+BUILD_BETA = 0
+BUILD_GAMMA = 0

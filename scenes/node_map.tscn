@@ -42,5 +42,7 @@ tile_set = SubResource("TileSet_bb85p")
 
 [node name="entities" type="Node2D" parent="."]
 
+[node name="ui" type="Node2D" parent="."]
+
 [node name="select" type="Sprite2D" parent="."]
 texture = ExtResource("4_jupjo")

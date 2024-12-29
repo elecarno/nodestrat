@@ -1,6 +1,8 @@
 class_name Building
 extends Node
 
+@onready var objects: Node = get_parent()
+
 var id: int = 0
 var type: String = "test_building"
 var pos: Vector2 = Vector2.ZERO
@@ -11,6 +13,8 @@ var stored_alpha: int = 0
 var stored_beta: int = 0
 var stored_gamma: int = 0
 var hp: int = 25
+
+var connections: Array = [] # stores object ids
 
 # assignments from resource
 var MAX_HP: int
@@ -23,6 +27,8 @@ var PROD_ENERGY: int
 var PROD_ALPHA: int
 var PROD_BETA: int
 var PROD_GAMMA: int
+var TRANSFER_PRIORITY: int
+var TRANSFER_RADIUS: int
 
 func _ready() -> void:
 	MAX_HP = res_refs.buildings[type].MAX_HP
@@ -35,18 +41,35 @@ func _ready() -> void:
 	PROD_ALPHA = res_refs.buildings[type].PROD_ALPHA
 	PROD_BETA = res_refs.buildings[type].PROD_BETA
 	PROD_GAMMA = res_refs.buildings[type].PROD_GAMMA
+	TRANSFER_PRIORITY = res_refs.buildings[type].TRANSFER_PRIORITY
+	TRANSFER_RADIUS = res_refs.buildings[type].TRANSFER_RADIUS
 	
 	hp = MAX_HP
 	
 	if type == "fortress":
 		stored_energy = 500
+		
+	refresh_connections()
 	
 func day_tick():
 	add_production()
 	
 func add_production():
-	stored_energy += PROD_ENERGY
-	if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
+	if stored_energy == MAX_ENERGY:
+		var to_transfer = PROD_ENERGY
+		while to_transfer > 0:
+			var nearest_transfer_idx = get_nearest_transfer("ENERGY")
+			var transfer_object = objects.get_child(nearest_transfer_idx)
+			var transferable_amount: int = transfer_object.MAX_ENERGY - transfer_object.stored_energy
+			if transferable_amount > to_transfer:
+				objects.get_child(nearest_transfer_idx).stored_energy += to_transfer
+				to_transfer = 0
+			else:
+				objects.get_child(nearest_transfer_idx).stored_energy += transferable_amount
+				to_transfer -= transferable_amount
+	else:
+		stored_energy += PROD_ENERGY
+		if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
 	
 	stored_alpha += PROD_ALPHA
 	if stored_alpha > MAX_ALPHA: stored_alpha = MAX_ALPHA
@@ -56,3 +79,31 @@ func add_production():
 	
 	stored_gamma += PROD_GAMMA
 	if stored_gamma > MAX_GAMMA: stored_gamma = MAX_GAMMA
+	
+func get_nearest_transfer(res: String):
+	var highest_priority_object_idx: int = 0
+	for i in range(0, objects.get_child_count()):
+		if objects.get_child(i) is Building:
+			var object = objects.get_child(i)
+			if object.TRANSFER_PRIORITY > highest_priority_object_idx:
+				if res == "ENERGY":
+					if object.stored_energy < object.MAX_ENERGY:
+						highest_priority_object_idx = i
+				if res == "ALPHA":
+					if object.stored_alpha < object.MAX_ALPHA:
+						highest_priority_object_idx = i
+				if res == "BETA":
+					if object.stored_beta < object.MAX_BETA:
+						highest_priority_object_idx = i
+				if res == "GAMMA":
+					if object.stored_gamma < object.MAX_GAMMA:
+						highest_priority_object_idx = i
+	
+	return highest_priority_object_idx
+
+func refresh_connections():
+	for i in range(0, objects.get_child_count()):
+		if objects.get_child(i) is Building:
+			var object = objects.get_child(i)
+			if pos.distance_to(object.pos) <= TRANSFER_RADIUS:
+				connections.append(object.id)

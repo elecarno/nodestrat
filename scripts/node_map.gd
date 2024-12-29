@@ -1,6 +1,8 @@
 class_name NodeMap
 extends Node2D
 
+@onready var connection_line: PackedScene = preload("res://scenes/connection.tscn")
+
 @onready var game_contoller: GameController = get_tree().get_root().get_node("main/game_controller")
 @onready var world_map: WorldMap = get_parent().get_node("world_map")
 @onready var world: Node3D = get_parent().get_node("world_map/world")
@@ -12,14 +14,16 @@ extends Node2D
 @onready var t_hills: TileMapLayer = get_node("t_hills")
 @onready var c_objects: Node2D = get_node("objects")
 @onready var c_entities: Node2D = get_node("entities")
+@onready var c_ui: Node2D = get_node("ui")
 
 @onready var buildings: Dictionary = {
 	"test_building": preload("res://scenes/buildings/b_test.tscn"),
 	"fortress": preload("res://scenes/buildings/b_fortress.tscn"),
 	"power_plant": preload("res://scenes/buildings/b_powerplant.tscn"),
+	"battery": preload("res://scenes/buildings/b_battery.tscn"),
 	"harvester_a": preload("res://scenes/buildings/b_harvester_a.tscn"),
 	"harvester_b": preload("res://scenes/buildings/b_harvester_b.tscn"),
-	"harvester_g": preload("res://scenes/buildings/b_harvester_g.tscn")
+	"harvester_g": preload("res://scenes/buildings/b_harvester_g.tscn"),
 }
 
 var node_id: int = 0
@@ -80,12 +84,32 @@ func load_objects():
 	for object in c_objects.get_children():
 		c_objects.remove_child(object)
 		object.queue_free()
-	
-	# spawn objects
+		
+	for entity in c_entities.get_children():
+		c_entities.remove_child(entity)
+		entity.queue_free()
+		
+	for ui in c_ui.get_children():
+		c_ui.remove_child(ui)
+		ui.queue_free()
+
 	var objects = world.get_child(node_id).get_node("objects")
+	# spawn objects
 	for i in range(0, objects.get_child_count()):
 		var type = objects.get_child(i).type
 		var pos = objects.get_child(i).pos
 		var object_node = buildings[type].instantiate()
 		object_node.position = pos
 		c_objects.add_child(object_node)
+		
+	# spawn connection lines
+	for i in range(0, objects.get_child_count()):
+		var conns: Array = objects.get_child(i).connections
+		for j in range(0, conns.size()):
+			var conn_line: Line2D = connection_line.instantiate()
+			conn_line.set_point_position(0, objects.get_child(j).pos)
+			for object in objects.get_children():
+				if object.id == conns[j]:
+					conn_line.set_point_position(1, object.pos)
+			c_ui.add_child(conn_line)
+					

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=24 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_4detf"]
 [ext_resource type="Script" path="res://scripts/m_spawner.gd" id="3_1vqeo"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c1bcajdlr35e3" path="res://scenes/build_listing.tscn" id="9_5j3l6"]
 [ext_resource type="Resource" uid="uid://bj4tkucnkbk8t" path="res://resources/buildings/b_power_plant.tres" id="11_02oht"]
 [ext_resource type="Resource" uid="uid://ree26xjx6uy3" path="res://resources/buildings/b_harvester_a.tres" id="12_bamfp"]
+[ext_resource type="Resource" uid="uid://bot3of4re8bw" path="res://resources/buildings/b_battery.tres" id="12_vilc3"]
 [ext_resource type="Resource" uid="uid://e70wv8pvn08l" path="res://resources/buildings/b_harvester_b.tres" id="13_7ue10"]
 [ext_resource type="Resource" uid="uid://cs7lmyhnlwnkm" path="res://resources/buildings/b_harvester_g.tres" id="14_w6exw"]
 
@@ -287,15 +288,20 @@ offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="0" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+[node name="fortress" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
 layout_mode = 2
 
-[node name="1" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+[node name="power_plant" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
 layout_mode = 2
 text = "Power Plant"
 n_build_res = ExtResource("11_02oht")
 
-[node name="2" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+[node name="battery" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+layout_mode = 2
+text = "Battery"
+n_build_res = ExtResource("12_vilc3")
+
+[node name="harvester" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
 layout_mode = 2
 text = "Harvester"
 neutral = false

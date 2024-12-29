@@ -100,6 +100,8 @@ func run_tick(delta):
 
 func day_tick():
 	if current_day_tick > last_day_tick:
+		print("running daytick " + str(current_day_tick))
+		
 		var world = world_map.get_node("world")
 		for node in range(0, world.get_child_count()):
 			world_map.get_node("world").get_child(node).day_tick()
@@ -112,6 +114,7 @@ func day_tick():
 @rpc("any_peer", "call_local")
 func toggle_pause():
 	paused = !paused
+	print("pause set to " + str(paused))
 
 # handle camera switching between world and node maps
 # bundled into a function because it is sometimes called by other nodes
@@ -144,6 +147,8 @@ func increase_speed():
 	
 	if not paused:
 		speedstamp.text = str(time_multiplier) + "x"
+		
+	print("increased speed to " + str(time_multiplier))
 	
 @rpc("any_peer", "call_local")
 func decrease_speed():
@@ -157,6 +162,8 @@ func decrease_speed():
 			
 	if not paused:
 		speedstamp.text = str(time_multiplier) + "x"
+	
+	print("decreased speed to " + str(time_multiplier))
 
 func _on_speed_up_pressed() -> void:
 	increase_speed.rpc()
@@ -256,6 +263,7 @@ func start_game():
 	
 	# start game if all players are ready
 	if all_players_ready:
+		print("starting game")
 		world_map.world_seed = int($canvas_layer/lobby/settings/seed/edit.text)
 		world_map.world_size = int($canvas_layer/lobby/settings/size/edit.text)
 		world_map.world_radius = int($canvas_layer/lobby/settings/radius/edit.text)
