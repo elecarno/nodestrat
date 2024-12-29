@@ -213,9 +213,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -268.0
-offset_top = -150.0
-offset_right = 268.0
+offset_left = -293.0
+offset_top = -194.0
+offset_right = 293.0
+offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -224,8 +225,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -2.0
-offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_jdauc")
@@ -257,16 +256,55 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -149.0
-offset_top = -92.0
-offset_right = 149.0
-offset_bottom = -41.0
+offset_left = -275.0
+offset_top = -89.0
+offset_right = -96.0
+offset_bottom = -38.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_7cnmm")
 text = "Radius: 16
 Unowned"
-horizontal_alignment = 1
+
+[node name="energy" type="Label" parent="canvas_layer/ui/node_info"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 61.0
+offset_right = 376.0
+offset_bottom = 81.0
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
+text = "E: 999/1K (+99)"
+
+[node name="alpha" type="Label" parent="canvas_layer/ui/node_info"]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 61.0
+offset_right = 565.0
+offset_bottom = 81.0
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
+text = "α: 999/1K (+99)"
+
+[node name="beta" type="Label" parent="canvas_layer/ui/node_info"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 84.0
+offset_right = 373.0
+offset_bottom = 104.0
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
+text = "β: 999/1K (+99)"
+
+[node name="gamma" type="Label" parent="canvas_layer/ui/node_info"]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 84.0
+offset_right = 565.0
+offset_bottom = 104.0
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
+text = "γ: 999/1K (+99)"
 
 [node name="mp" type="Control" parent="canvas_layer/ui"]
 visible = false

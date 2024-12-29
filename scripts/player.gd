@@ -5,6 +5,7 @@ extends Node
 @onready var main: Node = get_tree().get_root().get_node("main")
 @onready var world: Node3D = get_parent().get_parent().get_node("world_map/world")
 @onready var ui: Control = get_parent().get_parent().get_node("canvas_layer/ui")
+@onready var game_contoller: GameController = get_parent().get_parent()
 
 var client_id: int = 0
 var is_client: bool = false
@@ -59,13 +60,11 @@ func get_total_storage():
 	
 	for node in world.get_children():
 		if node.node_data["faction"] == faction_name:
-			var objects = node.get_node("objects").get_children()
-			for object in objects:
-				if object is Building:
-					total_storage["MAX_ENERGY"] += object.MAX_ENERGY
-					total_storage["MAX_ALPHA"] += object.MAX_ALPHA
-					total_storage["MAX_BETA"] += object.MAX_BETA
-					total_storage["MAX_GAMMA"] += object.MAX_GAMMA
+			var node_total_storage = node.get_total_storage()
+			total_storage["MAX_ENERGY"] += node_total_storage["MAX_ENERGY"]
+			total_storage["MAX_ALPHA"] += node_total_storage["MAX_ALPHA"]
+			total_storage["MAX_BETA"] += node_total_storage["MAX_BETA"]
+			total_storage["MAX_GAMMA"] += node_total_storage["MAX_GAMMA"]
 	
 	return total_storage
 	
@@ -111,28 +110,10 @@ func get_total_resources():
 	
 # ui update functions
 func ui_refresh_resources(total_res, total_storage, total_prod):
-	ui.get_node("faction_info/energy").text = "%s / %s (+%s)" % [
-		format_suffix(total_res["stored_energy"]),
-		format_suffix(total_storage["MAX_ENERGY"]),
-		format_suffix(total_prod["PROD_ENERGY"])]
-	ui.get_node("faction_info/alpha").text = "%s / %s (+%s)" % [
-		format_suffix(total_res["stored_alpha"]),
-		format_suffix(total_storage["MAX_ALPHA"]),
-		format_suffix(total_prod["PROD_ALPHA"])]
-	ui.get_node("faction_info/beta").text = "%s / %s (+%s)" % [
-		format_suffix(total_res["stored_beta"]),
-		format_suffix(total_storage["MAX_BETA"]),
-		format_suffix(total_prod["PROD_BETA"])]
-	ui.get_node("faction_info/gamma").text = "%s / %s (+%s)" % [
-		format_suffix(total_res["stored_gamma"]),
-		format_suffix(total_storage["MAX_GAMMA"]),
-		format_suffix(total_prod["PROD_GAMMA"])]
+	var texts = game_contoller.ui_format_resource_texts(total_res, total_storage, total_prod)
 	
-# util function
-func format_suffix(number: float) -> String:
-	if number >= 1_000_000:
-		return str(round(number / 1_000_000)) + "M"
-	elif number >= 1_000:
-		return str(round(number / 1_000)) + "K"
-	else:
-		return str(number)
+	ui.get_node("faction_info/energy").text = texts["energy"]
+	ui.get_node("faction_info/alpha").text = texts["alpha"] 
+	ui.get_node("faction_info/beta").text = texts["beta"]
+	ui.get_node("faction_info/gamma").text = texts["gamma"]
+	

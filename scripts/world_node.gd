@@ -110,7 +110,7 @@ func load_node_map():
 	game_contoller.node_map.node_id = id
 	game_contoller.node_map.load_node()
 	game_contoller.switch_cams()
-	game_contoller.toggle_node_info("N/A", node_data, false)
+	game_contoller.toggle_node_info("N/A", node_data, {}, false)
 
 # add building to node on all peers
 @rpc("any_peer", "call_local")
@@ -123,9 +123,10 @@ func add_building(peer_id, type, pos: Vector2):
 	if node_map.node_id == id:
 		node_map.load_objects()
 	
-	if node_data["status"] == STATUS.owned:
-		var faction_peer_id = game_contoller.get_faction_peer_id(node_data["faction"])
-		game_contoller.update_player_data(faction_peer_id)
+		if type == "fortress":
+			refresh_status.rpc()
+	
+	game_contoller.update_player_data()
 
 # refresh faction ownership status of node on all peers
 @rpc("any_peer", "call_local")
@@ -155,7 +156,6 @@ func refresh_status():
 		var faction_peer_id = game_contoller.get_faction_peer_id(fortress_faction)
 		mat.albedo_color = game_contoller.get_faction_colour(faction_peer_id)
 		mesh.material_override = mat
-		game_contoller.update_player_data(faction_peer_id)
 	else:
 		var mat: StandardMaterial3D = mesh.material_override.duplicate()
 		mat.albedo_color = Color(1, 1, 1, 1)
@@ -167,12 +167,66 @@ func day_tick():
 		if c_objects.get_child(object) is Building:
 			c_objects.get_child(object).day_tick()
 
+# get combined storage totals for all resources
+func get_total_storage():
+	var total_storage: Dictionary = {
+		"MAX_ENERGY": 0,
+		"MAX_ALPHA": 0,
+		"MAX_BETA": 0,
+		"MAX_GAMMA": 0
+	}
+	
+	for object in c_objects.get_children():
+		if object is Building:
+			total_storage["MAX_ENERGY"] += object.MAX_ENERGY
+			total_storage["MAX_ALPHA"] += object.MAX_ALPHA
+			total_storage["MAX_BETA"] += object.MAX_BETA
+			total_storage["MAX_GAMMA"] += object.MAX_GAMMA
+	
+	return total_storage
+	
+func get_total_production():
+	var total_prod: Dictionary = {
+		"PROD_ENERGY": 0,
+		"PROD_ALPHA": 0,
+		"PROD_BETA": 0,
+		"PROD_GAMMA": 0
+	}
+	
+	for object in c_objects.get_children():
+		if object is Building:
+			total_prod["PROD_ENERGY"] += object.PROD_ENERGY
+			total_prod["PROD_ALPHA"] += object.PROD_ALPHA
+			total_prod["PROD_BETA"] += object.PROD_BETA
+			total_prod["PROD_GAMMA"] += object.PROD_GAMMA
+	
+	return total_prod
+
+func get_total_resources():
+	var total_res: Dictionary = {
+		"stored_energy": 0,
+		"stored_alpha": 0,
+		"stored_beta": 0,
+		"stored_gamma": 0
+	}
+	
+	for object in c_objects.get_children():
+		if object is Building:
+			total_res["stored_energy"] += object.stored_energy
+			total_res["stored_alpha"] += object.stored_alpha
+			total_res["stored_beta"] += object.stored_beta
+			total_res["stored_gamma"] += object.stored_gamma
+	
+	return total_res
+
 # mouse hover checks
 func _on_mouse_entered() -> void:
+	var res_info_texts = game_contoller.ui_format_resource_texts(get_total_resources(), get_total_storage(), get_total_production())
+	
 	var node_name = str(id) + "-" + node_data["name"].to_upper()
-	game_contoller.toggle_node_info(node_name, node_data, true)
+	game_contoller.toggle_node_info(node_name, node_data, res_info_texts, true)
 	select.visible = true
 
 func _on_mouse_exited() -> void:
-	game_contoller.toggle_node_info("N/A", node_data, false)
+	game_contoller.toggle_node_info("N/A", node_data, {}, false)
 	select.visible = false

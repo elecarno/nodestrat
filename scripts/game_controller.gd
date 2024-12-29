@@ -93,9 +93,8 @@ func day_tick():
 		for node in range(0, world.get_child_count()):
 			world_map.get_node("world").get_child(node).day_tick()
 		
-		for player in range(0, players.get_child_count()):
-			players.get_child(player).update_player_data()
-				
+		update_player_data()
+		
 		last_day_tick = current_day_tick
 
 # handle pause on all clients
@@ -171,13 +170,13 @@ func get_faction_peer_id(faction):
 			return players.get_child(player).client_id
 
 # player update calls
-func update_player_data(peer_id):
+func update_player_data():
 	for player in range(0, players.get_child_count()):
-		if players.get_child(player).client_id == peer_id:
+		if players.get_child(player).client_id == multiplayer.get_unique_id():
 			players.get_child(player).update_player_data()
 
 # toggle node infobox 
-func toggle_node_info(node_name, node_data, vis):
+func toggle_node_info(node_name, node_data, res_info, vis):
 	node_info.visible = vis
 	node_info.get_node("name").text = node_name
 	node_info.get_node("info").text = "Radius: %02d" % [node_data["size"]]
@@ -187,6 +186,53 @@ func toggle_node_info(node_name, node_data, vis):
 		node_info.get_node("info").text += "\nOwned by " + node_data["faction"]
 	elif node_data["status"] == 2:
 		node_info.get_node("info").text += "\nContested"
+	
+	if get_faction_peer_id(node_data["faction"]) == multiplayer.get_unique_id() and vis:
+		node_info.get_node("energy").text = res_info["energy"]
+		node_info.get_node("alpha").text = res_info["alpha"] 
+		node_info.get_node("beta").text = res_info["beta"]
+		node_info.get_node("gamma").text = res_info["gamma"]
+	else:
+		node_info.get_node("energy").text = "E: ???"
+		node_info.get_node("alpha").text = "α: ???"
+		node_info.get_node("beta").text = "β: ???"
+		node_info.get_node("gamma").text = "γ: ???"
+		
+# ui text formatting
+func ui_format_resource_texts(total_res, total_storage, total_prod):
+	var texts: Dictionary = {
+		"energy": "",
+		"alpha": "",
+		"beta": "",
+		"gamma": ""
+	}
+	
+	texts["energy"] = "%s / %s (+%s)" % [
+		format_suffix(total_res["stored_energy"]),
+		format_suffix(total_storage["MAX_ENERGY"]),
+		format_suffix(total_prod["PROD_ENERGY"])]
+	texts["alpha"] = "%s / %s (+%s)" % [
+		format_suffix(total_res["stored_alpha"]),
+		format_suffix(total_storage["MAX_ALPHA"]),
+		format_suffix(total_prod["PROD_ALPHA"])]
+	texts["beta"] = "%s / %s (+%s)" % [
+		format_suffix(total_res["stored_beta"]),
+		format_suffix(total_storage["MAX_BETA"]),
+		format_suffix(total_prod["PROD_BETA"])]
+	texts["gamma"] = "%s / %s (+%s)" % [
+		format_suffix(total_res["stored_gamma"]),
+		format_suffix(total_storage["MAX_GAMMA"]),
+		format_suffix(total_prod["PROD_GAMMA"])]
+		
+	return texts
+
+func format_suffix(number: float) -> String:
+	if number >= 1_000_000:
+		return str(round(number / 1_000_000)) + "M"
+	elif number >= 1_000:
+		return str(round(number / 1_000)) + "K"
+	else:
+		return str(number)
 
 # handle starting game
 @rpc("any_peer", "call_local")
@@ -209,6 +255,7 @@ func start_game():
 		lobby.visible = false
 		ui.visible = true
 		world_map.init_world()
+		update_player_data()
 	
 func _on_start_pressed() -> void:
 	start_game.rpc()

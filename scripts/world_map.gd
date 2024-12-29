@@ -29,7 +29,6 @@ func _ready() -> void:
 	set_physics_process(false)
 
 # initialise world
-@rpc("any_peer", "call_local")
 func init_world():
 	print(world_seed)
 	

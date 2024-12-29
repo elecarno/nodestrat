@@ -65,6 +65,8 @@ func _physics_process(_delta: float) -> void:
 		# check for mouse click and check if node is owned by client's faction
 		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction:
 			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), "test_building", snapped_position)
+		#if Input.is_action_just_pressed("rmb"):
+			#world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), "fortress", snapped_position)
 	else:
 		select.visible = false
 
