@@ -14,11 +14,17 @@ extends Node2D
 @onready var c_entities: Node2D = get_node("entities")
 
 @onready var buildings: Dictionary = {
-	"test_building": preload("res://scenes/buildings/test_building.tscn"),
-	"fortress": preload("res://scenes/buildings/fortress.tscn")
+	"test_building": preload("res://scenes/buildings/b_test.tscn"),
+	"fortress": preload("res://scenes/buildings/b_fortress.tscn"),
+	"power_plant": preload("res://scenes/buildings/b_powerplant.tscn"),
+	"harvester_a": preload("res://scenes/buildings/b_harvester_a.tscn"),
+	"harvester_b": preload("res://scenes/buildings/b_harvester_b.tscn"),
+	"harvester_g": preload("res://scenes/buildings/b_harvester_g.tscn")
 }
 
 var node_id: int = 0
+
+var build_type: String = ""
 
 func load_node() -> void:
 	# clear tilemaps
@@ -63,10 +69,9 @@ func _physics_process(_delta: float) -> void:
 	if t_ground.get_used_cells().has(cell_position):
 		select.visible = true
 		# check for mouse click and check if node is owned by client's faction
-		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction:
-			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), "test_building", snapped_position)
-		#if Input.is_action_just_pressed("rmb"):
-			#world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), "fortress", snapped_position)
+		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction and build_type != "":
+			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, snapped_position)
+			build_type = ""
 	else:
 		select.visible = false
 

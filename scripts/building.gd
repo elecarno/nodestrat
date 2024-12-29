@@ -36,15 +36,23 @@ func _ready() -> void:
 	PROD_BETA = res_refs.buildings[type].PROD_BETA
 	PROD_GAMMA = res_refs.buildings[type].PROD_GAMMA
 	
+	hp = MAX_HP
+	
+	if type == "fortress":
+		stored_energy = 500
+	
 func day_tick():
 	add_production()
 	
 func add_production():
 	stored_energy += PROD_ENERGY
 	if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
+	
 	stored_alpha += PROD_ALPHA
-	if stored_energy > PROD_ALPHA: stored_alpha = PROD_ALPHA
+	if stored_alpha > MAX_ALPHA: stored_alpha = MAX_ALPHA
+	
 	stored_beta += PROD_BETA
 	if stored_beta > MAX_BETA: stored_beta = MAX_BETA
+	
 	stored_gamma += PROD_GAMMA
 	if stored_gamma > MAX_GAMMA: stored_gamma = MAX_GAMMA

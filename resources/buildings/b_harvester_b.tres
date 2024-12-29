@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://e70wv8pvn08l"]
+
+[ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_6wy0k"]
+
+[resource]
+script = ExtResource("1_6wy0k")
+CODE = "harvester_b"
+DISPLAY_NAME = "β Harvester"
+TYPE = 2
+MAX_HP = 200
+ENERGY_COST = 150
+MAX_ENERGY = 0
+MAX_ALPHA = 0
+MAX_BETA = 50
+MAX_GAMMA = 0
+PROD_ENERGY = 0
+PROD_ALPHA = 0
+PROD_BETA = 25
+PROD_GAMMA = 0
+BUILD_ENERGY = 250
+ANY_MATTER = 0
+BUILD_ALPHA = 0
+BUILD_BETA = 0
+BUILD_GAMMA = 0

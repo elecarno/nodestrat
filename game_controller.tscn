@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=23 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_4detf"]
 [ext_resource type="Script" path="res://scripts/m_spawner.gd" id="3_1vqeo"]
@@ -9,7 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://b4yxi8su2ki" path="res://scenes/world_map.tscn" id="5_nsfya"]
 [ext_resource type="Texture2D" uid="uid://bt018u1dhc8li" path="res://sprites/ui_main.png" id="6_bm72a"]
 [ext_resource type="Shader" path="res://vhs.gdshader" id="6_dlk7b"]
+[ext_resource type="Script" path="res://build_menu.gd" id="8_uan0g"]
 [ext_resource type="PackedScene" uid="uid://ch5jnqmw51dyk" path="res://scenes/lobby_player.tscn" id="9_3ewwb"]
+[ext_resource type="PackedScene" uid="uid://c1bcajdlr35e3" path="res://scenes/build_listing.tscn" id="9_5j3l6"]
+[ext_resource type="Resource" uid="uid://bj4tkucnkbk8t" path="res://resources/buildings/b_power_plant.tres" id="11_02oht"]
+[ext_resource type="Resource" uid="uid://ree26xjx6uy3" path="res://resources/buildings/b_harvester_a.tres" id="12_bamfp"]
+[ext_resource type="Resource" uid="uid://e70wv8pvn08l" path="res://resources/buildings/b_harvester_b.tres" id="13_7ue10"]
+[ext_resource type="Resource" uid="uid://cs7lmyhnlwnkm" path="res://resources/buildings/b_harvester_g.tres" id="14_w6exw"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3p6oe"]
 properties/0/path = NodePath("world_map:world_seed")
@@ -42,6 +48,30 @@ background_mode = 1
 background_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8g7ii"]
+bg_color = Color(0.713726, 0.337255, 0.337255, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.713726, 0.337255, 0.337255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdsic"]
+bg_color = Color(0.843137, 0.45098, 0.333333, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.843137, 0.45098, 0.333333, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c7ytv"]
+bg_color = Color(0.686275, 0.52549, 0.768627, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.686275, 0.52549, 0.768627, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l2nop"]
 shader = ExtResource("6_dlk7b")
@@ -117,7 +147,7 @@ offset_right = 293.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
-text = "E: 999/1K (+99)"
+text = "E: 999/999(+99)"
 
 [node name="alpha" type="Label" parent="canvas_layer/ui/faction_info"]
 layout_mode = 1
@@ -127,7 +157,7 @@ offset_right = 495.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
-text = "α: 999/1K (+99)"
+text = "α: 999/999(+99)"
 
 [node name="beta" type="Label" parent="canvas_layer/ui/faction_info"]
 layout_mode = 0
@@ -137,7 +167,7 @@ offset_right = 685.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
-text = "β: 999/1K (+99)"
+text = "β: 999/999(+99)"
 
 [node name="gamma" type="Label" parent="canvas_layer/ui/faction_info"]
 layout_mode = 0
@@ -147,7 +177,7 @@ offset_right = 879.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
-text = "γ: 999/1K (+99)"
+text = "γ: 999/999(+99)"
 
 [node name="name" type="Label" parent="canvas_layer/ui/faction_info"]
 layout_mode = 0
@@ -204,6 +234,182 @@ offset_bottom = 82.0
 theme = ExtResource("4_7cnmm")
 text = "-
 "
+
+[node name="build" type="Control" parent="canvas_layer/ui"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -188.0
+offset_right = 437.0
+offset_bottom = 188.0
+grow_vertical = 2
+script = ExtResource("8_uan0g")
+
+[node name="bg" type="NinePatchRect" parent="canvas_layer/ui/build"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_jdauc")
+region_rect = Rect2(0, 0, 144, 144)
+patch_margin_left = 48
+patch_margin_top = 48
+patch_margin_right = 48
+patch_margin_bottom = 48
+
+[node name="title" type="Label" parent="canvas_layer/ui/build"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 7.0
+offset_right = 90.0
+offset_bottom = 33.0
+grow_horizontal = 2
+theme = ExtResource("4_7cnmm")
+text = "Build"
+horizontal_alignment = 1
+
+[node name="vbox" type="VBoxContainer" parent="canvas_layer/ui/build"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 38.0
+offset_right = -207.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="0" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+layout_mode = 2
+
+[node name="1" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+layout_mode = 2
+text = "Power Plant"
+n_build_res = ExtResource("11_02oht")
+
+[node name="2" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+layout_mode = 2
+text = "Harvester"
+neutral = false
+n_build_res = null
+a_build_res = ExtResource("12_bamfp")
+b_build_res = ExtResource("13_7ue10")
+g_build_res = ExtResource("14_w6exw")
+
+[node name="info" type="Control" parent="canvas_layer/ui/build"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -207.0
+offset_top = -150.0
+offset_right = -13.0
+offset_bottom = 177.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="build" type="Button" parent="canvas_layer/ui/build/info"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = -32.0
+offset_right = 73.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_7cnmm")
+text = "Build"
+
+[node name="build_type" type="Control" parent="canvas_layer/ui/build/info"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="label" type="Label" parent="canvas_layer/ui/build/info/build_type"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = 222.0
+offset_right = 167.0
+offset_bottom = 248.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_7cnmm")
+text = "Build Type"
+horizontal_alignment = 1
+
+[node name="alpha" type="Button" parent="canvas_layer/ui/build/info/build_type"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 255.0
+offset_right = 43.0
+offset_bottom = 287.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_8g7ii")
+text = "α"
+
+[node name="beta" type="Button" parent="canvas_layer/ui/build/info/build_type"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 61.0
+offset_top = 255.0
+offset_right = 100.0
+offset_bottom = 287.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_cdsic")
+text = "β"
+
+[node name="gamma" type="Button" parent="canvas_layer/ui/build/info/build_type"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 115.0
+offset_top = 255.0
+offset_right = 154.0
+offset_bottom = 287.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.686275, 0.52549, 0.768627, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_c7ytv")
+text = "γ"
 
 [node name="node_info" type="Control" parent="canvas_layer/ui"]
 visible = false
@@ -639,4 +845,8 @@ mouse_filter = 2
 
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_up" to="." method="_on_speed_up_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_down" to="." method="_on_speed_down_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/build/info/build" to="canvas_layer/ui/build" method="_on_build_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/build/info/build_type/alpha" to="canvas_layer/ui/build" method="_on_alpha_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/build/info/build_type/beta" to="canvas_layer/ui/build" method="_on_beta_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/build/info/build_type/gamma" to="canvas_layer/ui/build" method="_on_gamma_pressed"]
 [connection signal="pressed" from="canvas_layer/lobby/start" to="." method="_on_start_pressed"]

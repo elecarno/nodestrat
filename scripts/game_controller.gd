@@ -25,11 +25,18 @@ const time_max: float = 30
 const time_min: float = 0.5
 @export var paused: bool = true
 
+var build_button_group: ButtonGroup = ButtonGroup.new()
+
 func _ready() -> void:
 	# set ui element starting visibilities
 	get_node("canvas_layer/crt").visible = true
 	ui.visible = false
 	lobby.visible = true
+	get_node("canvas_layer/ui/build").visible = false
+	
+	# set build buttons 
+	for button in range(0, $canvas_layer/ui/build/vbox.get_child_count()):
+		$canvas_layer/ui/build/vbox.get_child(button).button_group = build_button_group
 	
 	# set starting condition line edits to defaults from world_map
 	$canvas_layer/lobby/settings/seed/edit.text = str(randi())
@@ -78,6 +85,10 @@ func _process(delta: float) -> void:
 		node_map.visible = false
 		orbit_cam.current = true
 		pan_cam.enabled = false
+		
+	# handle toggle build menu
+	if Input.is_action_just_pressed("build") and node_map.visible:
+		get_node("canvas_layer/ui/build").visible = !get_node("canvas_layer/ui/build").visible
 
 # run tick on all clients
 @rpc("any_peer", "call_local")
@@ -207,19 +218,19 @@ func ui_format_resource_texts(total_res, total_storage, total_prod):
 		"gamma": ""
 	}
 	
-	texts["energy"] = "%s / %s (+%s)" % [
+	texts["energy"] = "E:%s/%s(+%s)" % [
 		format_suffix(total_res["stored_energy"]),
 		format_suffix(total_storage["MAX_ENERGY"]),
 		format_suffix(total_prod["PROD_ENERGY"])]
-	texts["alpha"] = "%s / %s (+%s)" % [
+	texts["alpha"] = "α:%s/%s(+%s)" % [
 		format_suffix(total_res["stored_alpha"]),
 		format_suffix(total_storage["MAX_ALPHA"]),
 		format_suffix(total_prod["PROD_ALPHA"])]
-	texts["beta"] = "%s / %s (+%s)" % [
+	texts["beta"] = "β:%s/%s(+%s)" % [
 		format_suffix(total_res["stored_beta"]),
 		format_suffix(total_storage["MAX_BETA"]),
 		format_suffix(total_prod["PROD_BETA"])]
-	texts["gamma"] = "%s / %s (+%s)" % [
+	texts["gamma"] = "γ:%s/%s(+%s)" % [
 		format_suffix(total_res["stored_gamma"]),
 		format_suffix(total_storage["MAX_GAMMA"]),
 		format_suffix(total_prod["PROD_GAMMA"])]

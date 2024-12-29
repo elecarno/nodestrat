@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_r4kjt")
+CODE = "test_building"
+DISPLAY_NAME = "Test"
 TYPE = 0
 MAX_HP = 100
 ENERGY_COST = 0
@@ -15,3 +17,8 @@ PROD_ENERGY = 0
 PROD_ALPHA = 0
 PROD_BETA = 0
 PROD_GAMMA = 0
+BUILD_ENERGY = 0
+ANY_MATTER = 0
+BUILD_ALPHA = 0
+BUILD_BETA = 0
+BUILD_GAMMA = 0

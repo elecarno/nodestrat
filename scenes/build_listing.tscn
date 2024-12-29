@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1bcajdlr35e3"]
+
+[ext_resource type="Script" path="res://scripts/building_listing.gd" id="2_4ffpj"]
+[ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="2_u8ktn"]
+[ext_resource type="Resource" uid="uid://bt1e1otxp1pkm" path="res://resources/buildings/b_fortress.tres" id="3_m1i5c"]
+
+[node name="build_listing" type="Button"]
+size_flags_horizontal = 3
+theme = ExtResource("2_u8ktn")
+toggle_mode = true
+text = "Fortress
+"
+script = ExtResource("2_4ffpj")
+n_build_res = ExtResource("3_m1i5c")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
