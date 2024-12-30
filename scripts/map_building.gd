@@ -9,7 +9,7 @@ var type: String = ""
 var connections: Array = []
 
 func _ready() -> void:
-	name += " (%s)" % [id]
+	name = type + " (%s)" % [id]
 	
 	# spawn connection lines
 	for i in range(0, connections.size()):

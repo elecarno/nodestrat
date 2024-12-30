@@ -250,11 +250,14 @@ func ui_format_resource_texts(total_res, total_storage, total_prod):
 
 func format_suffix(number: float) -> String:
 	if number >= 1_000_000:
-		return str(round(number / 1_000_000)) + "M"
+		return str(round_to_dec(number / 1_000_000, 1)) + "M"
 	elif number >= 1_000:
-		return str(round(number / 1_000)) + "K"
+		return str(round_to_dec(number / 1_000, 1)) + "K"
 	else:
 		return str(number)
+
+func round_to_dec(num, digit):
+	return round(num * pow(10.0, digit)) / pow(10.0, digit)
 
 # handle starting game
 @rpc("any_peer", "call_local")

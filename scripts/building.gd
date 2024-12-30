@@ -31,6 +31,8 @@ var TRANSFER_PRIORITY: int
 var TRANSFER_RADIUS: int
 
 func _ready() -> void:
+	name = type + " (%s)" % [id]
+	
 	MAX_HP = res_refs.buildings[type].MAX_HP
 	ENERGY_COST = res_refs.buildings[type].ENERGY_COST
 	MAX_ENERGY = res_refs.buildings[type].MAX_ENERGY
@@ -57,22 +59,18 @@ func day_tick():
 	print("---")
 	
 func add_production():
-	#if stored_energy == MAX_ENERGY:
-		#var to_transfer = PROD_ENERGY
-		#while to_transfer > 0:
-			#var nearest_transfer_idx = get_nearest_transfer("ENERGY")
-			#var transfer_object = objects.get_child(nearest_transfer_idx)
-			#var transferable_amount: int = transfer_object.MAX_ENERGY - transfer_object.stored_energy
-			#if transferable_amount > to_transfer:
-				#objects.get_child(nearest_transfer_idx).stored_energy += to_transfer
-				#to_transfer = 0
-			#else:
-				#objects.get_child(nearest_transfer_idx).stored_energy += transferable_amount
-				#to_transfer -= transferable_amount
-	#else:
-		#print("added energy prod")
-		#stored_energy += PROD_ENERGY
-		#if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
+	if stored_energy == MAX_ENERGY:
+		var transfers = get_transfers("ENERGY", PROD_ENERGY)
+		print(transfers)
+		if transfers != {}:
+			for id in transfers:
+				for i in range(0, objects.get_child_count()):
+					if objects.get_child(i).id == id:
+						objects.get_child(i).stored_energy += transfers[id]
+	else:
+		print("added energy prod")
+		stored_energy += PROD_ENERGY
+		if stored_energy > MAX_ENERGY: stored_energy = MAX_ENERGY
 	
 	print("added energy prod " + str(PROD_ENERGY))
 	stored_energy += PROD_ENERGY
@@ -90,27 +88,29 @@ func add_production():
 	stored_gamma += PROD_GAMMA
 	if stored_gamma > MAX_GAMMA: stored_gamma = MAX_GAMMA
 	
-func get_nearest_transfer(res: String):
-	var highest_priority_object_idx: int = 0
+func get_transfers(res: String, amount: int):
+	var to_transfer = amount
+	var transfers: Dictionary = {}
 	
+	# loop through established connections
 	for i in range(0, connections.size()):
-		var conn_object
-		for object in objects.get_children():
-			if object.id == connections[i]:
-				conn_object == object
-			
-		if conn_object.TRANSFER_PRIORITY > highest_priority_object_idx:
-			if res == "ENERGY":
-				if conn_object.stored_energy < conn_object.MAX_ENERGY:
-					highest_priority_object_idx = i
-			if res == "ALPHA":
-				if conn_object.stored_alpha < conn_object.MAX_ALPHA:
-					highest_priority_object_idx = i
-			if res == "BETA":
-				if conn_object.stored_beta < conn_object.MAX_BETA:
-					highest_priority_object_idx = i
-			if res == "GAMMA":
-				if conn_object.stored_gamma < conn_object.MAX_GAMMA:
-					highest_priority_object_idx = i
-	
-	return highest_priority_object_idx
+		# get reference to connection object
+		var conn_object: Building = null
+		for j in range(0, objects.get_child_count()):
+			#print(str(objects.get_child(j).id) + " : " + str(connections[i]))
+			if str(objects.get_child(j).id) == str(connections[i]):
+				conn_object = objects.get_child(j)
+				
+		# check for resource type
+		if res == "ENERGY":
+			var free_space = conn_object.MAX_ENERGY - conn_object.stored_energy
+			if free_space == 0:
+				transfers[conn_object.id] = 0
+			elif free_space < to_transfer:
+				transfers[conn_object.id] = abs(free_space - to_transfer)
+				to_transfer -= free_space
+			elif free_space >= to_transfer:
+				transfers[conn_object.id] = to_transfer
+				to_transfer = 0
+					
+	return transfers

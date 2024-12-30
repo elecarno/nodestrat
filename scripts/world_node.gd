@@ -182,6 +182,7 @@ func refresh_building_connections():
 	print("refreshing building connections for node " + str(id))
 	for i in range(0, c_objects.get_child_count()):
 		if c_objects.get_child(i) is Building:
+			c_objects.get_child(i).connections = []
 			for conn_object in c_objects.get_children():
 				var object = c_objects.get_child(i)
 				if object.pos.distance_to(conn_object.pos) <= object.TRANSFER_RADIUS*16 and conn_object.id != object.id:

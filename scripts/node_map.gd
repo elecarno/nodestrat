@@ -116,14 +116,3 @@ func load_objects():
 		c_objects.add_child(object_node)
 		print("spawned object " + str(objects.get_child(i).id) + " on node_map")
 		
-	# spawn connection lines
-	#for i in range(0, objects.get_child_count()):
-		#var conns: Array = objects.get_child(i).connections
-		#for j in range(0, conns.size()):
-			#var conn_line: Line2D = connection_line.instantiate()
-			#conn_line.set_point_position(0, objects.get_child(j).pos)
-			#for object in objects.get_children():
-				#if object.id == conns[j]:
-					#conn_line.set_point_position(1, object.pos)
-			#c_ui.add_child(conn_line)
-					
