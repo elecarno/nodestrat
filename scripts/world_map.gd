@@ -95,6 +95,7 @@ func generate_nodes():
 		print("spawned connection lines for " + str(node_id))
 			
 	create_player_factions()
+	get_parent().update_player_data()
 	print("-----")
 
 func create_player_factions():

@@ -109,6 +109,7 @@ func day_tick():
 			world_map.get_node("world").get_child(node).day_tick()
 		
 		update_player_data()
+		$canvas_layer/ui/build.refresh_info()
 		
 		last_day_tick = current_day_tick
 

@@ -105,7 +105,7 @@ func use_energy():
 func add_production():
 	if stored_energy == MAX_ENERGY:
 		var transfers = get_transfers("ENERGY", PROD_ENERGY)
-		print(transfers)
+		print("added energy prod " + str(PROD_ENERGY) + " (transfer)")
 		if transfers != {}:
 			for id in transfers:
 				for i in range(0, objects.get_child_count()):
@@ -118,7 +118,7 @@ func add_production():
 	
 	if stored_alpha == MAX_ALPHA:
 		var transfers = get_transfers("ALPHA", PROD_ALPHA)
-		print(transfers)
+		print("added alpha prod " + str(PROD_ALPHA) + " (transfer)")
 		if transfers != {}:
 			for id in transfers:
 				for i in range(0, objects.get_child_count()):
@@ -131,7 +131,7 @@ func add_production():
 	
 	if stored_beta == MAX_BETA:
 		var transfers = get_transfers("BETA", PROD_BETA)
-		print(transfers)
+		print("added beta prod " + str(PROD_BETA) + " (transfer)")
 		if transfers != {}:
 			for id in transfers:
 				for i in range(0, objects.get_child_count()):
@@ -144,7 +144,7 @@ func add_production():
 	
 	if stored_gamma == MAX_GAMMA:
 		var transfers = get_transfers("BETA", PROD_GAMMA)
-		print(transfers)
+		print("added gamma prod " + str(PROD_GAMMA) + " (transfer)")
 		if transfers != {}:
 			for id in transfers:
 				for i in range(0, objects.get_child_count()):

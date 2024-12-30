@@ -237,13 +237,14 @@ text = "-
 "
 
 [node name="build" type="Control" parent="canvas_layer/ui"]
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 17.0
 offset_top = -188.0
-offset_right = 437.0
+offset_right = 453.0
 offset_bottom = 188.0
 grow_vertical = 2
 script = ExtResource("8_uan0g")
@@ -283,7 +284,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 17.0
 offset_top = 38.0
-offset_right = -207.0
+offset_right = -213.0
 offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -346,23 +347,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="label" type="Label" parent="canvas_layer/ui/build/info/build_type"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -12.0
-offset_top = 222.0
-offset_right = 167.0
-offset_bottom = 248.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("4_7cnmm")
-text = "Build Type"
-horizontal_alignment = 1
-
 [node name="alpha" type="Button" parent="canvas_layer/ui/build/info/build_type"]
 layout_mode = 1
 anchors_preset = 7
@@ -417,6 +401,195 @@ theme_override_colors/font_color = Color(0.686275, 0.52549, 0.768627, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_c7ytv")
 text = "γ"
 
+[node name="vbox" type="VBoxContainer" parent="canvas_layer/ui/build/info"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="cost_label" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_7cnmm")
+text = "Build Cost"
+horizontal_alignment = 1
+
+[node name="cost" type="GridContainer" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+columns = 2
+
+[node name="energy" type="Label" parent="canvas_layer/ui/build/info/vbox/cost"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
+text = "E: 9.9K"
+horizontal_alignment = 1
+
+[node name="alpha" type="Label" parent="canvas_layer/ui/build/info/vbox/cost"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
+text = "α: 9.9K"
+horizontal_alignment = 1
+
+[node name="beta" type="Label" parent="canvas_layer/ui/build/info/vbox/cost"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
+text = "β: 9.9K"
+horizontal_alignment = 1
+
+[node name="gamma" type="Label" parent="canvas_layer/ui/build/info/vbox/cost"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
+text = "γ: 9.9K"
+horizontal_alignment = 1
+
+[node name="any_cost" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.521516, 0.722754, 0.397494, 1)
+text = "α/β/γ: 9.9K"
+horizontal_alignment = 1
+
+[node name="e_cost" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
+text = "E: 9.9K"
+horizontal_alignment = 1
+
+[node name="prod_label" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_7cnmm")
+text = "Production"
+horizontal_alignment = 1
+
+[node name="prod" type="GridContainer" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+columns = 2
+
+[node name="energy" type="Label" parent="canvas_layer/ui/build/info/vbox/prod"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
+text = "E: 9.9K"
+horizontal_alignment = 1
+
+[node name="alpha" type="Label" parent="canvas_layer/ui/build/info/vbox/prod"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
+text = "α: 9.9K"
+horizontal_alignment = 1
+
+[node name="beta" type="Label" parent="canvas_layer/ui/build/info/vbox/prod"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
+text = "β: 9.9K"
+horizontal_alignment = 1
+
+[node name="gamma" type="Label" parent="canvas_layer/ui/build/info/vbox/prod"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
+text = "γ: 9.9K"
+horizontal_alignment = 1
+
+[node name="any_prod" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.521516, 0.722754, 0.397494, 1)
+text = "α/β/γ: 9.9K"
+horizontal_alignment = 1
+
+[node name="storage_label" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_7cnmm")
+text = "Storage"
+horizontal_alignment = 1
+
+[node name="storage" type="GridContainer" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+columns = 2
+
+[node name="energy" type="Label" parent="canvas_layer/ui/build/info/vbox/storage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
+text = "E: 9.9K"
+horizontal_alignment = 1
+
+[node name="alpha" type="Label" parent="canvas_layer/ui/build/info/vbox/storage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
+text = "α: 9.9K"
+horizontal_alignment = 1
+
+[node name="beta" type="Label" parent="canvas_layer/ui/build/info/vbox/storage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
+text = "β: 9.9K"
+horizontal_alignment = 1
+
+[node name="gamma" type="Label" parent="canvas_layer/ui/build/info/vbox/storage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
+text = "γ: 9.9K"
+horizontal_alignment = 1
+
+[node name="any_storage" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.521516, 0.722754, 0.397494, 1)
+text = "α/β/γ: 9.9K"
+horizontal_alignment = 1
+
+[node name="upkeep_label" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_7cnmm")
+text = "Upkeep"
+horizontal_alignment = 1
+
+[node name="upkeep" type="Label" parent="canvas_layer/ui/build/info/vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_7cnmm")
+theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
+text = "E: 9.9K"
+horizontal_alignment = 1
+
 [node name="node_info" type="Control" parent="canvas_layer/ui"]
 visible = false
 layout_mode = 1
@@ -433,6 +606,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="bg" type="NinePatchRect" parent="canvas_layer/ui/node_info"]
+modulate = Color(1, 1, 1, 0.784314)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -852,7 +1026,7 @@ mouse_filter = 2
 
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_up" to="." method="_on_speed_up_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_down" to="." method="_on_speed_down_pressed"]
-[connection signal="visibility_changed" from="canvas_layer/ui/build" to="canvas_layer/ui/build/vbox/fortress" method="_on_build_visibility_changed"]
+[connection signal="visibility_changed" from="canvas_layer/ui/build" to="canvas_layer/ui/build" method="_on_visibility_changed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build" to="canvas_layer/ui/build" method="_on_build_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build_type/alpha" to="canvas_layer/ui/build" method="_on_alpha_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build_type/beta" to="canvas_layer/ui/build" method="_on_beta_pressed"]
