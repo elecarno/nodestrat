@@ -11,11 +11,11 @@ var connections: Array = []
 func _ready() -> void:
 	name = type + " (%s)" % [id]
 	
-	# spawn connection lines
-	for i in range(0, connections.size()):
-		var conn_line: Line2D = connection_line.instantiate()
-		for object in c_objects.get_children():
-			if object.id == connections[i]:
-				conn_line.set_point_position(1, to_local(object.position))
-		add_child(conn_line)
-	
+	## spawn connection lines
+	#for i in range(0, connections.size()):
+		#var conn_line: Line2D = connection_line.instantiate()
+		#for object in c_objects.get_children():
+			#if object.id == connections[i]:
+				#conn_line.set_point_position(1, to_local(object.position))
+		#add_child(conn_line)
+	#

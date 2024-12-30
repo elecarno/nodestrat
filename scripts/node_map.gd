@@ -19,8 +19,9 @@ extends Node2D
 @onready var buildings: Dictionary = {
 	"test_building": preload("res://scenes/buildings/b_test.tscn"),
 	"fortress": preload("res://scenes/buildings/b_fortress.tscn"),
-	"powerplant": preload("res://scenes/buildings/b_powerplant.tscn"),
+	"pylon": preload("res://scenes/buildings/b_pylon.tscn"),
 	"battery": preload("res://scenes/buildings/b_battery.tscn"),
+	"powerplant": preload("res://scenes/buildings/b_powerplant.tscn"),
 	"harvester_a": preload("res://scenes/buildings/b_harvester_a.tscn"),
 	"harvester_b": preload("res://scenes/buildings/b_harvester_b.tscn"),
 	"harvester_g": preload("res://scenes/buildings/b_harvester_g.tscn"),

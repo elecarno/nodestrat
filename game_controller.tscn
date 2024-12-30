@@ -144,7 +144,7 @@ mouse_filter = 2
 layout_mode = 1
 offset_left = 108.0
 offset_top = 5.0
-offset_right = 293.0
+offset_right = 303.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
@@ -152,9 +152,9 @@ text = "E: 999/999(+99)"
 
 [node name="alpha" type="Label" parent="canvas_layer/ui/faction_info"]
 layout_mode = 1
-offset_left = 312.0
+offset_left = 329.0
 offset_top = 5.0
-offset_right = 495.0
+offset_right = 521.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
@@ -162,9 +162,9 @@ text = "α: 999/999(+99)"
 
 [node name="beta" type="Label" parent="canvas_layer/ui/faction_info"]
 layout_mode = 0
-offset_left = 503.0
+offset_left = 535.0
 offset_top = 5.0
-offset_right = 685.0
+offset_right = 730.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
@@ -172,9 +172,9 @@ text = "β: 999/999(+99)"
 
 [node name="gamma" type="Label" parent="canvas_layer/ui/faction_info"]
 layout_mode = 0
-offset_left = 696.0
+offset_left = 742.0
 offset_top = 5.0
-offset_right = 879.0
+offset_right = 936.0
 offset_bottom = 25.0
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)

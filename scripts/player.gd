@@ -85,6 +85,10 @@ func get_total_production():
 					total_prod["PROD_ALPHA"] += object.PROD_ALPHA
 					total_prod["PROD_BETA"] += object.PROD_BETA
 					total_prod["PROD_GAMMA"] += object.PROD_GAMMA
+					
+			for object in objects:
+				if object is Building:
+					total_prod["PROD_ENERGY"] -= object.ENERGY_COST
 	
 	return total_prod
 	

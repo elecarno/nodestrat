@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://04pvnuih0sih"]
 
 [node name="connection" type="Line2D"]
+z_index = -1
 points = PackedVector2Array(0, 0, 0, 0)
-width = 3.0
+width = 2.0
+default_color = Color(0.87, 0.87, 0.87, 0.392157)

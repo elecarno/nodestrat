@@ -126,7 +126,7 @@ func add_building(peer_id, type, pos: Vector2):
 	c_objects.add_child(building)
 	print("added building of type " + type + " to node " + str(id))
 	print("----- @rpc")
-	refresh_building_connections()
+	#refresh_building_connections()
 	
 	if node_map.node_id == id:
 		node_map.load_objects()
@@ -178,20 +178,20 @@ func refresh_status():
 	
 	print("----- @rpc")
 
-func refresh_building_connections():
-	print("refreshing building connections for node " + str(id))
-	for i in range(0, c_objects.get_child_count()):
-		if c_objects.get_child(i) is Building:
-			c_objects.get_child(i).connections = []
-			for conn_object in c_objects.get_children():
-				var object = c_objects.get_child(i)
-				if object.pos.distance_to(conn_object.pos) <= object.TRANSFER_RADIUS*16 and conn_object.id != object.id:
-					c_objects.get_child(i).connections.append(conn_object.id)
-					print("connected building %s (%s) to %s (%s)" % [object.id, object.type, conn_object.id, conn_object.type])
+#func refresh_building_connections():
+	#print("refreshing building connections for node " + str(id))
+	#for i in range(0, c_objects.get_child_count()):
+		#if c_objects.get_child(i) is Building:
+			#c_objects.get_child(i).connections = []
+			#for conn_object in c_objects.get_children():
+				#var object = c_objects.get_child(i)
+				#if object.pos.distance_to(conn_object.pos) <= object.TRANSFER_RADIUS*16 and conn_object.id != object.id:
+					#c_objects.get_child(i).connections.append(conn_object.id)
+					#print("connected building %s (%s) to %s (%s)" % [object.id, object.type, conn_object.id, conn_object.type])
 
 # run day tick methods on all objects and entities
 func day_tick():
-	print("running daytick on node " + str(id))
+	#print("running daytick on node " + str(id))
 	for object in range(0, c_objects.get_child_count()):
 		if c_objects.get_child(object) is Building:
 			c_objects.get_child(object).day_tick()
@@ -228,6 +228,10 @@ func get_total_production():
 			total_prod["PROD_ALPHA"] += object.PROD_ALPHA
 			total_prod["PROD_BETA"] += object.PROD_BETA
 			total_prod["PROD_GAMMA"] += object.PROD_GAMMA
+			
+	for object in c_objects.get_children():
+		if object is Building:
+			total_prod["PROD_ENERGY"] -= object.ENERGY_COST
 	
 	return total_prod
 

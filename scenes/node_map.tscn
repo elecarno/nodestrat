@@ -30,12 +30,15 @@ script = ExtResource("2_pul1f")
 enabled = false
 
 [node name="t_ground" type="TileMapLayer" parent="."]
+z_index = -2
 tile_set = SubResource("TileSet_bb85p")
 
 [node name="t_walls" type="TileMapLayer" parent="."]
+z_index = -2
 tile_set = SubResource("TileSet_bb85p")
 
 [node name="t_hills" type="TileMapLayer" parent="."]
+z_index = -2
 tile_set = SubResource("TileSet_bb85p")
 
 [node name="objects" type="Node2D" parent="."]

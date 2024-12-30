@@ -2,10 +2,12 @@ extends Resource
 class_name r_building
 
 enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
+enum DESIGNATION {PRODUCTION, STORAGE, PIPELINE}
 
 @export var CODE: String
 @export var DISPLAY_NAME: String
 @export var TYPE: ALIGNMENT
+@export var PURPOSE: DESIGNATION
 @export var MAX_HP: int
 @export var ENERGY_COST: int # energy cost requirement to run building (per day)
 @export var TRANSFER_PRIORITY: int # 0 = none, 1 = highest
