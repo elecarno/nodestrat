@@ -2,6 +2,7 @@ class_name GameController
 extends Node
 
 var client_id = 0
+var game_started: bool = false
 
 @onready var players: Node = get_node("players")
 @onready var world_map: WorldMap = get_node("world_map")
@@ -281,6 +282,7 @@ func start_game():
 		lobby.visible = false
 		ui.visible = true
 		world_map.init_world()
+		game_started = true
 		update_player_data()
 	
 func _on_start_pressed() -> void:

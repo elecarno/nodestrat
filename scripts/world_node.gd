@@ -252,6 +252,47 @@ func get_total_resources():
 	
 	return total_res
 
+func subtract_resource(res: String, amount: int):
+	var to_take: int = amount
+	
+	var conn_object: Building = null
+	for j in range(0, c_objects.get_child_count()):
+		conn_object = c_objects.get_child(j)
+			
+		if res == "ENERGY":
+			if conn_object.stored_energy > 0:
+				if conn_object.stored_energy >= to_take:
+					c_objects.get_child(j).stored_energy -= to_take
+					to_take = 0
+				elif conn_object.stored_energy < to_take:
+					to_take -= c_objects.get_child(j).stored_energy
+					c_objects.get_child(j).stored_energy = 0
+		elif res == "ALPHA":
+			if conn_object.stored_alpha > 0:
+				if conn_object.stored_alpha >= to_take:
+					c_objects.get_child(j).stored_alpha -= to_take
+					to_take = 0
+				elif conn_object.stored_alpha < to_take:
+					to_take -= c_objects.get_child(j).stored_alpha
+					c_objects.get_child(j).stored_alpha = 0
+		elif res == "BETA":
+			if conn_object.stored_beta > 0:
+				if conn_object.stored_beta >= to_take:
+					c_objects.get_child(j).stored_beta -= to_take
+					to_take = 0
+				elif conn_object.stored_beta < to_take:
+					to_take -= c_objects.get_child(j).stored_beta
+					c_objects.get_child(j).stored_beta = 0
+		elif res == "GAMMA":
+			if conn_object.stored_gamma > 0:
+				if conn_object.stored_gamma >= to_take:
+					c_objects.get_child(j).stored_gamma -= to_take
+					to_take = 0
+				elif conn_object.stored_gamma < to_take:
+					to_take -= c_objects.get_child(j).stored_gamma
+					c_objects.get_child(j).stored_gamma = 0
+
+
 # mouse hover checks
 func _on_mouse_entered() -> void:
 	var res_info_texts = game_contoller.ui_format_resource_texts(get_total_resources(), get_total_storage(), get_total_production())

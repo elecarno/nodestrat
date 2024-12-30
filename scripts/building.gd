@@ -2,6 +2,7 @@ class_name Building
 extends Node
 
 @onready var objects: Node = get_parent()
+@onready var world_node: WorldNode = get_parent().get_parent()
 
 enum DESIGNATION {PRODUCTION, STORAGE, PIPELINE}
 enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
@@ -53,6 +54,11 @@ func _ready() -> void:
 	PROD_GAMMA = res_refs.buildings[type].PROD_GAMMA
 	TRANSFER_PRIORITY = res_refs.buildings[type].TRANSFER_PRIORITY
 	TRANSFER_RADIUS = res_refs.buildings[type].TRANSFER_RADIUS
+	
+	world_node.subtract_resource("ENERGY", res_refs.buildings[type].BUILD_ENERGY)
+	world_node.subtract_resource("ALPHA", res_refs.buildings[type].BUILD_ALPHA)
+	world_node.subtract_resource("BETA", res_refs.buildings[type].BUILD_BETA)
+	world_node.subtract_resource("GAMMA", res_refs.buildings[type].BUILD_GAMMA)
 	
 	hp = MAX_HP
 	
