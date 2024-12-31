@@ -8,5 +8,8 @@ var buildings: Dictionary = {
 	"powerplant": preload("res://resources/buildings/b_powerplant.tres"),
 	"harvester_a": preload("res://resources/buildings/b_harvester_a.tres"),
 	"harvester_b": preload("res://resources/buildings/b_harvester_b.tres"),
-	"harvester_g": preload("res://resources/buildings/b_harvester_g.tres")
+	"harvester_g": preload("res://resources/buildings/b_harvester_g.tres"),
+	"factory_a": preload("res://resources/buildings/b_factory_a.tres"),
+	"factory_b": preload("res://resources/buildings/b_factory_b.tres"),
+	"factory_g": preload("res://resources/buildings/b_factory_g.tres")
 }

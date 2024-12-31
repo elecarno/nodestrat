@@ -119,6 +119,15 @@ func load_node_map():
 @rpc("any_peer", "call_local")
 func add_building(peer_id, type, pos: Vector2):
 	print("----- @rpc")
+	if type == "harvester_a" and tilemap_data["ground_tiles"][pos] != Vector2(1, 0):
+		print("cannot place alpha harvester on non alpha terrain")
+		return
+	if type == "harvester_b" and tilemap_data["ground_tiles"][pos] != Vector2(2, 0):
+		print("cannot place beta harvester on non beta terrain")
+		return
+	if type == "harvester_g" and tilemap_data["ground_tiles"][pos] != Vector2(3, 0):
+		print("cannot place gamma harvester on non gamma terrain")
+		return
 	var building: Building = building_node.instantiate()
 	building.type = type
 	building.pos = pos

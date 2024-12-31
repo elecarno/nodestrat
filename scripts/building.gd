@@ -70,7 +70,7 @@ func day_tick():
 	print("running daytick on building " + str(id))
 	if use_energy():
 		if PURPOSE == DESIGNATION.PRODUCTION:
-			var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][floor(pos/16)]
+			var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][pos]
 			if TERRAIN_ALIGNMENT == ALIGNMENT.NEUTRAL:
 				add_production()
 			if TERRAIN_ALIGNMENT == ALIGNMENT.ALPHA and on_terrain == Vector2(1, 0):

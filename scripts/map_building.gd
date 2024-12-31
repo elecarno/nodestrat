@@ -10,6 +10,8 @@ var connections: Array = []
 
 func _ready() -> void:
 	name = type + " (%s)" % [id]
+	position *= 16
+	position += Vector2(8, 8)
 	
 	## spawn connection lines
 	#for i in range(0, connections.size()):
@@ -18,4 +20,3 @@ func _ready() -> void:
 			#if object.id == connections[i]:
 				#conn_line.set_point_position(1, to_local(object.position))
 		#add_child(conn_line)
-	#

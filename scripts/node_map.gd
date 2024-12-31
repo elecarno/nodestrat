@@ -25,6 +25,9 @@ extends Node2D
 	"harvester_a": preload("res://scenes/buildings/b_harvester_a.tscn"),
 	"harvester_b": preload("res://scenes/buildings/b_harvester_b.tscn"),
 	"harvester_g": preload("res://scenes/buildings/b_harvester_g.tscn"),
+	"factory_a": preload("res://scenes/buildings/b_factory_a.tscn"),
+	"factory_b": preload("res://scenes/buildings/b_factory_b.tscn"),
+	"factory_g": preload("res://scenes/buildings/b_factory_g.tscn")
 }
 
 var node_id: int = 0
@@ -82,7 +85,7 @@ func _physics_process(_delta: float) -> void:
 		select.visible = true
 		# check for mouse click and check if node is owned by client's faction
 		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction and build_type != "":
-			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, snapped_position)
+			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position)
 			build_type = ""
 	else:
 		select.visible = false

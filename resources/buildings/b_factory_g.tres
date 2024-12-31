@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://be241y43jmqh3"]
+
+[ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_xjqd0"]
+
+[resource]
+script = ExtResource("1_xjqd0")
+CODE = "factory_g"
+DISPLAY_NAME = "γ Factory"
+TYPE = 3
+PURPOSE = 0
+MAX_HP = 200
+ENERGY_COST = 75
+TRANSFER_PRIORITY = 2
+TRANSFER_RADIUS = 8
+MAX_ENERGY = 0
+MAX_ALPHA = 0
+MAX_BETA = 0
+MAX_GAMMA = 0
+PROD_ENERGY = 0
+PROD_ALPHA = 0
+PROD_BETA = 0
+PROD_GAMMA = 0
+BUILD_ENERGY = 250
+ANY_MATTER = 0
+BUILD_ALPHA = 0
+BUILD_BETA = 0
+BUILD_GAMMA = 250

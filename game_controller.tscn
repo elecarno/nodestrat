@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=27 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_4detf"]
 [ext_resource type="Script" path="res://scripts/m_spawner.gd" id="3_1vqeo"]
@@ -17,6 +17,9 @@
 [ext_resource type="Resource" uid="uid://bot3of4re8bw" path="res://resources/buildings/b_battery.tres" id="12_vilc3"]
 [ext_resource type="Resource" uid="uid://e70wv8pvn08l" path="res://resources/buildings/b_harvester_b.tres" id="13_7ue10"]
 [ext_resource type="Resource" uid="uid://cs7lmyhnlwnkm" path="res://resources/buildings/b_harvester_g.tres" id="14_w6exw"]
+[ext_resource type="Resource" uid="uid://5e4ny1p7y1e6" path="res://resources/buildings/b_factory_a.tres" id="16_r73bm"]
+[ext_resource type="Resource" uid="uid://dgceuihfn6f5f" path="res://resources/buildings/b_factory_b.tres" id="17_cc4i3"]
+[ext_resource type="Resource" uid="uid://be241y43jmqh3" path="res://resources/buildings/b_factory_g.tres" id="18_3var3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3p6oe"]
 properties/0/path = NodePath("world_map:world_seed")
@@ -310,6 +313,15 @@ n_build_res = null
 a_build_res = ExtResource("12_bamfp")
 b_build_res = ExtResource("13_7ue10")
 g_build_res = ExtResource("14_w6exw")
+
+[node name="factory" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+layout_mode = 2
+text = "Factory"
+neutral = false
+n_build_res = null
+a_build_res = ExtResource("16_r73bm")
+b_build_res = ExtResource("17_cc4i3")
+g_build_res = ExtResource("18_3var3")
 
 [node name="info" type="Control" parent="canvas_layer/ui/build"]
 visible = false
