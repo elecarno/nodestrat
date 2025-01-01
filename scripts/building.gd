@@ -70,15 +70,16 @@ func day_tick():
 	print("running daytick on building " + str(id))
 	if use_energy():
 		if PURPOSE == DESIGNATION.PRODUCTION:
-			var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][pos]
-			if TERRAIN_ALIGNMENT == ALIGNMENT.NEUTRAL:
-				add_production()
-			if TERRAIN_ALIGNMENT == ALIGNMENT.ALPHA and on_terrain == Vector2(1, 0):
-				add_production()
-			if TERRAIN_ALIGNMENT == ALIGNMENT.BETA and on_terrain == Vector2(2, 0):
-				add_production()
-			if TERRAIN_ALIGNMENT == ALIGNMENT.GAMMA and on_terrain == Vector2(3, 0):
-				add_production()
+			add_production()
+			#var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][pos]
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.NEUTRAL:
+				#add_production()
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.ALPHA and on_terrain == Vector2(1, 0):
+				#add_production()
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.BETA and on_terrain == Vector2(2, 0):
+				#add_production()
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.GAMMA and on_terrain == Vector2(3, 0):
+				#add_production()
 		elif PURPOSE == DESIGNATION.STORAGE:
 			pass
 		elif PURPOSE == DESIGNATION.PIPELINE:

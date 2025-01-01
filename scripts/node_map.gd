@@ -85,8 +85,18 @@ func _physics_process(_delta: float) -> void:
 		select.visible = true
 		# check for mouse click and check if node is owned by client's faction
 		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction and build_type != "":
-			world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position)
-			build_type = ""
+			var pos = Vector2(cell_position.x, cell_position.y)
+			if build_type == "harvester_a" and node.tilemap_data["ground_tiles"][pos] != Vector2(1, 0):
+				print("cannot place alpha harvester on non alpha terrain")
+			elif build_type == "harvester_b" and node.tilemap_data["ground_tiles"][pos] != Vector2(2, 0):
+				print("cannot place beta harvester on non beta terrain")
+			elif build_type == "harvester_g" and node.tilemap_data["ground_tiles"][pos] != Vector2(3, 0):
+				print("cannot place gamma harvester on non gamma terrain")
+			elif build_type == "powerplant" and node.tilemap_data["ground_tiles"][pos] != Vector2(4, 0):
+				print("cannot place powerplant on non energy terrain")
+			else:
+				world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position)
+				build_type = ""
 	else:
 		select.visible = false
 

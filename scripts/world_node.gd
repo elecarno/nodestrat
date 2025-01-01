@@ -84,6 +84,10 @@ func init_node() -> void:
 				var wall_tile: Vector2 = Vector2(0, 1)
 				var hill_tile: Vector2 = Vector2(0, 2)
 				
+				var walls = n_walls.get_noise_2d(x,y)*5
+				var hills = n_hills.get_noise_2d(x,y)*5
+				
+				# matter tiles
 				if a > 0.5:
 					tile = Vector2(1, 0)
 					wall_tile = Vector2(1, 1)
@@ -96,8 +100,9 @@ func init_node() -> void:
 					
 				tilemap_data["ground_tiles"][tile_pos] = tile
 				
-				var walls = n_walls.get_noise_2d(x,y)*5
-				var hills = n_hills.get_noise_2d(x,y)*5
+				# energy tiles
+				if hills > 0.1 and hills < 0.5:
+					tilemap_data["ground_tiles"][tile_pos] = Vector2(4, 0)
 				
 				# temporarily disabled hill generation because it
 				# adds too much extra stuff to account for
@@ -119,15 +124,6 @@ func load_node_map():
 @rpc("any_peer", "call_local")
 func add_building(peer_id, type, pos: Vector2):
 	print("----- @rpc")
-	if type == "harvester_a" and tilemap_data["ground_tiles"][pos] != Vector2(1, 0):
-		print("cannot place alpha harvester on non alpha terrain")
-		return
-	if type == "harvester_b" and tilemap_data["ground_tiles"][pos] != Vector2(2, 0):
-		print("cannot place beta harvester on non beta terrain")
-		return
-	if type == "harvester_g" and tilemap_data["ground_tiles"][pos] != Vector2(3, 0):
-		print("cannot place gamma harvester on non gamma terrain")
-		return
 	var building: Building = building_node.instantiate()
 	building.type = type
 	building.pos = pos
