@@ -4,7 +4,6 @@ extends Node
 @onready var objects: Node = get_parent()
 @onready var world_node: WorldNode = get_parent().get_parent()
 
-enum DESIGNATION {PRODUCTION, STORAGE, PIPELINE}
 enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
 
 var id: int = randi()
@@ -12,7 +11,6 @@ var type: String = "test_building"
 var pos: Vector2 = Vector2.ZERO
 var faction: String = ""
 
-var PURPOSE: DESIGNATION
 var TERRAIN_ALIGNMENT: ALIGNMENT
 
 var stored_energy: int = 0
@@ -26,6 +24,9 @@ var connections: Array = [] # stores object ids
 # assignments from resource
 var MAX_HP: int
 var ENERGY_COST: int
+var PIVOT: Vector2
+var WIDTH: int
+var HEIGHT: int
 var MAX_ENERGY: int
 var MAX_ALPHA: int
 var MAX_BETA: int
@@ -34,15 +35,15 @@ var PROD_ENERGY: int
 var PROD_ALPHA: int
 var PROD_BETA: int
 var PROD_GAMMA: int
-var TRANSFER_PRIORITY: int
-var TRANSFER_RADIUS: int
 
 func _ready() -> void:
 	name = type + " (%s)" % [id]
 	
 	MAX_HP = res_refs.buildings[type].MAX_HP
-	PURPOSE = res_refs.buildings[type].PURPOSE
 	TERRAIN_ALIGNMENT = res_refs.buildings[type].TYPE
+	PIVOT = res_refs.buildings[type].PIVOT
+	WIDTH = res_refs.buildings[type].WIDTH
+	HEIGHT = res_refs.buildings[type].HEIGHT
 	ENERGY_COST = res_refs.buildings[type].ENERGY_COST
 	MAX_ENERGY = res_refs.buildings[type].MAX_ENERGY
 	MAX_ALPHA = res_refs.buildings[type].MAX_ALPHA
@@ -52,8 +53,6 @@ func _ready() -> void:
 	PROD_ALPHA = res_refs.buildings[type].PROD_ALPHA
 	PROD_BETA = res_refs.buildings[type].PROD_BETA
 	PROD_GAMMA = res_refs.buildings[type].PROD_GAMMA
-	TRANSFER_PRIORITY = res_refs.buildings[type].TRANSFER_PRIORITY
-	TRANSFER_RADIUS = res_refs.buildings[type].TRANSFER_RADIUS
 	
 	world_node.subtract_resource("ENERGY", res_refs.buildings[type].BUILD_ENERGY)
 	world_node.subtract_resource("ALPHA", res_refs.buildings[type].BUILD_ALPHA)
@@ -69,21 +68,16 @@ func day_tick():
 	print("---")
 	print("running daytick on building " + str(id))
 	if use_energy():
-		if PURPOSE == DESIGNATION.PRODUCTION:
-			add_production()
-			#var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][pos]
-			#if TERRAIN_ALIGNMENT == ALIGNMENT.NEUTRAL:
-				#add_production()
-			#if TERRAIN_ALIGNMENT == ALIGNMENT.ALPHA and on_terrain == Vector2(1, 0):
-				#add_production()
-			#if TERRAIN_ALIGNMENT == ALIGNMENT.BETA and on_terrain == Vector2(2, 0):
-				#add_production()
-			#if TERRAIN_ALIGNMENT == ALIGNMENT.GAMMA and on_terrain == Vector2(3, 0):
-				#add_production()
-		elif PURPOSE == DESIGNATION.STORAGE:
-			pass
-		elif PURPOSE == DESIGNATION.PIPELINE:
-			pass
+		add_production()
+		#var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][pos]
+		#if TERRAIN_ALIGNMENT == ALIGNMENT.NEUTRAL:
+			#add_production()
+		#if TERRAIN_ALIGNMENT == ALIGNMENT.ALPHA and on_terrain == Vector2(1, 0):
+			#add_production()
+		#if TERRAIN_ALIGNMENT == ALIGNMENT.BETA and on_terrain == Vector2(2, 0):
+			#add_production()
+		#if TERRAIN_ALIGNMENT == ALIGNMENT.GAMMA and on_terrain == Vector2(3, 0):
+			#add_production()
 	else:
 		print("building %s cannot get enough energy to function" % [id])
 	print("---")
