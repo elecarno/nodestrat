@@ -116,8 +116,8 @@ func get_total_resources():
 func ui_refresh_resources(total_res, total_storage, total_prod):
 	var texts = game_contoller.ui_format_resource_texts(total_res, total_storage, total_prod)
 	
-	ui.get_node("faction_info/energy").text = texts["energy"]
-	ui.get_node("faction_info/alpha").text = texts["alpha"] 
-	ui.get_node("faction_info/beta").text = texts["beta"]
-	ui.get_node("faction_info/gamma").text = texts["gamma"]
+	ui.get_node("faction_info/hbox/energy").text = texts["energy"]
+	ui.get_node("faction_info/hbox/alpha").text = texts["alpha"] 
+	ui.get_node("faction_info/hbox/beta").text = texts["beta"]
+	ui.get_node("faction_info/hbox/gamma").text = texts["gamma"]
 	

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://ckuvh637mlo3s"]
+
+[ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_sp62a"]
+
+[resource]
+script = ExtResource("1_sp62a")
+CODE = "tank"
+DISPLAY_NAME = "Tank"
+TYPE = 0
+PURPOSE = 1
+MAX_HP = 3000
+ENERGY_COST = 5
+TRANSFER_PRIORITY = 2
+TRANSFER_RADIUS = 8
+MAX_ENERGY = 0
+MAX_ALPHA = 500
+MAX_BETA = 500
+MAX_GAMMA = 500
+PROD_ENERGY = 0
+PROD_ALPHA = 0
+PROD_BETA = 0
+PROD_GAMMA = 0
+BUILD_ENERGY = 0
+ANY_MATTER = 350
+BUILD_ALPHA = 0
+BUILD_BETA = 0
+BUILD_GAMMA = 0

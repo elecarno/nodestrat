@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=28 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_4detf"]
 [ext_resource type="Script" path="res://scripts/m_spawner.gd" id="3_1vqeo"]
@@ -16,6 +16,7 @@
 [ext_resource type="Resource" uid="uid://ree26xjx6uy3" path="res://resources/buildings/b_harvester_a.tres" id="12_bamfp"]
 [ext_resource type="Resource" uid="uid://bot3of4re8bw" path="res://resources/buildings/b_battery.tres" id="12_vilc3"]
 [ext_resource type="Resource" uid="uid://e70wv8pvn08l" path="res://resources/buildings/b_harvester_b.tres" id="13_7ue10"]
+[ext_resource type="Resource" uid="uid://ckuvh637mlo3s" path="res://resources/buildings/b_tank.tres" id="13_717ne"]
 [ext_resource type="Resource" uid="uid://cs7lmyhnlwnkm" path="res://resources/buildings/b_harvester_g.tres" id="14_w6exw"]
 [ext_resource type="Resource" uid="uid://5e4ny1p7y1e6" path="res://resources/buildings/b_factory_a.tres" id="16_r73bm"]
 [ext_resource type="Resource" uid="uid://dgceuihfn6f5f" path="res://resources/buildings/b_factory_b.tres" id="17_cc4i3"]
@@ -139,46 +140,40 @@ texture = ExtResource("6_bm72a")
 [node name="faction_info" type="Control" parent="canvas_layer/ui"]
 layout_mode = 1
 anchors_preset = 0
-offset_right = 911.0
+offset_right = 1089.0
 offset_bottom = 130.0
 mouse_filter = 2
 
-[node name="energy" type="Label" parent="canvas_layer/ui/faction_info"]
-layout_mode = 1
-offset_left = 108.0
-offset_top = 5.0
-offset_right = 303.0
-offset_bottom = 25.0
+[node name="hbox" type="HBoxContainer" parent="canvas_layer/ui/faction_info"]
+layout_mode = 0
+offset_left = 101.0
+offset_right = 1089.0
+offset_bottom = 29.0
+
+[node name="energy" type="Label" parent="canvas_layer/ui/faction_info/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
 text = "E: 999/999(+99)"
 
-[node name="alpha" type="Label" parent="canvas_layer/ui/faction_info"]
-layout_mode = 1
-offset_left = 329.0
-offset_top = 5.0
-offset_right = 521.0
-offset_bottom = 25.0
+[node name="alpha" type="Label" parent="canvas_layer/ui/faction_info/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
 text = "α: 999/999(+99)"
 
-[node name="beta" type="Label" parent="canvas_layer/ui/faction_info"]
-layout_mode = 0
-offset_left = 535.0
-offset_top = 5.0
-offset_right = 730.0
-offset_bottom = 25.0
+[node name="beta" type="Label" parent="canvas_layer/ui/faction_info/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
 text = "β: 999/999(+99)"
 
-[node name="gamma" type="Label" parent="canvas_layer/ui/faction_info"]
-layout_mode = 0
-offset_left = 742.0
-offset_top = 5.0
-offset_right = 936.0
-offset_bottom = 25.0
+[node name="gamma" type="Label" parent="canvas_layer/ui/faction_info/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
 text = "γ: 999/999(+99)"
@@ -304,6 +299,11 @@ n_build_res = ExtResource("11_02oht")
 layout_mode = 2
 text = "Battery"
 n_build_res = ExtResource("12_vilc3")
+
+[node name="tank" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
+layout_mode = 2
+text = "Tank"
+n_build_res = ExtResource("13_717ne")
 
 [node name="harvester" parent="canvas_layer/ui/build/vbox" instance=ExtResource("9_5j3l6")]
 layout_mode = 2

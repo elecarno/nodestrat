@@ -118,7 +118,7 @@ func refresh_info():
 		
 		if a_build_res.BUILD_ALPHA > 0:
 			$"info/vbox/any_cost".visible = true
-			$"info/vbox/any_cost".text = "E: "+str(a_build_res.BUILD_ALPHA)
+			$"info/vbox/any_cost".text = "α·β·γ: "+str(a_build_res.BUILD_ALPHA)
 		
 		if a_build_res.BUILD_ENERGY > 0:
 			$"info/vbox/e_cost".visible = true
