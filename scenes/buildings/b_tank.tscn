@@ -1,11 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckbnvmkwjf0h0"]
+[gd_scene load_steps=5 format=3 uid="uid://ckbnvmkwjf0h0"]
 
 [ext_resource type="Script" path="res://scripts/map_building.gd" id="1_yl4gq"]
 [ext_resource type="Texture2D" uid="uid://dp2rj41m4w4q" path="res://sprites/buildings/b_tank.png" id="2_mw8am"]
+[ext_resource type="Texture2D" uid="uid://chvl8g33pns6k" path="res://sprites/select_full.png" id="3_8cqm5"]
 
-[node name="b_tank" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1p813"]
+size = Vector2(48, 32)
+
+[node name="b_tank" type="Area2D"]
 script = ExtResource("1_yl4gq")
 
 [node name="sprite" type="Sprite2D" parent="."]
 position = Vector2(0, 8)
 texture = ExtResource("2_mw8am")
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_1p813")
+
+[node name="select" type="NinePatchRect" parent="."]
+visible = false
+z_index = 1
+offset_left = -26.0
+offset_top = -11.0
+offset_right = 26.0
+offset_bottom = 26.0
+texture = ExtResource("3_8cqm5")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

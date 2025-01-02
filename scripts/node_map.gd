@@ -35,6 +35,7 @@ extends Node2D
 var node_id: int = 0
 
 var build_type: String = ""
+var building_selection: int = 0
 
 var rot: int = 0
 

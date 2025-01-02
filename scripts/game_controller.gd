@@ -34,6 +34,7 @@ func _ready() -> void:
 	ui.visible = false
 	lobby.visible = true
 	get_node("canvas_layer/ui/build").visible = false
+	get_node("canvas_layer/ui/building_info").visible = false
 	
 	# set build buttons 
 	for button in range(0, $canvas_layer/ui/build/vbox.get_child_count()):
