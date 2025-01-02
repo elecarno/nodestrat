@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://7obaa8wu86c8"]
 
-[ext_resource type="Texture2D" uid="uid://ccw3e0uc4rxqn" path="res://sprites/fortress.png" id="1_f3086"]
 [ext_resource type="Script" path="res://scripts/map_building.gd" id="1_kjhxe"]
+[ext_resource type="Texture2D" uid="uid://b1fkipehs0u0k" path="res://sprites/buildings/b_fortress.png" id="2_x2lmj"]
 
 [node name="b_fortress" type="Node2D"]
 script = ExtResource("1_kjhxe")
 
 [node name="sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_f3086")
+texture = ExtResource("2_x2lmj")

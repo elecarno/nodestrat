@@ -107,8 +107,8 @@ func create_player_factions():
 		players.get_child(i).faction_colour = faction_colours[colour_idx]
 		faction_colours.remove_at(colour_idx)
 		players.get_child(i).update_faction_label()
-		var fortress_pos = sample_point_in_circle(min_node_size - 2)
-		world.get_child(starting_node).add_building(players.get_child(i).client_id, "fortress", fortress_pos)
+		var fortress_pos = sample_point_in_circle(min_node_size - 5)
+		world.get_child(starting_node).add_building(players.get_child(i).client_id, "fortress", fortress_pos, 0)
 		world.get_child(starting_node).refresh_status()
 
 # utility functions

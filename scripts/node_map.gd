@@ -8,6 +8,7 @@ extends Node2D
 @onready var world: Node3D = get_parent().get_node("world_map/world")
 @onready var cam: Camera2D = get_node("pan_cam/cam")
 @onready var select: Sprite2D = get_node("select")
+@onready var preview: Sprite2D = get_node("select/preview")
 
 @onready var t_ground: TileMapLayer = get_node("t_ground")
 @onready var t_walls: TileMapLayer = get_node("t_walls")
@@ -34,6 +35,8 @@ extends Node2D
 var node_id: int = 0
 
 var build_type: String = ""
+
+var rot: int = 0
 
 func load_node() -> void:
 	print("-----")
@@ -84,18 +87,34 @@ func _physics_process(_delta: float) -> void:
 	# check if cursor is on terrain
 	if t_ground.get_used_cells().has(cell_position):
 		select.visible = true
+		var res: r_building
 		if build_type == "":
 			select.texture = load("res://sprites/select.png")
+			preview.visible = false
+			rot = 0
 		else:
+			res = res_refs.buildings[build_type]
 			select.texture = load("res://sprites/select_action.png")
+			preview.texture = res.SPRITE
+			preview.offset = (Vector2(res.PIVOT_0.x, res.PIVOT_0.y) * -16) - Vector2(8, 8)
+			preview.visible = true
+			if Input.is_action_just_pressed("rotate"):
+				rot += 90
+				if rot > 270:
+					rot = 0
+			preview.rotation_degrees = rot
 		# check for mouse click and check if node is owned by client's faction
 		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction and build_type != "":
 			var pos = Vector2(cell_position.x, cell_position.y)
 			var occupied: bool = false
-			for i in range(0, node.c_objects.get_child_count()):
-				if node.c_objects.get_child(i).pos == pos:
-					occupied = true
 			
+			var building_tiles: Array = node.get_building_tiles(cell_position, build_type, rot)
+			var occupied_tiles: Array = node.get_all_building_tiles()
+			
+			for i in range(0, building_tiles.size()):
+				if occupied_tiles.has(building_tiles[i]):
+					occupied = true
+					
 			if occupied:
 				print("cell is already occupied by an object")
 			else:
@@ -108,12 +127,14 @@ func _physics_process(_delta: float) -> void:
 				elif build_type == "powerplant" and node.tilemap_data["ground_tiles"][pos] != Vector2(4, 0):
 					print("cannot place powerplant on non energy terrain")
 				else:
-					world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position)
+					world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position, rot)
 					build_type = ""
 		if Input.is_action_just_pressed("rmb"):
 			build_type = ""
+			preview.visible = false
 	else:
 		select.visible = false
+		preview.visible = false
 
 func load_objects():
 	print("refreshing objects")
@@ -135,6 +156,7 @@ func load_objects():
 	for i in range(0, objects.get_child_count()):
 		var type = objects.get_child(i).type
 		var pos = objects.get_child(i).pos
+		var rot = objects.get_child(i).rot
 		var connections = objects.get_child(i).connections
 		var object_id = objects.get_child(i).id
 		var object_node: MapBuilding = buildings[type].instantiate()
@@ -142,6 +164,7 @@ func load_objects():
 		object_node.connections = connections
 		object_node.position = pos
 		object_node.type = type
+		object_node.rotation_degrees = rot
 		c_objects.add_child(object_node)
 		print("spawned object " + str(objects.get_child(i).id) + " on node_map")
 		

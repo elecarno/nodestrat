@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qay5eg5x1w1m"
-path="res://.godot/imported/battery.png-9c8b219a14601a7d89f1811b2019b1f0.ctex"
+uid="uid://ccw3e0uc4rxqn"
+path="res://.godot/imported/fortress.png-a66617b8e7e547262a6dc0fc81a5549b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/battery.png"
-dest_files=["res://.godot/imported/battery.png-9c8b219a14601a7d89f1811b2019b1f0.ctex"]
+source_file="res://sprites/dev/fortress.png"
+dest_files=["res://.godot/imported/fortress.png-a66617b8e7e547262a6dc0fc81a5549b.ctex"]
 
 [params]
 

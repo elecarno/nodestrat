@@ -9,9 +9,11 @@ enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
 var id: int = randi()
 var type: String = "test_building"
 var pos: Vector2 = Vector2.ZERO
+var rot: int = 0
 var faction: String = ""
 
 var TERRAIN_ALIGNMENT: ALIGNMENT
+var production_efficiency: float = 1.0
 
 var stored_energy: int = 0
 var stored_alpha: int = 0
@@ -24,7 +26,6 @@ var connections: Array = [] # stores object ids
 # assignments from resource
 var MAX_HP: int
 var ENERGY_COST: int
-var PIVOT: Vector2
 var WIDTH: int
 var HEIGHT: int
 var MAX_ENERGY: int
@@ -41,7 +42,6 @@ func _ready() -> void:
 	
 	MAX_HP = res_refs.buildings[type].MAX_HP
 	TERRAIN_ALIGNMENT = res_refs.buildings[type].TYPE
-	PIVOT = res_refs.buildings[type].PIVOT
 	WIDTH = res_refs.buildings[type].WIDTH
 	HEIGHT = res_refs.buildings[type].HEIGHT
 	ENERGY_COST = res_refs.buildings[type].ENERGY_COST
@@ -63,6 +63,7 @@ func _ready() -> void:
 	
 	if type == "fortress":
 		stored_energy = 500
+		#stored_alpha = 250 # DEBUG
 	
 func day_tick():
 	print("---")

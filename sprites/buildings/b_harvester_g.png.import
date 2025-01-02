@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi7jfn5m8w35v"
-path="res://.godot/imported/tank.png-ae2451a16bebab242d4706a9e5598c40.ctex"
+uid="uid://bwiy8pcedgmat"
+path="res://.godot/imported/b_harvester_g.png-207de2ec77ed4af951b0c9e469de46c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/tank.png"
-dest_files=["res://.godot/imported/tank.png-ae2451a16bebab242d4706a9e5598c40.ctex"]
+source_file="res://sprites/buildings/b_harvester_g.png"
+dest_files=["res://.godot/imported/b_harvester_g.png-207de2ec77ed4af951b0c9e469de46c5.ctex"]
 
 [params]
 

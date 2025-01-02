@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3u4jn6r306q3"
-path="res://.godot/imported/powerplant.png-1e9322fc818938f2ce3fe39d51dbca39.ctex"
+uid="uid://6uu4d2or0s7i"
+path="res://.godot/imported/b_factory_a.png-09c0a334c215fb9bcd1b234a2456d948.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/powerplant.png"
-dest_files=["res://.godot/imported/powerplant.png-1e9322fc818938f2ce3fe39d51dbca39.ctex"]
+source_file="res://sprites/buildings/b_factory_a.png"
+dest_files=["res://.godot/imported/b_factory_a.png-09c0a334c215fb9bcd1b234a2456d948.ctex"]
 
 [params]
 

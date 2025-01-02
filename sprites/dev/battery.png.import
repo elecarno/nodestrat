@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3y8bhbfb5f4y"
-path="res://.godot/imported/pylon.png-f25e41403f29b5e5dcb45d090f74e69c.ctex"
+uid="uid://qay5eg5x1w1m"
+path="res://.godot/imported/battery.png-63aa84680e89abe12b8404cacd12c088.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/pylon.png"
-dest_files=["res://.godot/imported/pylon.png-f25e41403f29b5e5dcb45d090f74e69c.ctex"]
+source_file="res://sprites/dev/battery.png"
+dest_files=["res://.godot/imported/battery.png-63aa84680e89abe12b8404cacd12c088.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bix2ol7sq7ujl"]
 
 [ext_resource type="Script" path="res://scripts/map_building.gd" id="1_u8y12"]
-[ext_resource type="Texture2D" uid="uid://d3y8bhbfb5f4y" path="res://sprites/pylon.png" id="2_0f3g0"]
+[ext_resource type="Texture2D" uid="uid://d3y8bhbfb5f4y" path="res://sprites/dev/pylon.png" id="2_0f3g0"]
 
 [node name="b_pylon" type="Node2D"]
 script = ExtResource("1_u8y12")

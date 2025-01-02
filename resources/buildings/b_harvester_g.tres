@@ -1,17 +1,22 @@
-[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://cs7lmyhnlwnkm"]
+[gd_resource type="Resource" script_class="r_building" load_steps=3 format=3 uid="uid://cs7lmyhnlwnkm"]
 
 [ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_1e5wl"]
+[ext_resource type="Texture2D" uid="uid://bwiy8pcedgmat" path="res://sprites/buildings/b_harvester_g.png" id="1_53ql8"]
 
 [resource]
 script = ExtResource("1_1e5wl")
+SPRITE = ExtResource("1_53ql8")
 CODE = "harvester_g"
 DISPLAY_NAME = "γ Harvester"
 TYPE = 3
-PURPOSE = 0
 MAX_HP = 200
 ENERGY_COST = 75
-TRANSFER_PRIORITY = 2
-TRANSFER_RADIUS = 8
+PIVOT_0 = Vector2(2, 1)
+PIVOT_90 = Vector2(1, 2)
+PIVOT_180 = Vector2(2, 1)
+PIVOT_270 = Vector2(1, 2)
+WIDTH = 5
+HEIGHT = 3
 MAX_ENERGY = 0
 MAX_ALPHA = 0
 MAX_BETA = 0

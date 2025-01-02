@@ -1,17 +1,22 @@
-[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://5e4ny1p7y1e6"]
+[gd_resource type="Resource" script_class="r_building" load_steps=3 format=3 uid="uid://5e4ny1p7y1e6"]
 
 [ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_34vnf"]
+[ext_resource type="Texture2D" uid="uid://6uu4d2or0s7i" path="res://sprites/buildings/b_factory_a.png" id="1_rbemd"]
 
 [resource]
 script = ExtResource("1_34vnf")
+SPRITE = ExtResource("1_rbemd")
 CODE = "factory_a"
 DISPLAY_NAME = "α Factory"
 TYPE = 1
-PURPOSE = 0
 MAX_HP = 200
 ENERGY_COST = 75
-TRANSFER_PRIORITY = 2
-TRANSFER_RADIUS = 8
+PIVOT_0 = Vector2(1, 1)
+PIVOT_90 = Vector2(1, 1)
+PIVOT_180 = Vector2(2, 1)
+PIVOT_270 = Vector2(1, 2)
+WIDTH = 4
+HEIGHT = 3
 MAX_ENERGY = 0
 MAX_ALPHA = 0
 MAX_BETA = 0

@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://dql6feqhfhh1b"]
 
-[ext_resource type="Texture2D" uid="uid://dkdb1dpj1s828" path="res://sprites/a_tile.png" id="1_0pvs1"]
 [ext_resource type="Script" path="res://scripts/map_building.gd" id="1_61ira"]
+[ext_resource type="Texture2D" uid="uid://c3stuxty2a8wr" path="res://sprites/buildings/b_harvester_a.png" id="2_hc3fq"]
 
 [node name="b_harvester_a" type="Node2D"]
 script = ExtResource("1_61ira")
 
 [node name="sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_0pvs1")
+texture = ExtResource("2_hc3fq")

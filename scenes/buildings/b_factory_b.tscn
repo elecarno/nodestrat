@@ -1,10 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://c4lfhypl2ut0j"]
 
 [ext_resource type="Script" path="res://scripts/map_building.gd" id="1_axo2c"]
-[ext_resource type="Texture2D" uid="uid://biy40c3jnd1kf" path="res://sprites/b_tile_2.png" id="2_16syj"]
+[ext_resource type="Texture2D" uid="uid://dii6ygmly1q1x" path="res://sprites/buildings/b_factory_b.png" id="2_l0ll8"]
 
 [node name="b_factory_b" type="Node2D"]
 script = ExtResource("1_axo2c")
 
 [node name="sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_16syj")
+position = Vector2(8, 0)
+texture = ExtResource("2_l0ll8")

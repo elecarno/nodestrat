@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkdb1dpj1s828"
-path="res://.godot/imported/a_tile.png-a2ada8b9858a6621678794e9a998dbb3.ctex"
+uid="uid://cgpu8eae5gtil"
+path="res://.godot/imported/b_battery.png-0385d5ff23650ae0dc9247f189e2f82a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/a_tile.png"
-dest_files=["res://.godot/imported/a_tile.png-a2ada8b9858a6621678794e9a998dbb3.ctex"]
+source_file="res://sprites/buildings/b_battery.png"
+dest_files=["res://.godot/imported/b_battery.png-0385d5ff23650ae0dc9247f189e2f82a.ctex"]
 
 [params]
 

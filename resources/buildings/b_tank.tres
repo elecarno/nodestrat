@@ -1,17 +1,22 @@
-[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://ckuvh637mlo3s"]
+[gd_resource type="Resource" script_class="r_building" load_steps=3 format=3 uid="uid://ckuvh637mlo3s"]
 
 [ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_sp62a"]
+[ext_resource type="Texture2D" uid="uid://dp2rj41m4w4q" path="res://sprites/buildings/b_tank.png" id="1_tis7v"]
 
 [resource]
 script = ExtResource("1_sp62a")
+SPRITE = ExtResource("1_tis7v")
 CODE = "tank"
 DISPLAY_NAME = "Tank"
 TYPE = 0
-PURPOSE = 1
 MAX_HP = 3000
 ENERGY_COST = 5
-TRANSFER_PRIORITY = 2
-TRANSFER_RADIUS = 8
+PIVOT_0 = Vector2(1, 0)
+PIVOT_90 = Vector2(1, 1)
+PIVOT_180 = Vector2(1, 1)
+PIVOT_270 = Vector2(0, 1)
+WIDTH = 3
+HEIGHT = 2
 MAX_ENERGY = 0
 MAX_ALPHA = 500
 MAX_BETA = 500

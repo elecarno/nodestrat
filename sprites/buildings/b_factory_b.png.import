@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcpiu1dfwao6l"
-path="res://.godot/imported/g_tile.png-db165c4fbeccfb002ded9d0997213942.ctex"
+uid="uid://dii6ygmly1q1x"
+path="res://.godot/imported/b_factory_b.png-91121bf35842e041ebf059578f338bb5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/g_tile.png"
-dest_files=["res://.godot/imported/g_tile.png-db165c4fbeccfb002ded9d0997213942.ctex"]
+source_file="res://sprites/buildings/b_factory_b.png"
+dest_files=["res://.godot/imported/b_factory_b.png-91121bf35842e041ebf059578f338bb5.ctex"]
 
 [params]
 

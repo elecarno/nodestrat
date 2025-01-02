@@ -122,11 +122,12 @@ func load_node_map():
 
 # add building to node on all peers
 @rpc("any_peer", "call_local")
-func add_building(peer_id, type, pos: Vector2):
+func add_building(peer_id, type: String, pos: Vector2, rot: int):
 	print("----- @rpc")
 	var building: Building = building_node.instantiate()
 	building.type = type
 	building.pos = pos
+	building.rot = rot
 	building.faction = game_contoller.get_faction(peer_id)
 	c_objects.add_child(building)
 	print("added building of type " + type + " to node " + str(id))
@@ -183,16 +184,52 @@ func refresh_status():
 	
 	print("----- @rpc")
 
-#func refresh_building_connections():
-	#print("refreshing building connections for node " + str(id))
-	#for i in range(0, c_objects.get_child_count()):
-		#if c_objects.get_child(i) is Building:
-			#c_objects.get_child(i).connections = []
-			#for conn_object in c_objects.get_children():
-				#var object = c_objects.get_child(i)
-				#if object.pos.distance_to(conn_object.pos) <= object.TRANSFER_RADIUS*16 and conn_object.id != object.id:
-					#c_objects.get_child(i).connections.append(conn_object.id)
-					#print("connected building %s (%s) to %s (%s)" % [object.id, object.type, conn_object.id, conn_object.type])
+func get_building_tiles(origin_pos, type, rot):
+	var building_tiles: Array
+	var res = res_refs.buildings[type]
+	
+	var w = res.WIDTH
+	var h = res.HEIGHT
+	var width: int
+	var height: int
+	var pivot: Vector2i
+	if rot == 0 or rot == 180:
+		width = w
+		height = h
+	else:
+		width = h
+		height = w
+	
+	if rot == 0:
+		pivot = res.PIVOT_0
+	if rot == 90:
+		pivot = res.PIVOT_90
+	if rot == 180:
+		pivot = res.PIVOT_180
+	if rot == 270:
+		pivot = res.PIVOT_270
+
+	var o_pos_i = Vector2i(origin_pos.x, origin_pos.y)
+	var starting_tile: Vector2 = o_pos_i - pivot
+	
+	for x in range(0, width):
+		for y in range(0, width):
+			building_tiles.append(starting_tile + Vector2(x, y))
+	
+	return building_tiles
+
+func get_all_building_tiles():
+	var all_building_tiles: Array
+	
+	for i in range(0, c_objects.get_child_count()):
+		if c_objects.get_child(i) is Building:
+			var pos = c_objects.get_child(i).pos
+			var type = c_objects.get_child(i).type
+			var rot = c_objects.get_child(i).rot
+			var building_tiles: Array = get_building_tiles(pos, type, rot)
+			all_building_tiles.append_array(building_tiles)
+			
+	return all_building_tiles
 
 # run day tick methods on all objects and entities
 func day_tick():

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccw3e0uc4rxqn"
-path="res://.godot/imported/fortress.png-f4dd1d6cd787c298db4d33f8c29d76e4.ctex"
+uid="uid://biy40c3jnd1kf"
+path="res://.godot/imported/b_tile_2.png-8a4be56abc21e63e663828b679ac20da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/fortress.png"
-dest_files=["res://.godot/imported/fortress.png-f4dd1d6cd787c298db4d33f8c29d76e4.ctex"]
+source_file="res://sprites/dev/b_tile_2.png"
+dest_files=["res://.godot/imported/b_tile_2.png-8a4be56abc21e63e663828b679ac20da.ctex"]
 
 [params]
 

@@ -1,17 +1,22 @@
-[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://bt1e1otxp1pkm"]
+[gd_resource type="Resource" script_class="r_building" load_steps=3 format=3 uid="uid://bt1e1otxp1pkm"]
 
+[ext_resource type="Texture2D" uid="uid://b1fkipehs0u0k" path="res://sprites/buildings/b_fortress.png" id="1_edjcf"]
 [ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_yundm"]
 
 [resource]
 script = ExtResource("1_yundm")
+SPRITE = ExtResource("1_edjcf")
 CODE = "fortress"
 DISPLAY_NAME = "Fortress"
 TYPE = 0
-PURPOSE = 0
 MAX_HP = 1500
 ENERGY_COST = 0
-TRANSFER_PRIORITY = 1
-TRANSFER_RADIUS = 8
+PIVOT_0 = Vector2(3, 3)
+PIVOT_90 = Vector2(3, 3)
+PIVOT_180 = Vector2(3, 3)
+PIVOT_270 = Vector2(3, 3)
+WIDTH = 7
+HEIGHT = 7
 MAX_ENERGY = 500
 MAX_ALPHA = 250
 MAX_BETA = 250

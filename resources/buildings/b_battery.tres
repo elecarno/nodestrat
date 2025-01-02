@@ -1,17 +1,22 @@
-[gd_resource type="Resource" script_class="r_building" load_steps=2 format=3 uid="uid://bot3of4re8bw"]
+[gd_resource type="Resource" script_class="r_building" load_steps=3 format=3 uid="uid://bot3of4re8bw"]
 
+[ext_resource type="Texture2D" uid="uid://cgpu8eae5gtil" path="res://sprites/buildings/b_battery.png" id="1_3otkm"]
 [ext_resource type="Script" path="res://resources/res_scripts/r_building.gd" id="1_mbw28"]
 
 [resource]
 script = ExtResource("1_mbw28")
+SPRITE = ExtResource("1_3otkm")
 CODE = "battery"
 DISPLAY_NAME = "Battery"
 TYPE = 0
-PURPOSE = 1
 MAX_HP = 150
 ENERGY_COST = 0
-TRANSFER_PRIORITY = 2
-TRANSFER_RADIUS = 8
+PIVOT_0 = Vector2(1, 0)
+PIVOT_90 = Vector2(1, 1)
+PIVOT_180 = Vector2(1, 1)
+PIVOT_270 = Vector2(0, 1)
+WIDTH = 3
+HEIGHT = 2
 MAX_ENERGY = 500
 MAX_ALPHA = 0
 MAX_BETA = 0

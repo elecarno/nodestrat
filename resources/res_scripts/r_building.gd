@@ -3,6 +3,8 @@ class_name r_building
 
 enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
 
+@export var SPRITE: Texture2D
+
 @export var CODE: String
 @export var DISPLAY_NAME: String
 @export var TYPE: ALIGNMENT
@@ -11,7 +13,10 @@ enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
 
 # dimensions
 @export_category("Dimensions")
-@export var PIVOT: Vector2 = Vector2.ZERO
+@export var PIVOT_0: Vector2 = Vector2.ZERO
+@export var PIVOT_90: Vector2 = Vector2.ZERO
+@export var PIVOT_180: Vector2 = Vector2.ZERO
+@export var PIVOT_270: Vector2 = Vector2.ZERO
 @export var WIDTH: int = 1
 @export var HEIGHT: int = 1
 
