@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt33dbsmhyv8t"]
+
+[ext_resource type="Theme" uid="uid://bh0okiyugsrgf" path="res://theme.tres" id="1_b42h0"]
+[ext_resource type="Script" path="res://scripts/unit_listing.gd" id="2_yxkn3"]
+
+[node name="unit_listing" type="Button"]
+size_flags_horizontal = 3
+theme = ExtResource("1_b42h0")
+toggle_mode = true
+text = "Fortress
+"
+script = ExtResource("2_yxkn3")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

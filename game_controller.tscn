@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b1maxltpl60t3"]
+[gd_scene load_steps=31 format=3 uid="uid://b1maxltpl60t3"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_4detf"]
 [ext_resource type="Script" path="res://scripts/m_spawner.gd" id="3_1vqeo"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/build_menu.gd" id="8_uan0g"]
 [ext_resource type="PackedScene" uid="uid://ch5jnqmw51dyk" path="res://scenes/lobby_player.tscn" id="9_3ewwb"]
 [ext_resource type="PackedScene" uid="uid://c1bcajdlr35e3" path="res://scenes/build_listing.tscn" id="9_5j3l6"]
+[ext_resource type="PackedScene" uid="uid://dt33dbsmhyv8t" path="res://scenes/unit_listing.tscn" id="10_yvebb"]
 [ext_resource type="Resource" uid="uid://bj4tkucnkbk8t" path="res://resources/buildings/b_powerplant.tres" id="11_02oht"]
 [ext_resource type="Resource" uid="uid://ree26xjx6uy3" path="res://resources/buildings/b_harvester_a.tres" id="12_bamfp"]
 [ext_resource type="Resource" uid="uid://bot3of4re8bw" path="res://resources/buildings/b_battery.tres" id="12_vilc3"]
@@ -237,7 +238,6 @@ text = "-
 "
 
 [node name="factory" type="Control" parent="canvas_layer/ui"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -292,8 +292,9 @@ offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="fortress" parent="canvas_layer/ui/factory/vbox" instance=ExtResource("9_5j3l6")]
+[node name="soldier" parent="canvas_layer/ui/factory/vbox" instance=ExtResource("10_yvebb")]
 layout_mode = 2
+text = "Soldier"
 
 [node name="info" type="Control" parent="canvas_layer/ui/factory"]
 layout_mode = 1
@@ -310,39 +311,45 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="build" type="Button" parent="canvas_layer/ui/factory/info"]
+visible = false
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
+anchor_bottom = 0.5
 offset_left = -73.0
-offset_top = -32.0
+offset_top = -11.0
 offset_right = 73.0
+offset_bottom = 21.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme = ExtResource("4_7cnmm")
 text = "Build"
 
 [node name="build_type" type="Control" parent="canvas_layer/ui/factory/info"]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -14.5
+offset_right = 73.0
+offset_bottom = 25.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="alpha" type="Button" parent="canvas_layer/ui/factory/info/build_type"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 255.0
-offset_right = 43.0
-offset_bottom = 287.0
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_right = 39.0
+offset_bottom = 16.0
+grow_vertical = 2
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_8g7ii")
@@ -350,17 +357,17 @@ text = "α"
 
 [node name="beta" type="Button" parent="canvas_layer/ui/factory/info/build_type"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 61.0
-offset_top = 255.0
-offset_right = 100.0
-offset_bottom = 287.0
+anchor_bottom = 0.5
+offset_left = -19.5
+offset_top = -16.0
+offset_right = 19.5
+offset_bottom = 16.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_cdsic")
@@ -368,17 +375,16 @@ text = "β"
 
 [node name="gamma" type="Button" parent="canvas_layer/ui/factory/info/build_type"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 115.0
-offset_top = 255.0
-offset_right = 154.0
-offset_bottom = 287.0
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
 theme = ExtResource("4_7cnmm")
 theme_override_colors/font_color = Color(0.686275, 0.52549, 0.768627, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_c7ytv")
@@ -389,7 +395,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -43.0
+offset_bottom = -188.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -397,10 +403,11 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 6
 theme = ExtResource("4_7cnmm")
-text = "Build Cost"
+text = "Production Cost"
 horizontal_alignment = 1
 
 [node name="cost" type="GridContainer" parent="canvas_layer/ui/factory/info/vbox"]
+visible = false
 layout_mode = 2
 columns = 2
 
@@ -436,17 +443,7 @@ theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
 text = "γ: 9.9K"
 horizontal_alignment = 1
 
-[node name="any_cost" type="Label" parent="canvas_layer/ui/factory/info/vbox"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.521516, 0.722754, 0.397494, 1)
-text = "α/β/γ: 9.9K"
-horizontal_alignment = 1
-
 [node name="e_cost" type="Label" parent="canvas_layer/ui/factory/info/vbox"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_7cnmm")
@@ -454,103 +451,7 @@ theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
 text = "E: 9.9K"
 horizontal_alignment = 1
 
-[node name="prod_label" type="Label" parent="canvas_layer/ui/factory/info/vbox"]
-layout_mode = 2
-size_flags_vertical = 6
-theme = ExtResource("4_7cnmm")
-text = "Production"
-horizontal_alignment = 1
-
-[node name="prod" type="GridContainer" parent="canvas_layer/ui/factory/info/vbox"]
-layout_mode = 2
-columns = 2
-
-[node name="energy" type="Label" parent="canvas_layer/ui/factory/info/vbox/prod"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
-text = "E: 9.9K"
-horizontal_alignment = 1
-
-[node name="alpha" type="Label" parent="canvas_layer/ui/factory/info/vbox/prod"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
-text = "α: 9.9K"
-horizontal_alignment = 1
-
-[node name="beta" type="Label" parent="canvas_layer/ui/factory/info/vbox/prod"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
-text = "β: 9.9K"
-horizontal_alignment = 1
-
-[node name="gamma" type="Label" parent="canvas_layer/ui/factory/info/vbox/prod"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
-text = "γ: 9.9K"
-horizontal_alignment = 1
-
-[node name="any_prod" type="Label" parent="canvas_layer/ui/factory/info/vbox"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.521516, 0.722754, 0.397494, 1)
-text = "α/β/γ: 9.9K"
-horizontal_alignment = 1
-
-[node name="storage_label" type="Label" parent="canvas_layer/ui/factory/info/vbox"]
-layout_mode = 2
-size_flags_vertical = 6
-theme = ExtResource("4_7cnmm")
-text = "Storage"
-horizontal_alignment = 1
-
-[node name="storage" type="GridContainer" parent="canvas_layer/ui/factory/info/vbox"]
-layout_mode = 2
-columns = 2
-
-[node name="energy" type="Label" parent="canvas_layer/ui/factory/info/vbox/storage"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.901961, 0.784314, 0.431373, 1)
-text = "E: 9.9K"
-horizontal_alignment = 1
-
-[node name="alpha" type="Label" parent="canvas_layer/ui/factory/info/vbox/storage"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.713726, 0.337255, 0.337255, 1)
-text = "α: 9.9K"
-horizontal_alignment = 1
-
-[node name="beta" type="Label" parent="canvas_layer/ui/factory/info/vbox/storage"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.843137, 0.45098, 0.333333, 1)
-text = "β: 9.9K"
-horizontal_alignment = 1
-
-[node name="gamma" type="Label" parent="canvas_layer/ui/factory/info/vbox/storage"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("4_7cnmm")
-theme_override_colors/font_color = Color(0.687867, 0.5236, 0.77, 1)
-text = "γ: 9.9K"
-horizontal_alignment = 1
-
-[node name="any_storage" type="Label" parent="canvas_layer/ui/factory/info/vbox"]
-visible = false
+[node name="any_cost" type="Label" parent="canvas_layer/ui/factory/info/vbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_7cnmm")
@@ -1588,9 +1489,9 @@ mouse_filter = 2
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_up" to="." method="_on_speed_up_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_down" to="." method="_on_speed_down_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/factory/info/build" to="canvas_layer/ui/factory" method="_on_build_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/alpha" to="canvas_layer/ui/factory" method="_on_alpha_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/beta" to="canvas_layer/ui/factory" method="_on_beta_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/gamma" to="canvas_layer/ui/factory" method="_on_gamma_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/alpha" to="canvas_layer/ui/build" method="_on_alpha_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/beta" to="canvas_layer/ui/build" method="_on_beta_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/gamma" to="canvas_layer/ui/build" method="_on_gamma_pressed"]
 [connection signal="visibility_changed" from="canvas_layer/ui/build" to="canvas_layer/ui/build" method="_on_visibility_changed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build" to="canvas_layer/ui/build" method="_on_build_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build_type/alpha" to="canvas_layer/ui/build" method="_on_alpha_pressed"]
