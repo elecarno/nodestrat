@@ -9,6 +9,7 @@ extends Node2D
 @onready var cam: Camera2D = get_node("pan_cam/cam")
 @onready var select: Sprite2D = get_node("select")
 @onready var preview: Sprite2D = get_node("select/preview")
+@onready var building_info: Control = $"../canvas_layer/ui/building_info"
 
 @onready var t_ground: TileMapLayer = get_node("t_ground")
 @onready var t_walls: TileMapLayer = get_node("t_walls")
@@ -36,6 +37,7 @@ var node_id: int = 0
 
 var build_type: String = ""
 var building_selection: int = 0
+var building_selected: bool = false
 
 var rot: int = 0
 
@@ -85,6 +87,13 @@ func _physics_process(_delta: float) -> void:
 	var snapped_position = t_ground.map_to_local(cell_position)
 	select.position = snapped_position
 	
+	if building_selection != 0:
+		for i in range(0, node.c_objects.get_child_count()):
+			if node.c_objects.get_child(i) is Building:
+				if node.c_objects.get_child(i).id == building_selection:
+					building_info.building = node.c_objects.get_child(i)
+		building_info.init_info()
+	
 	# check if cursor is on terrain
 	if t_ground.get_used_cells().has(cell_position):
 		select.visible = true
@@ -130,6 +139,12 @@ func _physics_process(_delta: float) -> void:
 				else:
 					world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position, rot)
 					build_type = ""
+					
+
+		if Input.is_action_just_pressed("lmb"):
+			if building_selected:
+				building_info.visible = true
+
 		if Input.is_action_just_pressed("rmb"):
 			build_type = ""
 			preview.visible = false

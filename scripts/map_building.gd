@@ -24,8 +24,9 @@ func _ready() -> void:
 func _on_mouse_entered() -> void:
 	$select.visible = true
 	node_map.building_selection = id
-	
+	node_map.building_selected = true
 
 func _on_mouse_exited() -> void:
 	$select.visible = false
-	node_map.building_selection = 0
+	node_map.building_selected = false
+	#node_map.building_selection = 0

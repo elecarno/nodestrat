@@ -132,6 +132,10 @@ func switch_cams():
 	pan_cam.position = Vector2.ZERO
 	pan_cam.zoom = Vector2.ONE
 	
+	if world_map.visible:
+		$canvas_layer/ui/build.visible = false
+		$canvas_layer/ui/building_info.visible = false
+		
 # format timestamp text
 func format_time():
 	var hours = tick % 24
