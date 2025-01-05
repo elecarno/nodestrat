@@ -36,6 +36,7 @@ enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
 
 # build costs
 @export_category("Build Costs")
+@export var BUILD_TIME: int = 1
 @export var BUILD_ENERGY: int
 @export var ANY_MATTER: int
 @export var BUILD_ALPHA: int

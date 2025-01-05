@@ -5,6 +5,8 @@ var building: Building
 func init_info():
 	var res: r_building = res_refs.buildings[building.type]
 	$title.text = res.DISPLAY_NAME
+	if building.build_time > 0:
+		$title.text += " (%sd)" % [building.build_time]
 	
 	$vbox/prod/energy.text = "E: +"+str(building.PROD_ENERGY)
 	$vbox/prod/alpha.text = "α: +"+str(building.PROD_ALPHA)

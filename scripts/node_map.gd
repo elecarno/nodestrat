@@ -176,11 +176,13 @@ func load_objects():
 		var connections = objects.get_child(i).connections
 		var object_id = objects.get_child(i).id
 		var object_node: MapBuilding = buildings[type].instantiate()
+		var built = objects.get_child(i).built
 		object_node.id = object_id
 		object_node.connections = connections
 		object_node.position = pos
 		object_node.type = type
 		object_node.rotation_degrees = rot
+		object_node.built = built
 		c_objects.add_child(object_node)
 		print("spawned object " + str(objects.get_child(i).id) + " on node_map")
 		

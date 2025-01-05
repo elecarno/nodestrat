@@ -8,11 +8,17 @@ extends Area2D
 var id: int = 0
 var type: String = ""
 var connections: Array = []
+var built: bool = false
 
 func _ready() -> void:
 	name = type + " (%s)" % [id]
 	position *= 16
 	position += Vector2(8, 8)
+	
+	if built:
+		modulate = Color(1, 1, 1, 1)
+	else:
+		modulate = Color(1, 1, 1, 0.5)
 	
 	#for i in range(0, connections.size()):
 		#var conn_line: Line2D = connection_line.instantiate()

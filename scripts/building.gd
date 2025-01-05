@@ -3,8 +3,7 @@ extends Node
 
 @onready var objects: Node = get_parent()
 @onready var world_node: WorldNode = get_parent().get_parent()
-
-enum ALIGNMENT {NEUTRAL, ALPHA, BETA, GAMMA}
+@onready var node_map: NodeMap = get_parent().get_parent().get_parent().get_node("node_map")
 
 var id: int = randi()
 var type: String = "test_building"
@@ -12,7 +11,7 @@ var pos: Vector2 = Vector2.ZERO
 var rot: int = 0
 var faction: String = ""
 
-var TERRAIN_ALIGNMENT: ALIGNMENT
+var TERRAIN_ALIGNMENT
 var production_efficiency: float = 1.0
 
 var stored_energy: int = 0
@@ -20,6 +19,9 @@ var stored_alpha: int = 0
 var stored_beta: int = 0
 var stored_gamma: int = 0
 var hp: int = 25
+
+var build_time: int
+var built: bool = false
 
 var connections: Array = [] # stores object ids
 
@@ -40,19 +42,22 @@ var PROD_GAMMA: int
 func _ready() -> void:
 	name = type + " (%s)" % [id]
 	
-	MAX_HP = res_refs.buildings[type].MAX_HP
-	TERRAIN_ALIGNMENT = res_refs.buildings[type].TYPE
-	WIDTH = res_refs.buildings[type].WIDTH
-	HEIGHT = res_refs.buildings[type].HEIGHT
-	ENERGY_COST = res_refs.buildings[type].ENERGY_COST
-	MAX_ENERGY = res_refs.buildings[type].MAX_ENERGY
-	MAX_ALPHA = res_refs.buildings[type].MAX_ALPHA
-	MAX_BETA = res_refs.buildings[type].MAX_BETA
-	MAX_GAMMA = res_refs.buildings[type].MAX_GAMMA
-	PROD_ENERGY = res_refs.buildings[type].PROD_ENERGY
-	PROD_ALPHA = res_refs.buildings[type].PROD_ALPHA
-	PROD_BETA = res_refs.buildings[type].PROD_BETA
-	PROD_GAMMA = res_refs.buildings[type].PROD_GAMMA
+	var res: r_building = res_refs.buildings[type]
+	
+	MAX_HP = res.MAX_HP
+	TERRAIN_ALIGNMENT = res.TYPE
+	WIDTH = res.WIDTH
+	HEIGHT = res.HEIGHT
+	ENERGY_COST = res.ENERGY_COST
+	MAX_ENERGY = res.MAX_ENERGY
+	MAX_ALPHA = res.MAX_ALPHA
+	MAX_BETA = res.MAX_BETA
+	MAX_GAMMA = res.MAX_GAMMA
+	PROD_ENERGY = res.PROD_ENERGY
+	PROD_ALPHA = res.PROD_ALPHA
+	PROD_BETA = res.PROD_BETA
+	PROD_GAMMA = res.PROD_GAMMA
+	build_time = res.BUILD_TIME
 	
 	world_node.subtract_resource("ENERGY", res_refs.buildings[type].BUILD_ENERGY)
 	world_node.subtract_resource("ALPHA", res_refs.buildings[type].BUILD_ALPHA)
@@ -68,19 +73,29 @@ func _ready() -> void:
 func day_tick():
 	print("---")
 	print("running daytick on building " + str(id))
-	if use_energy():
-		add_production()
-		#var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][pos]
-		#if TERRAIN_ALIGNMENT == ALIGNMENT.NEUTRAL:
-			#add_production()
-		#if TERRAIN_ALIGNMENT == ALIGNMENT.ALPHA and on_terrain == Vector2(1, 0):
-			#add_production()
-		#if TERRAIN_ALIGNMENT == ALIGNMENT.BETA and on_terrain == Vector2(2, 0):
-			#add_production()
-		#if TERRAIN_ALIGNMENT == ALIGNMENT.GAMMA and on_terrain == Vector2(3, 0):
-			#add_production()
+	
+	if build_time > 0:
+		build_time -= 1
+		print("reducing build time to " + str(build_time))
 	else:
-		print("building %s cannot get enough energy to function" % [id])
+		if !built:
+			built = true
+			node_map.load_objects()
+	
+	if built:
+		if use_energy():
+			add_production()
+			#var on_terrain: Vector2 = world_node.tilemap_data["ground_tiles"][pos]
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.NEUTRAL:
+				#add_production()
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.ALPHA and on_terrain == Vector2(1, 0):
+				#add_production()
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.BETA and on_terrain == Vector2(2, 0):
+				#add_production()
+			#if TERRAIN_ALIGNMENT == ALIGNMENT.GAMMA and on_terrain == Vector2(3, 0):
+				#add_production()
+		else:
+			print("building %s cannot get enough energy to function" % [id])
 	print("---")
 
 func use_energy():
