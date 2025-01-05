@@ -74,7 +74,7 @@ func refresh_info():
 			$"info/vbox/e_cost".visible = false
 			if n_build_res.BUILD_ENERGY > 0:
 				$"info/vbox/e_cost".visible = true
-				$"info/vbox/cost/energy".text = "E: "+str(n_build_res.BUILD_ENERGY)
+				$"info/vbox/e_cost".text = "E: "+str(n_build_res.BUILD_ENERGY)
 		else:
 			$"info/vbox/cost/energy".text = "E: "+str(n_build_res.BUILD_ENERGY)
 			$"info/vbox/cost/alpha".text = "α: "+str(n_build_res.BUILD_ALPHA)

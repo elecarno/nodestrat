@@ -3,7 +3,7 @@ extends Node
 
 @onready var objects: Node = get_parent()
 @onready var world_node: WorldNode = get_parent().get_parent()
-@onready var node_map: NodeMap = get_parent().get_parent().get_parent().get_node("node_map")
+@onready var node_map: NodeMap = get_tree().get_root().get_node("main/game_controller/node_map")
 
 var id: int = randi()
 var type: String = "test_building"
@@ -68,7 +68,7 @@ func _ready() -> void:
 	
 	if type == "fortress":
 		stored_energy = 500
-		#stored_alpha = 250 # DEBUG
+		stored_alpha = 150
 	
 func day_tick():
 	print("---")

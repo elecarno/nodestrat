@@ -109,6 +109,8 @@ func create_player_factions():
 		players.get_child(i).update_faction_label()
 		var fortress_pos = sample_point_in_circle(min_node_size - 5)
 		world.get_child(starting_node).add_building(players.get_child(i).client_id, "fortress", fortress_pos, 0)
+		world.get_child(starting_node).c_objects.get_child(0).build_time = 0
+		world.get_child(starting_node).c_objects.get_child(0).built = true
 		world.get_child(starting_node).refresh_status()
 
 # utility functions
