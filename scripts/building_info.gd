@@ -1,8 +1,12 @@
 extends Control
 
 var building: Building
+@onready var node_map: NodeMap = $"../../../node_map"
 
 func init_info():
+	if building == null:
+		return
+	
 	var res: r_building = res_refs.buildings[building.type]
 	$title.text = res.DISPLAY_NAME
 	if building.build_time > 0:
@@ -26,4 +30,9 @@ func init_info():
 	$vbox/faction.set("theme_override_colors/font_color", faction_colour)
 
 func _on_exit_pressed() -> void:
+	visible = false
+
+func _on_destroy_pressed() -> void:
+	node_map.world.get_child(node_map.node_id).remove_building.rpc(building.id)
+	building == null
 	visible = false

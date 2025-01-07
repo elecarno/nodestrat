@@ -125,6 +125,7 @@ func load_node_map():
 func add_building(peer_id, type: String, pos: Vector2, rot: int):
 	print("----- @rpc")
 	var building: Building = building_node.instantiate()
+	building.id = world_map.rng.randi()
 	building.type = type
 	building.pos = pos
 	building.rot = rot
@@ -141,6 +142,26 @@ func add_building(peer_id, type: String, pos: Vector2, rot: int):
 			refresh_status.rpc()
 	
 	game_contoller.update_player_data()
+
+@rpc("any_peer", "call_local")
+func remove_building(building_id):
+	print("attempting to remove building " + str(building_id))
+	for i in range(0, c_objects.get_child_count()):
+		if c_objects.get_child(i) is Building:
+			if c_objects.get_child(i).id == building_id:
+				if c_objects.get_child(i).type == "fortress":
+					refresh_status.rpc()
+				
+				c_objects.remove_child(c_objects.get_child(i))
+				#c_objects.get_child(i).queue_free()
+					
+				if node_map.node_id == id:
+					node_map.load_objects()
+					
+				game_contoller.update_player_data()
+				print("destroyed building " + str(building_id))
+			else:
+				print("can't find building " + str(building_id))
 
 # refresh faction ownership status of node on all peers
 @rpc("any_peer", "call_local")

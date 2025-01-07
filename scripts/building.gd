@@ -5,7 +5,7 @@ extends Node
 @onready var world_node: WorldNode = get_parent().get_parent()
 @onready var node_map: NodeMap = get_tree().get_root().get_node("main/game_controller/node_map")
 
-var id: int = randi()
+var id: int = 0
 var type: String = "test_building"
 var pos: Vector2 = Vector2.ZERO
 var rot: int = 0

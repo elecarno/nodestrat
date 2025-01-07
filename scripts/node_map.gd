@@ -142,7 +142,7 @@ func _physics_process(_delta: float) -> void:
 					
 
 		if Input.is_action_just_pressed("lmb"):
-			if building_selected:
+			if building_selected and node.node_data["faction"] == game_contoller.get_faction(multiplayer.get_unique_id()):
 				building_info.visible = true
 
 		if Input.is_action_just_pressed("rmb"):

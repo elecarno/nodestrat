@@ -60,7 +60,9 @@ func generate_nodes():
 		new_node.node_data["name"] = "Tower"
 		if node_id != 0:
 			new_node.node_data["position"] = sample_point_in_sphere(world_radius)
-			new_node.node_data["name"] = node_names[rng.randi() % node_names.size()]
+			var chosen_name = node_names[rng.randi() % node_names.size()]
+			new_node.node_data["name"] = chosen_name
+			node_names.erase(chosen_name)
 		world.get_child(node_id).id = node_id
 		world.get_child(node_id).node_data = new_node.node_data
 		world.get_child(node_id).init_node()
@@ -183,11 +185,25 @@ func get_random_key_exclude(dictionary: Dictionary, exclude_key):
 
 # data arrays
 var node_names: Array = [
-	"Lytir", "Noctuae", "Oynyena", "Carcharoth", "Metri", "Gori", "Panacea",
-	"Rosae", "Maja", "Keni", "Namo", "Vaire", "Inin", "Bracko", "Anat",
-	"Anin", "Reeni", "Satet", "Eridani", "Zori", "Pegasi", "Goll", "Durin",
-	"Alkonost", "Scorpii", "Ledi", "Capricorni", "Tresi", "Artemis", "Hebe",
-	"Essid", "Xani", "Mova"
+	"Lytir",	"Noctuae",	"Oynyena",		"Carcharoth", 
+	"Metri",	"Gori",		"Panacea",		"Rosae", 
+	"Maja",		"Keni",		"Namo",			"Vaire", 
+	"Inin",		"Bracko",	"Anat",			"Anin", 
+	
+	"Reeni",	"Satet",	"Eridani",		"Zori", 
+	"Pegasi",	"Goll",		"Durin",		"Alkonost", 
+	"Scorpii",	"Ledi",		"Capricorni",	"Tresi", 
+	"Artemis",	"Hebe",		"Essid",		"Xani", 
+	
+	"Mova",		"Liluri",	"Amymone",		"Jola", 
+	"Dnuni",	"Doka",		"Pazuzu",		"Kiloo", 
+	"Modgud",	"Burislav",	"Elyon",		"Ankan",
+	"Svati",	"Anish",	"Laaki",		"Tisa", 
+	
+	"Sinmore",	"Gunn",		"Vorti",		"Poxu", 
+	"Earendil",	"Lahmu",	"Mari",			"Vorcia", 
+	"Khonsu",	"Koni",		"Aman",			"Krotai",
+	"Mane",		"Burislav",	"Jezzo",		"Henda"
 ]
 
 var faction_colours: Array = [

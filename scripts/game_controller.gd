@@ -88,10 +88,13 @@ func _process(delta: float) -> void:
 		node_map.visible = false
 		orbit_cam.current = true
 		pan_cam.enabled = false
+		$canvas_layer/ui/build.visible = false
+		$canvas_layer/ui/building_info.visible = false
 		
 	# handle toggle build menu
 	if Input.is_action_just_pressed("build") and node_map.visible:
-		get_node("canvas_layer/ui/build").visible = !get_node("canvas_layer/ui/build").visible
+		if world_map.world.get_child(node_map.node_id).node_data["faction"] == get_faction(multiplayer.get_unique_id()):
+			get_node("canvas_layer/ui/build").visible = !get_node("canvas_layer/ui/build").visible
 
 # run tick on all clients
 @rpc("any_peer", "call_local")
@@ -285,6 +288,7 @@ func start_game():
 		world_map.max_connections_per_node = int($canvas_layer/lobby/settings/max_conn/edit.text)
 		world_map.connection_threshold = int($canvas_layer/lobby/settings/conn_thres/edit.text)
 		world_map.min_node_size = int($canvas_layer/lobby/settings/min_node/edit.text)
+		world_map.max_node_size = int($canvas_layer/lobby/settings/max_node/edit.text)
 		world_map.max_connections_per_node = int($canvas_layer/lobby/settings/max_node/edit.text)
 		lobby.visible = false
 		ui.visible = true

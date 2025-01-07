@@ -99,3 +99,67 @@ mesh = SubResource("PlaneMesh_4t1lb")
 [node name="30" parent="world" instance=ExtResource("4_puhio")]
 
 [node name="31" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="32" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="33" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="34" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="35" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="36" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="37" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="38" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="39" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="40" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="41" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="42" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="43" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="44" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="45" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="46" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="47" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="48" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="49" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="50" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="51" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="52" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="53" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="54" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="55" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="56" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="57" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="58" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="59" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="60" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="61" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="62" parent="world" instance=ExtResource("4_puhio")]
+
+[node name="63" parent="world" instance=ExtResource("4_puhio")]

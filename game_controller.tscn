@@ -122,6 +122,7 @@ environment = SubResource("Environment_xeig2")
 [node name="canvas_layer" type="CanvasLayer" parent="."]
 
 [node name="ui" type="Control" parent="canvas_layer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1497,6 +1498,6 @@ mouse_filter = 2
 [connection signal="pressed" from="canvas_layer/ui/build/info/build_type/alpha" to="canvas_layer/ui/build" method="_on_alpha_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build_type/beta" to="canvas_layer/ui/build" method="_on_beta_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build_type/gamma" to="canvas_layer/ui/build" method="_on_gamma_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/building_info/destroy" to="canvas_layer/ui/build" method="_on_build_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/building_info/destroy" to="canvas_layer/ui/building_info" method="_on_destroy_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/building_info/exit" to="canvas_layer/ui/building_info" method="_on_exit_pressed"]
 [connection signal="pressed" from="canvas_layer/lobby/start" to="." method="_on_start_pressed"]
