@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="r_entity" load_steps=2 format=3 uid="uid://dh7jvyr0y5m31"]
+
+[ext_resource type="Script" path="res://resources/res_scripts/r_entity.gd" id="1_6henu"]
+
+[resource]
+script = ExtResource("1_6henu")
+CODE = "scout_drone"
+DISPLAY_NAME = "Scout Drone"
+SIZE = 1
+MAX_HP = 5
+MAX_RANGE = 15
+MAX_DAMAGE = 5

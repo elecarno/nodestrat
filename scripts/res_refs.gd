@@ -14,3 +14,15 @@ var buildings: Dictionary = {
 	"factory_b": preload("res://resources/buildings/b_factory_b.tres"),
 	"factory_g": preload("res://resources/buildings/b_factory_g.tres")
 }
+
+var entities: Dictionary = {
+	"scout_drone": preload("res://resources/entities/scout_drone.tres")
+}
+
+# defines defaults
+var units: Dictionary = {
+	# code: [entity_1, entity_2, entity_3, ...]
+	"scout_party": 
+		["scout_drone", "scout_drone", 
+		"scout_drone", "scout_drone"]
+}

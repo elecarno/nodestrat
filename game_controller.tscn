@@ -122,7 +122,6 @@ environment = SubResource("Environment_xeig2")
 [node name="canvas_layer" type="CanvasLayer" parent="."]
 
 [node name="ui" type="Control" parent="canvas_layer"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -295,7 +294,8 @@ grow_vertical = 2
 
 [node name="soldier" parent="canvas_layer/ui/factory/vbox" instance=ExtResource("10_yvebb")]
 layout_mode = 2
-text = "Soldier"
+text = "Scout Party"
+unit = "scout_party"
 
 [node name="info" type="Control" parent="canvas_layer/ui/factory"]
 layout_mode = 1
