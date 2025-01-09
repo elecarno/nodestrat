@@ -37,7 +37,7 @@ func _ready() -> void:
 	get_node("canvas_layer/ui/building_info").visible = false
 	$canvas_layer/ui/factory.visible = false
 	
-	# set build buttons 
+	# set build buttons
 	for button in range(0, $canvas_layer/ui/build/vbox.get_child_count()):
 		$canvas_layer/ui/build/vbox.get_child(button).button_group = build_button_group
 	
@@ -95,6 +95,11 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("build") and node_map.visible:
 		if world_map.world.get_child(node_map.node_id).node_data["faction"] == get_faction(multiplayer.get_unique_id()):
 			get_node("canvas_layer/ui/build").visible = !get_node("canvas_layer/ui/build").visible
+			
+	# handle toggle factory menu
+	if Input.is_action_just_pressed("factory") and node_map.visible:
+		if world_map.world.get_child(node_map.node_id).node_data["faction"] == get_faction(multiplayer.get_unique_id()):
+			get_node("canvas_layer/ui/factory").visible = !get_node("canvas_layer/ui/factory").visible
 
 # run tick on all clients
 @rpc("any_peer", "call_local")

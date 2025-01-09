@@ -1489,10 +1489,9 @@ mouse_filter = 2
 
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_up" to="." method="_on_speed_up_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/time_control/speed_down" to="." method="_on_speed_down_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/factory/info/build" to="canvas_layer/ui/factory" method="_on_build_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/alpha" to="canvas_layer/ui/build" method="_on_alpha_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/beta" to="canvas_layer/ui/build" method="_on_beta_pressed"]
-[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/gamma" to="canvas_layer/ui/build" method="_on_gamma_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/alpha" to="canvas_layer/ui/factory" method="_on_alpha_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/beta" to="canvas_layer/ui/factory" method="_on_beta_pressed"]
+[connection signal="pressed" from="canvas_layer/ui/factory/info/build_type/gamma" to="canvas_layer/ui/factory" method="_on_gamma_pressed"]
 [connection signal="visibility_changed" from="canvas_layer/ui/build" to="canvas_layer/ui/build" method="_on_visibility_changed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build" to="canvas_layer/ui/build" method="_on_build_pressed"]
 [connection signal="pressed" from="canvas_layer/ui/build/info/build_type/alpha" to="canvas_layer/ui/build" method="_on_alpha_pressed"]
