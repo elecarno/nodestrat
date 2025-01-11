@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj3uq51t4spyx"]
+
+[ext_resource type="Texture2D" uid="uid://ym84jnts4ojj" path="res://sprites/test_unit.png" id="1_clfim"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm7po"]
+
+[node name="unit" type="Area2D"]
+
+[node name="sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_clfim")
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fm7po")

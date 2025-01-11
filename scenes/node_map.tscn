@@ -45,7 +45,7 @@ tile_set = SubResource("TileSet_bb85p")
 
 [node name="objects" type="Node2D" parent="."]
 
-[node name="entities" type="Node2D" parent="."]
+[node name="units" type="Node2D" parent="."]
 
 [node name="ui" type="Node2D" parent="."]
 

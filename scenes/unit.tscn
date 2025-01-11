@@ -1,13 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dj3uq51t4spyx"]
+[gd_scene load_steps=2 format=3 uid="uid://cqyeal7sh5ar"]
 
-[ext_resource type="Texture2D" uid="uid://ym84jnts4ojj" path="res://sprites/test_unit.png" id="1_clfim"]
+[ext_resource type="Script" path="res://scenes/node_unit.gd" id="1_gtoju"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm7po"]
-
-[node name="unit" type="Area2D"]
-
-[node name="sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_clfim")
-
-[node name="col" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_fm7po")
+[node name="unit" type="Node"]
+script = ExtResource("1_gtoju")

@@ -55,7 +55,7 @@ shape = SubResource("SphereShape3D_hlmlg")
 
 [node name="objects" type="Node" parent="."]
 
-[node name="entities" type="Node" parent="."]
+[node name="units" type="Node" parent="."]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

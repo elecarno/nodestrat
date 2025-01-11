@@ -1,7 +1,8 @@
 class_name WorldNode
 extends StaticBody3D
 
-@onready var building_node = preload("res://scenes/building.tscn")
+@onready var building_node = preload("res://scenes/map_building.tscn")
+@onready var unit_node = preload("res://scenes/map_unit.tscn")
 
 @onready var mesh: MeshInstance3D = get_node("mesh")
 @onready var select: MeshInstance3D = get_node("mesh/select")
@@ -12,7 +13,7 @@ extends StaticBody3D
 #@onready var players: Node = get_parent().get_parent().get_parent().get_node("players")
 
 @onready var c_objects: Node = get_node("objects")
-@onready var c_entities: Node = get_node("entities")
+@onready var c_units: Node = get_node("units")
 
 var n_alpha: FastNoiseLite = FastNoiseLite.new()
 var n_beta: FastNoiseLite = FastNoiseLite.new()
@@ -145,6 +146,7 @@ func add_building(peer_id, type: String, pos: Vector2, rot: int):
 
 @rpc("any_peer", "call_local")
 func remove_building(building_id):
+	print("----- @rpc")
 	print("attempting to remove building " + str(building_id))
 	for i in range(0, c_objects.get_child_count()):
 		if c_objects.get_child(i) is Building:
@@ -162,6 +164,17 @@ func remove_building(building_id):
 				print("destroyed building " + str(building_id))
 			else:
 				print("can't find building " + str(building_id))
+	print("----- @rpc")
+
+@rpc("any_peer", "call_local")
+func add_unit(peer_id, type: String, pos: Vector2):
+	print("----- @rpc")
+	var unit: Unit = unit_node.instantiate()
+	unit.type = type
+	unit.pos = pos
+	unit.faction = game_contoller.get_faction(peer_id)
+	c_units.add_child(unit)
+	print("added unit of type " + type + " to node " + str(id))
 
 # refresh faction ownership status of node on all peers
 @rpc("any_peer", "call_local")

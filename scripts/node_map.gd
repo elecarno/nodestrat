@@ -15,7 +15,7 @@ extends Node2D
 @onready var t_walls: TileMapLayer = get_node("t_walls")
 @onready var t_hills: TileMapLayer = get_node("t_hills")
 @onready var c_objects: Node2D = get_node("objects")
-@onready var c_entities: Node2D = get_node("entities")
+@onready var c_units: Node2D = get_node("units")
 @onready var c_ui: Node2D = get_node("ui")
 
 @onready var buildings: Dictionary = {
@@ -159,8 +159,8 @@ func load_objects():
 		c_objects.remove_child(object)
 		object.queue_free()
 		
-	for entity in c_entities.get_children():
-		c_entities.remove_child(entity)
+	for entity in c_units.get_children():
+		c_units.remove_child(entity)
 		entity.queue_free()
 		
 	for ui in c_ui.get_children():

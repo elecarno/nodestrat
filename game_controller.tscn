@@ -298,6 +298,7 @@ text = "Scout Party"
 unit = "scout_party"
 
 [node name="info" type="Control" parent="canvas_layer/ui/factory"]
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
