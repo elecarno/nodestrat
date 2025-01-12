@@ -15,6 +15,8 @@ var game_started: bool = false
 @onready var node_info: Control = get_node("canvas_layer/ui/node_info")
 @onready var ui: Control = get_node("canvas_layer/ui")
 @onready var lobby: Control = get_node("canvas_layer/lobby")
+@onready var build_menu: Control = get_node("canvas_layer/ui/build")
+@onready var factory_menu: Control = get_node("canvas_layer/ui/factory")
 
 @export var tick: int = 24 # used for game calculations
 var last_day_tick: int = floor(tick/24)
@@ -33,9 +35,9 @@ func _ready() -> void:
 	get_node("canvas_layer/crt").visible = true
 	ui.visible = false
 	lobby.visible = true
-	get_node("canvas_layer/ui/build").visible = false
+	build_menu.visible = false
 	get_node("canvas_layer/ui/building_info").visible = false
-	$canvas_layer/ui/factory.visible = false
+	factory_menu.visible = false
 	
 	# set build buttons
 	for button in range(0, $canvas_layer/ui/build/vbox.get_child_count()):
@@ -88,18 +90,21 @@ func _process(delta: float) -> void:
 		node_map.visible = false
 		orbit_cam.current = true
 		pan_cam.enabled = false
-		$canvas_layer/ui/build.visible = false
+		build_menu.visible = false
 		$canvas_layer/ui/building_info.visible = false
+		factory_menu.visible = false
 		
 	# handle toggle build menu
 	if Input.is_action_just_pressed("build") and node_map.visible:
 		if world_map.world.get_child(node_map.node_id).node_data["faction"] == get_faction(multiplayer.get_unique_id()):
-			get_node("canvas_layer/ui/build").visible = !get_node("canvas_layer/ui/build").visible
+			build_menu.visible = !build_menu.visible
+			factory_menu.visible = false
 			
 	# handle toggle factory menu
 	if Input.is_action_just_pressed("factory") and node_map.visible:
 		if world_map.world.get_child(node_map.node_id).node_data["faction"] == get_faction(multiplayer.get_unique_id()):
-			get_node("canvas_layer/ui/factory").visible = !get_node("canvas_layer/ui/factory").visible
+			factory_menu.visible = !factory_menu.visible
+			build_menu.visible = false
 
 # run tick on all clients
 @rpc("any_peer", "call_local")

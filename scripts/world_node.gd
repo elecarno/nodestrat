@@ -2,7 +2,7 @@ class_name WorldNode
 extends StaticBody3D
 
 @onready var building_node = preload("res://scenes/map_building.tscn")
-@onready var unit_node = preload("res://scenes/map_unit.tscn")
+@onready var unit_node = preload("res://scenes/node_unit.tscn")
 
 @onready var mesh: MeshInstance3D = get_node("mesh")
 @onready var select: MeshInstance3D = get_node("mesh/select")
@@ -167,14 +167,22 @@ func remove_building(building_id):
 	print("----- @rpc")
 
 @rpc("any_peer", "call_local")
-func add_unit(peer_id, type: String, pos: Vector2):
+func add_unit(peer_id, type: String, pos: Vector2, alignment: String):
 	print("----- @rpc")
 	var unit: Unit = unit_node.instantiate()
+	unit.id = world_map.rng.randi()
 	unit.type = type
 	unit.pos = pos
 	unit.faction = game_contoller.get_faction(peer_id)
+	unit.alignment = alignment
 	c_units.add_child(unit)
 	print("added unit of type " + type + " to node " + str(id))
+	
+	if node_map.node_id == id:
+		node_map.load_objects()
+	
+	game_contoller.update_player_data()
+	
 
 # refresh faction ownership status of node on all peers
 @rpc("any_peer", "call_local")

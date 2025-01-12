@@ -6,7 +6,7 @@ var type: String = "test_building"
 var pos: Vector2 = Vector2.ZERO
 var faction: String = ""
 
-var TERRAIN_ALIGNMENT
+var alignment: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

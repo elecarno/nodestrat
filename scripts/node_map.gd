@@ -33,11 +33,16 @@ extends Node2D
 	"factory_g": preload("res://scenes/buildings/b_factory_g.tscn")
 }
 
+@onready var map_unit: PackedScene = preload("res://scenes/map_unit.tscn")
+
 var node_id: int = 0
 
 var build_type: String = ""
 var building_selection: int = 0
 var building_selected: bool = false
+
+var unit_type: String = ""
+var unit_alignment: String = ""
 
 var rot: int = 0
 
@@ -98,48 +103,63 @@ func _physics_process(_delta: float) -> void:
 	if t_ground.get_used_cells().has(cell_position):
 		select.visible = true
 		var res: r_building
-		if build_type == "":
+		if build_type == "" and unit_type == "":
 			select.texture = load("res://sprites/select.png")
 			preview.visible = false
 			rot = 0
 		else:
-			res = res_refs.buildings[build_type]
 			select.texture = load("res://sprites/select_action.png")
-			preview.texture = res.SPRITE
-			preview.offset = (Vector2(res.PIVOT_0.x, res.PIVOT_0.y) * -16) - Vector2(8, 8)
-			preview.visible = true
-			if Input.is_action_just_pressed("rotate"):
-				rot += 90
-				if rot > 270:
-					rot = 0
-			preview.rotation_degrees = rot
+			if build_type != "":
+				res = res_refs.buildings[build_type]
+				preview.texture = res.SPRITE
+				preview.offset = (Vector2(res.PIVOT_0.x, res.PIVOT_0.y) * -16) - Vector2(8, 8)
+				preview.visible = true
+				if Input.is_action_just_pressed("rotate"):
+					rot += 90
+					if rot > 270:
+						rot = 0
+				preview.rotation_degrees = rot
+		
 		# check for mouse click and check if node is owned by client's faction
-		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction and build_type != "":
+		var occupied: bool = false
+		var building_tiles: Array
+		
+		if build_type != "":
+			building_tiles = node.get_building_tiles(cell_position, build_type, rot)
+		
+		if unit_type != "":
+			building_tiles = [cell_position]
+			
+		var occupied_tiles: Array = node.get_all_building_tiles()
+		for i in range(0, building_tiles.size()):
+			if occupied_tiles.has(building_tiles[i]):
+				occupied = true
+		
+		if Input.is_action_just_pressed("lmb") and node.node_data["faction"] == client_faction:
 			var pos = Vector2(cell_position.x, cell_position.y)
-			var occupied: bool = false
-			
-			var building_tiles: Array = node.get_building_tiles(cell_position, build_type, rot)
-			var occupied_tiles: Array = node.get_all_building_tiles()
-			
-			for i in range(0, building_tiles.size()):
-				if occupied_tiles.has(building_tiles[i]):
-					occupied = true
-					
-			if occupied:
-				print("cell is already occupied by an object")
-			else:
-				if build_type == "harvester_a" and node.tilemap_data["ground_tiles"][pos] != Vector2(1, 0):
-					print("cannot place alpha harvester on non alpha terrain")
-				elif build_type == "harvester_b" and node.tilemap_data["ground_tiles"][pos] != Vector2(2, 0):
-					print("cannot place beta harvester on non beta terrain")
-				elif build_type == "harvester_g" and node.tilemap_data["ground_tiles"][pos] != Vector2(3, 0):
-					print("cannot place gamma harvester on non gamma terrain")
-				elif build_type == "powerplant" and node.tilemap_data["ground_tiles"][pos] != Vector2(4, 0):
-					print("cannot place powerplant on non energy terrain")
+			if build_type != "":
+				if occupied:
+					print("cell is already occupied by an object")
 				else:
-					world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position, rot)
-					build_type = ""
+					if build_type == "harvester_a" and node.tilemap_data["ground_tiles"][pos] != Vector2(1, 0):
+						print("cannot place alpha harvester on non alpha terrain")
+					elif build_type == "harvester_b" and node.tilemap_data["ground_tiles"][pos] != Vector2(2, 0):
+						print("cannot place beta harvester on non beta terrain")
+					elif build_type == "harvester_g" and node.tilemap_data["ground_tiles"][pos] != Vector2(3, 0):
+						print("cannot place gamma harvester on non gamma terrain")
+					elif build_type == "powerplant" and node.tilemap_data["ground_tiles"][pos] != Vector2(4, 0):
+						print("cannot place powerplant on non energy terrain")
+					else:
+						world.get_child(node_id).add_building.rpc(multiplayer.get_unique_id(), build_type, cell_position, rot)
+						build_type = ""
 					
+			if unit_type != "":
+				if occupied:
+					print("cell is already occupied by an object")
+				else:
+					world.get_child(node_id).add_unit.rpc(multiplayer.get_unique_id(), unit_type, cell_position, unit_alignment)
+					unit_type = ""
+				
 
 		if Input.is_action_just_pressed("lmb"):
 			if building_selected and node.node_data["faction"] == game_contoller.get_faction(multiplayer.get_unique_id()):
@@ -168,6 +188,7 @@ func load_objects():
 		ui.queue_free()
 
 	var objects = world.get_child(node_id).get_node("objects")
+	var units = world.get_child(node_id).get_node("units")
 	# spawn objects
 	for i in range(0, objects.get_child_count()):
 		var type = objects.get_child(i).type
@@ -186,3 +207,13 @@ func load_objects():
 		c_objects.add_child(object_node)
 		print("spawned object " + str(objects.get_child(i).id) + " on node_map")
 		
+	for i in range(0, units.get_child_count()):
+		var type = units.get_child(i).type
+		var pos = units.get_child(i).pos
+		var unit_id = units.get_child(i).id
+		var unit_node: MapUnit = map_unit.instantiate()
+		unit_node.id = unit_id
+		unit_node.type = type
+		unit_node.position = pos
+		c_units.add_child(unit_node)
+		print("spawned unit " + str(units.get_child(i).id) + " on node_map")

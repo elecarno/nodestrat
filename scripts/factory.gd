@@ -1,23 +1,19 @@
 extends Control
 
+@onready var node_map: NodeMap = $"../../../node_map"
+@onready var world_map: WorldMap = $"../../../world_map"
+@onready var game_contoller: GameController = $"../../.."
+
 var unit_code: String
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_alpha_pressed() -> void:
-	pass # Replace with function body.
-
+	node_map.unit_type = unit_code
+	node_map.unit_alignment = "ALPHA"
 
 func _on_beta_pressed() -> void:
-	pass # Replace with function body.
-
+	node_map.unit_type = unit_code
+	node_map.unit_alignment = "BETA"
 
 func _on_gamma_pressed() -> void:
-	pass # Replace with function body.
+	node_map.unit_type = unit_code
+	node_map.unit_alignment = "GAMMA"

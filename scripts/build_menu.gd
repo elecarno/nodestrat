@@ -125,6 +125,7 @@ func refresh_info():
 			$"info/vbox/e_cost".text = "E: "+str(a_build_res.BUILD_ENERGY)
 		
 		$"info/vbox/upkeep".text = "E: "+str(a_build_res.ENERGY_COST)
+	
 func _on_visibility_changed() -> void:
 	if has_res:
 		refresh_info()
