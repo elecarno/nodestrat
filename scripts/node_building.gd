@@ -59,10 +59,19 @@ func _ready() -> void:
 	PROD_GAMMA = res.PROD_GAMMA
 	build_time = res.BUILD_TIME
 	
-	world_node.subtract_resource("ENERGY", res_refs.buildings[type].BUILD_ENERGY)
-	world_node.subtract_resource("ALPHA", res_refs.buildings[type].BUILD_ALPHA)
-	world_node.subtract_resource("BETA", res_refs.buildings[type].BUILD_BETA)
-	world_node.subtract_resource("GAMMA", res_refs.buildings[type].BUILD_GAMMA)
+	world_node.subtract_resource("ENERGY", res.BUILD_ENERGY)
+	world_node.subtract_resource("ALPHA", res.BUILD_ALPHA)
+	world_node.subtract_resource("BETA", res.BUILD_BETA)
+	world_node.subtract_resource("GAMMA", res.BUILD_GAMMA)
+
+	if res.ANY_MATTER > 0:
+		var node_resources:Dictionary = world_node.get_total_resources()
+		if node_resources["stored_alpha"] > res.ANY_MATTER:
+			world_node.subtract_resource("ALPHA", res.ANY_MATTER)
+		elif node_resources["stored_beta"] > res.ANY_MATTER:
+			world_node.subtract_resource("BETA", res.ANY_MATTER)
+		elif node_resources["stored_gamma"] > res.ANY_MATTER:
+			world_node.subtract_resource("GAMMA", res.ANY_MATTER)
 	
 	hp = MAX_HP
 	
